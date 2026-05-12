@@ -1,0 +1,645 @@
+{
+  "common": {
+    "callNow": "Call Now",
+    "sendMessage": "Send message",
+    "bookConsultation": "Book consultation",
+    "exploreServices": "Explore services",
+    "viewGuide": "View guide",
+    "readMore": "Read more",
+    "switchLocale": "Switch language",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "backHome": "Back to homepage",
+    "requestCallback": "Request a callback",
+    "allServices": "All services",
+    "allGuides": "All guides",
+    "contactOffice": "Contact office",
+    "directSupport": "Direct support",
+    "relatedServices": "Related services",
+    "readTime": "Read time",
+    "askOffice": "Ask the office",
+    "step": "Step",
+    "topic": "Topic",
+    "trustSignals": "Trust signals",
+    "specialtyService": "Specialty service",
+    "licenseOne": "License 1",
+    "licenseTwo": "License 2",
+    "gujranwalaOffice": "Gujranwala office",
+    "minutesShort": "min",
+    "english": "EN",
+    "urdu": "اردو",
+    "breadcrumb": "Breadcrumb"
+  },
+  "nav": {
+    "home": "Home",
+    "about": "About Us",
+    "contact": "Contact",
+    "visitVisa": "Visit Visa",
+    "tourPackages": "Tour Packages",
+    "hotelBooking": "Hotel Booking",
+    "travelInsurance": "Travel Insurance",
+    "licenses": "IATA Certified · Pakistan's Premier Travel & Tours Agency",
+    "umrah": "Umrah",
+    "tours": "Tours"
+  },
+  "hero": {
+    "eyebrow": "IATA Certified Travel & Tours Agency",
+    "line1": "Your Gateway",
+    "line2": "to the World",
+    "subtitle": "Pakistan's most trusted travel agency — flights, tours, Umrah packages, hotel bookings and visit visas. All under one roof.",
+    "ctaPrimary": "Explore Tours",
+    "ctaSecondary": "Contact Us Now"
+  },
+  "trust": {
+    "offices": "Licensed Offices",
+    "countries": "Countries Covered",
+    "clients": "Happy Clients",
+    "experience": "Years Experience"
+  },
+  "services": {
+    "title": "Our Services",
+    "subtitle": "Complete travel and visa solutions under one roof"
+  },
+  "wakala": {
+    "badge": "Flagship Service",
+    "headline": "Saudi Arabia Work Visa Wakala",
+    "urduHeadline": "سعودی عرب ورک ویزہ وکالہ",
+    "description": "Licensed Wakala services for Saudi Arabia work visa — fast, legal, and fully certified under IATA Certified",
+    "cta": "Apply for Saudi Wakala",
+    "highlights": {
+      "saudiLicensed": "Saudi Licensed",
+      "route": "Pakistan to Saudi Route"
+    }
+  },
+  "footer": {
+    "description": "The Flight Centre Travel & Tours is Gujranwala's IATA certified travel agency offering flight bookings, Umrah packages, international tours, hotel reservations, visit visas and travel insurance.",
+    "quickLinks": "Quick links",
+    "servicesTitle": "Service desk",
+    "contactTitle": "Reach us",
+    "officeHours": "Available 9 AM – 9 PM, 6 days a week. 24/7 helpdesk at 0304-111-9-786.",
+    "rights": "All rights reserved",
+    "tagline": "Your Gateway to the World",
+    "licensed": "IATA Certified Agency",
+    "licensedBy": "IATA Certified",
+    "whatsappCta": "WhatsApp Us",
+    "licenseBar": "License"
+  },
+  "breadcrumbs": {
+    "aria": "Breadcrumb",
+    "home": "Home",
+    "services": "Services",
+    "about": "About",
+    "contact": "Contact",
+    "guides": "Guides",
+    "umrah": "Umrah",
+    "tours": "Tours",
+    "ticket-booking": "Ticket Booking",
+    "visit-visa": "Visit Visa",
+    "tour-packages": "Tour Packages",
+    "hotel-booking": "Hotel Booking",
+    "travel-insurance": "Travel Insurance",
+    "umrah-packages": "Umrah Packages",
+    "saudi-visa-guide": "Saudi Visa Guide",
+    "visit-visa-guide": "Visit Visa Guide",
+    "umrah-calculator": "Umrah Calculator",
+    "tour-calculator": "Tour Calculator"
+  },
+  "home": {
+    "meta": {
+      "title": "The Flight Centre | Flights, Tours, Umrah & Visa Services — Gujranwala",
+      "description": "Book flights, Umrah packages, international tours, hotel reservations and visit visas with The Flight Centre Travel & Tours, Gujranwala. IATA Certified. UAN: 111-786-788."
+    },
+    "hero": {
+      "eyebrow": "IATA Certified Travel & Tours Agency",
+      "lineOne": "Your Gateway",
+      "lineTwo": "to the World",
+      "subtitle": "Gujranwala's Most Trusted Travel Agency — Flights, Umrah, Tours, Visas & Hotels",
+      "primaryCta": "Explore Tours",
+      "secondaryCta": "Contact Us Now",
+      "stats": [
+        {
+          "label": "Licensed Since",
+          "value": "20+ Years"
+        },
+        {
+          "label": "Countries Served",
+          "value": "50+"
+        }
+      ]
+    },
+    "trustBar": {
+      "stats": {
+        "offices": {
+          "label": "Licensed Offices"
+        },
+        "countries": {
+          "label": "Countries"
+        },
+        "clients": {
+          "label": "Clients"
+        },
+        "experience": {
+          "label": "Years Experience"
+        }
+      }
+    },
+    "services": {
+      "eyebrow": "What we handle",
+      "title": "Every step from the visa desk to the boarding gate",
+      "description": "The site is structured around the real services you provide, with clear detail pages for each core offering and a dedicated spotlight on Saudi Wakala handling.",
+      "cardCta": "Open service"
+    },
+    "wakala": {
+      "eyebrow": "Saudi focus",
+      "title": "A dedicated desk for Saudi Arabia work visa Wakala",
+      "description": "This is your specialty, so the site treats it as a lead service: visibly licensed, clearly explained and easy to contact from every major section.",
+      "bullets": [
+        "Separate Saudi Wakala license number highlighted across the site",
+        "Document preparation support before file submission",
+        "Fast routing from enquiry to the correct manpower desk"
+      ],
+      "cta": "Talk to the Saudi desk"
+    },
+    "faq": {
+      "eyebrow": "Frequently asked questions",
+      "title": "Straight answers before you visit the office",
+      "description": "These are the questions most clients ask first when planning travel, visit visas or overseas work processing.",
+      "items": [
+        {
+          "q": "Is The Flight Centre IATA certified?",
+          "a": "Yes. The Flight Centre Travel & Tours is an IATA certified travel agency based in Gujranwala, Pakistan. We operate from two offices and have been serving clients for over 20 years."
+        },
+        {
+          "q": "Which travel agency in Gujranwala offers Umrah packages?",
+          "a": "The Flight Centre Travel & Tours at Office 36-37 Jinnah Stadium, Gujranwala offers complete Umrah packages including hotel, air ticket, transport and Umrah visa. Call UAN 111-786-788."
+        },
+        {
+          "q": "What Umrah package durations are available?",
+          "a": "The Flight Centre offers 15-day, 21-day and 28-day Umrah packages from Pakistan, covering hotel near Haram, return air ticket, Umrah visa, ground transport and Ziyarat."
+        },
+        {
+          "q": "Does The Flight Centre book international flights?",
+          "a": "Yes. We provide airline ticket booking for all international and domestic routes. Visit our flight booking portal at www.theflightcentre.pk for online bookings."
+        },
+        {
+          "q": "What tour destinations does The Flight Centre cover?",
+          "a": "We offer curated tour packages to Dubai, Malaysia, Thailand, Singapore, Bahrain, Azerbaijan, Oman, Cambodia, Sri Lanka, Iran, Indonesia and 50+ more destinations."
+        },
+        {
+          "q": "How do I get a visit visa through The Flight Centre?",
+          "a": "Contact our office with your destination and travel dates. We provide document guidance, application support and processing assistance for all countries."
+        },
+        {
+          "q": "Does The Flight Centre offer a B2B portal for travel agents?",
+          "a": "Yes. The Flight Centre offers a web portal ID for travel agencies with same-day activation. Features include multi-user ID support, ticket management and round-the-clock connectivity. Visit agent.tfctours.com."
+        },
+        {
+          "q": "What is the UAN number for The Flight Centre?",
+          "a": "The UAN is 111-786-788. You can also call 0304-111-9-786 or reach our 24/7 helpdesk on the same number."
+        }
+      ]
+    },
+    "gallery": {
+      "eyebrow": "Destinations and pathways",
+      "title": "A visual snapshot of where your enquiries can lead",
+      "description": "The imagery balances manpower routes, faith travel cues and aspirational destinations to make the experience feel both grounded and expansive.",
+      "items": {
+        "saudi": "Saudi Arabia work, Umrah and Wakala pathways",
+        "uae": "Visit visa and city-break enquiries",
+        "turkey": "Short tours and leisure itineraries",
+        "japan": "Premium international travel planning",
+        "australia": "Long-haul routing and hotel coordination",
+        "tanzania": "Work and travel opportunity guidance"
+      }
+    }
+  },
+  "about": {
+    "title": "About The Flight Centre",
+    "ceoTitle": "Chief Executive",
+    "ceoName": "Rana Khalid Parvez Khan",
+    "meta": {
+      "title": "About The Flight Centre Travel & Tours | Gujranwala",
+      "description": "Learn about The Flight Centre Travel & Tours — Gujranwala's IATA certified travel agency with 20+ years of experience in flights, Umrah packages, tours and visa services."
+    },
+    "hero": {
+      "eyebrow": "About the agency",
+      "title": "Gujranwala's trusted travel agency — licensed, experienced and client-first.",
+      "description": "The Flight Centre Travel & Tours combines flight bookings, Umrah packages, international tours and visa services under one reliable roof, serving clients across Pakistan for over 20 years."
+    },
+    "story": {
+      "title": "Two decades of trusted travel service",
+      "paragraphs": [
+        "The Flight Centre Travel & Tours has been Gujranwala's go-to travel agency for over 20 years. From simple flight bookings to complete Umrah packages and international tours, we handle every travel need with care and professionalism.",
+        "As an IATA certified agency, we provide direct access to global airline inventory and maintain strong relationships with hotels, visa authorities and tour operators across 50+ countries.",
+        "Our two offices in Gujranwala serve thousands of clients each year, with a 24/7 helpdesk ensuring round-the-clock support for every traveller."
+      ]
+    },
+    "leadership": {
+      "eyebrow": "Leadership",
+      "title": "Led by Rana Khalid Parvez Khan",
+      "description": "The leadership section is framed to reinforce accountability and hands-on oversight, especially for clients navigating sensitive documentation and cross-border employment cases."
+    },
+    "values": {
+      "title": "What clients can expect",
+      "items": [
+        {
+          "title": "Licensed handling",
+          "description": "Trust begins with visible license numbers and a clear explanation of what each operational desk covers."
+        },
+        {
+          "title": "One-stop coordination",
+          "description": "Tickets, hotel reservations, insurance, visit visas and work processing are presented as connected services rather than disconnected tasks."
+        },
+        {
+          "title": "Direct communication",
+          "description": "Calls to action consistently lead to phone, UAN and email touchpoints so the user always knows the next step."
+        }
+      ]
+    },
+    "licenses": {
+      "title": "Our licensed operations",
+      "cards": [
+        {
+          "title": "Overseas Employment License",
+          "number": "IATA Certified",
+          "description": "Registered for manpower promotion and overseas recruitment operations from Sialkot."
+        },
+        {
+          "title": "Saudi Wakala License",
+          "number": "IATA Certified",
+          "description": "Dedicated Saudi Arabia Wakala handling highlighted as a specialist service line."
+        }
+      ]
+    }
+  },
+  "contact": {
+    "title": "Get in Touch",
+    "description": "Share your destination, service need or visa question and the team can respond with the right next step.",
+    "name": "Full Name",
+    "email": "Email Address",
+    "phone": "Phone Number",
+    "service": "Service Required",
+    "message": "Your Message",
+    "submit": "Send Message",
+    "sending": "Sending...",
+    "success": "Your enquiry has been sent. The team will get back to you soon.",
+    "error": "We could not send your message right now. Please call or email the office directly.",
+    "namePlaceholder": "Your full name",
+    "phonePlaceholder": "+92 300 0000000",
+    "emailPlaceholder": "you@example.com",
+    "servicePlaceholder": "Select a service",
+    "messagePlaceholder": "Tell us about your destination, visa requirement, travel dates or work visa case.",
+    "meta": {
+      "title": "Contact The Flight Centre Travel & Tours | Gujranwala",
+      "description": "Reach The Flight Centre Travel & Tours by phone, UAN, WhatsApp or office visit. Main Office: Jinnah Stadium Gujranwala. Branch: DC Colony Gujranwala."
+    },
+    "hero": {
+      "eyebrow": "Contact",
+      "title": "Visit us, call us or message us — we're always ready.",
+      "description": "Two offices in Gujranwala, a 24/7 helpdesk and WhatsApp support. Reach the team through any channel that works best for you."
+    },
+    "labels": {
+      "phone": "Phone",
+      "uan": "UAN",
+      "email": "Email",
+      "office": "Office",
+      "ceo": "CEO"
+    },
+    "form": {
+      "title": "Send an enquiry",
+      "description": "Share your destination, service need or visa question and the team can respond with the right next step.",
+      "name": "Full name",
+      "phone": "Phone number",
+      "email": "Email address",
+      "service": "Service needed",
+      "message": "Message",
+      "namePlaceholder": "Your full name",
+      "phonePlaceholder": "+92 300 0000000",
+      "emailPlaceholder": "you@example.com",
+      "servicePlaceholder": "Select a service",
+      "messagePlaceholder": "Tell us about your destination, visa requirement, travel dates or work visa case.",
+      "submit": "Send enquiry",
+      "sending": "Sending...",
+      "success": "Your enquiry has been sent. The team will get back to you soon.",
+      "error": "We could not send your message right now. Please call or email the office directly."
+    },
+    "expectation": {
+      "title": "What happens next",
+      "steps": [
+        "Your message is routed to the right service desk.",
+        "The team reviews your travel, visa or manpower requirement.",
+        "You receive a callback or email with the next document or booking step."
+      ]
+    }
+  },
+  "servicesPage": {
+    "meta": {
+      "title": "Services",
+      "description": "Browse all The Flight Centre Travel & Tours services including flight booking, Umrah packages, tours, hotel booking, visit visas and travel insurance."
+    },
+    "hero": {
+      "eyebrow": "Service portfolio",
+      "title": "All your travel needs, one destination.",
+      "description": "Tickets, visas, tours, Umrah packages, worldwide hotels and travel insurance deals are handled together by one trusted travel team."
+    },
+    "processTitle": "How we support your journey",
+    "process": [
+      "Share your destination, travel dates and the service you need.",
+      "Get clear guidance on fares, documents, package options or coverage.",
+      "Confirm the booking or application step with support from our travel desk."
+    ],
+    "whyUsTitle": "Why travellers choose us",
+      "whyUs": [
+        "Trusted and reliable service for families, businesses and individual travellers",
+        "Best-price guidance across tickets, hotels, tours and packages",
+        "24/7 customer support backed by a global travel network"
+      ]
+  },
+  "guidesPage": {
+    "meta": {
+      "title": "Travel & Visa Guides",
+      "description": "Read concise travel and visa guidance from The Flight Centre Travel & Tours, including Saudi visa preparation and general visit visa readiness."
+    },
+    "hero": {
+      "eyebrow": "Guides",
+      "title": "Useful reading before your documents are in hand.",
+      "description": "These guides are written as quick reference pieces that help clients arrive more prepared for a call, office visit or application review."
+    },
+    "note": "Guides are informational and should be confirmed with the agency for case-specific requirements."
+  },
+  "servicesData": {
+    "ticket-booking": {
+      "title": "Ticket",
+      "summary": "Domestic and international flight tickets for all airlines and destinations with instant booking and e-ticket support.",
+      "tag": "Flights"
+    },
+    "visit-visa": {
+      "title": "Visa",
+      "summary": "Visit, tourist, business, family and other visa assistance with easy documentation and expert guidance.",
+      "tag": "All Countries"
+    },
+    "tour-packages": {
+      "title": "Tours",
+      "summary": "Family tours, honeymoon packages, adventure tours and customized itineraries with hotels and meals.",
+      "tag": "Best Tours"
+    },
+    "hotel-booking": {
+      "title": "Worldwide Hotels",
+      "summary": "Stay anywhere and feel at home with hotel bookings from best-price options to luxury stays.",
+      "tag": "Stay Anywhere"
+    },
+    "travel-insurance": {
+      "title": "Travel Insurance Deals",
+      "summary": "Travel worry-free with medical coverage, trip cancellation, baggage protection and worldwide assistance.",
+      "tag": "Travel Safe"
+    },
+    "umrah-packages": {
+      "title": "Umrah Packages",
+      "summary": "A spiritual journey with economy to luxury packages, Makkah and Madinah hotels, visa, ticket, transport and Ziyarat.",
+      "tag": "Spiritual Journey"
+    }
+  },
+  "servicePages": {
+    "ticket-booking": {
+      "meta": {
+        "title": "Ticket Booking",
+        "description": "Book domestic and international flight tickets with The Flight Centre Travel & Tours across all airlines and destinations."
+      },
+      "eyebrow": "Travel desk",
+      "title": "Domestic and international flight tickets.",
+      "description": "From urgent departures to planned family travel, our ticket desk helps you compare routes, fares and airline options before issuing a confirmed e-ticket.",
+      "highlights": [
+        "All airlines and all destinations",
+        "Best fare guidance before booking",
+        "Instant booking and e-ticket support"
+      ],
+      "processTitle": "How ticketing support works",
+      "process": [
+        "Share your destination, travel dates and passenger details.",
+        "Compare available airline, fare and timing options.",
+        "Confirm your booking and receive the e-ticket."
+      ],
+      "requirementsTitle": "Keep these details ready",
+      "requirements": [
+        "Passport copy or traveller details",
+        "Preferred departure and return dates",
+        "Destination city, route preference and baggage needs"
+      ],
+      "ctaTitle": "Need the fastest available fare?",
+      "ctaDescription": "Call the ticket desk for domestic, international, group or corporate booking support."
+    },
+    "visit-visa": {
+      "meta": {
+        "title": "Visa Services",
+        "description": "Get visit, tourist, business and family visa assistance with documentation support from The Flight Centre Travel & Tours."
+      },
+      "eyebrow": "Visa support",
+      "title": "Visit, tourist, business, family and more.",
+      "description": "Visa files work best when the documents, purpose and travel plan make sense together. Our visa desk helps you understand the checklist and prepare with confidence.",
+      "highlights": [
+        "All-country visa assistance",
+        "Easy documentation guidance",
+        "Expert support with a high success focus"
+      ],
+      "processTitle": "How visit visa support works",
+      "process": [
+        "Discuss your country, visa type and travel purpose.",
+        "Review the required documents and supporting details.",
+        "Prepare the file for the correct application route."
+      ],
+      "requirementsTitle": "Typical items to prepare",
+      "requirements": [
+        "Passport and personal identification details",
+        "Travel dates, purpose of visit and previous travel history",
+        "Financial, employment, host or business documents where required"
+      ],
+      "ctaTitle": "Unsure which documents apply to your country?",
+      "ctaDescription": "Share your destination and visa category so the team can guide you through the right checklist."
+    },
+    "tour-packages": {
+      "meta": {
+        "title": "Tour Packages",
+        "description": "Explore family tours, honeymoon packages, adventure tours and customized itineraries with The Flight Centre Travel & Tours."
+      },
+      "eyebrow": "Tour planning",
+      "title": "Explore the world with our best tours.",
+      "description": "Whether you are planning a family break, honeymoon or adventure trip, our tour desk helps shape the itinerary, hotels and meals around your travel style.",
+      "highlights": [
+        "Family tours and honeymoon packages",
+        "Adventure tours and customized itineraries",
+        "Best hotels, meals and destination planning"
+      ],
+      "processTitle": "How package planning works",
+      "process": [
+        "Choose your destination, travel dates and number of travellers.",
+        "Discuss trip style, hotel preference, meals and activities.",
+        "Receive a coordinated tour plan with the core inclusions."
+      ],
+      "requirementsTitle": "Useful planning details",
+      "requirements": [
+        "Preferred destination or shortlist",
+        "Expected travel month and number of travellers",
+        "Budget range, hotel preference and activity interests"
+      ],
+      "ctaTitle": "Looking for a stress-free holiday setup?",
+      "ctaDescription": "Ask the tour desk for a family, honeymoon, adventure or custom package."
+    },
+    "hotel-booking": {
+      "meta": {
+        "title": "Worldwide Hotels",
+        "description": "Book hotels worldwide with best-price guidance, secure reservations and instant confirmation from The Flight Centre Travel & Tours."
+      },
+      "eyebrow": "Stay coordination",
+      "title": "Stay anywhere, feel at home.",
+      "description": "The right hotel can make the whole journey easier. We help match your destination, dates and budget with secure reservations and clear confirmation.",
+      "highlights": [
+        "Worldwide hotel booking",
+        "Best-price guidance from luxury to budget",
+        "Secure reservations and instant confirmation"
+      ],
+      "processTitle": "How hotel assistance works",
+      "process": [
+        "Share your destination, dates and room requirements.",
+        "Review hotel options by location, comfort level and price.",
+        "Confirm the reservation and receive booking details."
+      ],
+      "requirementsTitle": "Information to have ready",
+      "requirements": [
+        "City and check-in/check-out dates",
+        "Number of guests and room preference",
+        "Approximate budget, hotel category and location preference"
+      ],
+      "ctaTitle": "Need your stay lined up with a visa or flight?",
+      "ctaDescription": "The team can coordinate worldwide hotels as part of your complete travel plan."
+    },
+    "travel-insurance": {
+      "meta": {
+        "title": "Travel Insurance Deals",
+        "description": "Arrange travel insurance deals with medical coverage, trip cancellation, baggage protection and worldwide assistance."
+      },
+      "eyebrow": "Protection layer",
+      "title": "Travel worry-free, we have got you covered.",
+      "description": "Travel insurance adds a practical safety layer to your journey, helping protect medical needs, cancellations, baggage issues and visa-linked requirements.",
+      "highlights": [
+        "Medical coverage and trip cancellation support",
+        "Baggage protection and 24/7 assistance",
+        "Worldwide coverage for safer travel"
+      ],
+      "processTitle": "How insurance support works",
+      "process": [
+        "Share your destination and trip duration.",
+        "Review the most relevant coverage option for your route.",
+        "Attach the policy to your ticket, visa or tour preparation."
+      ],
+      "requirementsTitle": "Prepare these trip details",
+      "requirements": [
+        "Destination country or countries",
+        "Travel dates and expected duration",
+        "Any visa-linked documentation requirement"
+      ],
+      "ctaTitle": "Want insurance added to a current travel case?",
+      "ctaDescription": "Ask for travel insurance while booking tickets, hotels, tours or a visit visa so everything moves together."
+    },
+    "umrah-packages": {
+      "meta": {
+        "title": "Umrah Packages",
+        "description": "Plan your Umrah journey with economy to luxury packages covering Makkah and Madinah hotels, visa, ticket, transport and Ziyarat."
+      },
+      "eyebrow": "Spiritual journey",
+      "title": "A spiritual journey, a lifetime experience.",
+      "description": "Our Umrah packages bring the essential arrangements together so pilgrims can focus on the journey: hotels in Makkah and Madinah, visa, ticketing, transport and Ziyarat support.",
+      "highlights": [
+        "Economy to luxury packages",
+        "Makkah and Madinah hotels",
+        "Visa, ticket, transport and Ziyarat support"
+      ],
+      "processTitle": "How Umrah package planning works",
+      "process": [
+        "Choose your preferred travel duration, dates and comfort level.",
+        "Review hotel, transport, visa and ticket options with the team.",
+        "Confirm the package and receive guidance throughout your journey."
+      ],
+      "requirementsTitle": "Keep these details ready",
+      "requirements": [
+        "Passport copies and traveller details",
+        "Preferred travel dates and package category",
+        "Number of pilgrims and room-sharing preference"
+      ],
+      "ctaTitle": "Planning Umrah for yourself or your family?",
+      "ctaDescription": "Contact the Umrah desk for economy, standard or luxury package options with guided support."
+    }
+  },
+  "guidesData": {
+    "saudi-visa-guide": {
+      "title": "Saudi Visa Preparation Guide",
+      "summary": "A concise overview of the questions and documents clients usually want clarified before starting Saudi-related travel or work processing."
+    },
+    "visit-visa-guide": {
+      "title": "Visit Visa Readiness Guide",
+      "summary": "A simple pre-visit checklist covering the information travellers often need before discussing a general visit visa application."
+    }
+  },
+  "guidePages": {
+    "saudi-visa-guide": {
+      "meta": {
+        "title": "Saudi Visa Preparation Guide",
+        "description": "Read a quick Saudi visa preparation guide covering documents, discussion points and next-step planning before contacting The Flight Centre Travel & Tours."
+      },
+      "eyebrow": "Saudi guide",
+      "title": "A simple guide before your Saudi visa conversation begins.",
+      "description": "This guide helps clients think clearly about documents, timing and the kind of case they are bringing to the Saudi desk.",
+      "checklistTitle": "Useful items to gather first",
+      "checklist": [
+        "Passport and identification details",
+        "A clear idea of whether the case is visit, work or Wakala related",
+        "Any employer, sponsor or file context already in hand"
+      ],
+      "sections": [
+        {
+          "title": "Know the purpose of travel",
+          "body": "Saudi-related applications can differ significantly depending on whether the case is for employment, visit travel or a Wakala-linked process. Clarifying the purpose early helps the agency point you to the right desk."
+        },
+        {
+          "title": "Check document readiness",
+          "body": "Bring or prepare every document you already have so the team can quickly identify what is complete, what is missing and what may need clarification before the case moves forward."
+        },
+        {
+          "title": "Ask for the next practical step",
+          "body": "A good first conversation should not feel vague. The goal is to leave knowing the next required document, booking or follow-up point."
+        }
+      ],
+      "note": "Saudi case requirements can vary by file type, so this guide should be treated as a starting point rather than a final checklist."
+    },
+    "visit-visa-guide": {
+      "meta": {
+        "title": "Visit Visa Readiness Guide",
+        "description": "Prepare for your visit visa discussion with a quick overview of documents, travel intent and supporting details to review before contacting The Flight Centre Travel & Tours."
+      },
+      "eyebrow": "Visit visa guide",
+      "title": "Better visit visa conversations start with better preparation.",
+      "description": "Use this guide to organise the information that typically shapes the first visit visa discussion with the agency.",
+      "checklistTitle": "What to think about before you call",
+      "checklist": [
+        "Destination country and expected dates",
+        "Reason for travel and expected duration of stay",
+        "Any financial, host or travel history documents you may need"
+      ],
+      "sections": [
+        {
+          "title": "Match documents to destination",
+          "body": "Not every country asks for the same supporting material. Knowing the destination and travel purpose helps narrow the checklist quickly."
+        },
+        {
+          "title": "Prepare a clean travel story",
+          "body": "You should be able to explain why you are travelling, how long you expect to stay and what arrangements are already planned."
+        },
+        {
+          "title": "Link the visa to the rest of the trip",
+          "body": "Visit visa support becomes stronger when the traveller also thinks about flights, hotel reservations and insurance as part of the same planning flow."
+        }
+      ],
+      "note": "Final visit visa requirements depend on the country and the traveller’s case, so use this page as an orientation guide."
+    }
+  }
+}
+
