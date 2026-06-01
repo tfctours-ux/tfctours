@@ -1,25 +1,26 @@
-import { TRANSPORT_OPTIONS } from "./config";
+// src/components/umrah-calculator/calculations.ts
+import { computeNights, formatPKR } from "@/lib/calculator-utils";
+
+import { TRANSPORT_OPTIONS, type TransportOption } from "./config";
 import type { DerivedValues, HotelBlock, WizardState } from "./types";
 
-export function computeNights(checkIn: string, checkOut: string): number {
-  if (!checkIn || !checkOut) return 0;
-  const ms = new Date(checkOut).getTime() - new Date(checkIn).getTime();
-  const nights = Math.round(ms / 86_400_000);
-  return nights > 0 ? nights : 0;
-}
+export { computeNights, formatPKR };
 
 export function computeTotalNights(hotels: HotelBlock[]): number {
   return hotels.reduce((sum, h) => sum + computeNights(h.checkIn, h.checkOut), 0);
 }
 
-export function computeDerivedValues(state: WizardState): DerivedValues {
+export function computeDerivedValues(
+  state: WizardState,
+  transportOptions: TransportOption[] = TRANSPORT_OPTIONS,
+): DerivedValues {
   const { step1, step3, step4, step5 } = state;
 
   const totalPassengers = step1.adults + step1.children + step1.infants;
   const makkahNights = computeTotalNights(step3.hotels);
   const madinahNights = computeTotalNights(step4.hotels);
 
-  const transportOption = TRANSPORT_OPTIONS.find((o) => o.label === step5.transportVisa);
+  const transportOption = transportOptions.find((o) => o.label === step5.transportVisa);
   const transportSAR = transportOption?.sar ?? 0;
 
   const exchangeRate = Number.parseFloat(step5.exchangeRate) || 0;
@@ -45,8 +46,4 @@ export function computeDerivedValues(state: WizardState): DerivedValues {
     ticketTotalInfant,
     ticketGrandTotal,
   };
-}
-
-export function formatPKR(amount: number): string {
-  return `PKR ${amount.toLocaleString("en-PK")}`;
 }

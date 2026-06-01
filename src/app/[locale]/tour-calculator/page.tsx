@@ -1,3 +1,4 @@
+// src/app/[locale]/tour-calculator/page.tsx
 import type { Metadata } from "next";
 
 import {
@@ -14,7 +15,15 @@ import {
 import { setRequestLocale } from "next-intl/server";
 
 import { Breadcrumb } from "@/components/layout/Breadcrumb";
+import ErrorBoundary from "@/components/shared/ErrorBoundary";
 import { TourCalculatorWizard } from "@/components/tour-calculator";
+import {
+  DEPARTURE_CITIES,
+  DESTINATION_CITIES,
+  TOUR_AIRLINES,
+  TOUR_COUNTRIES,
+} from "@/components/tour-calculator/config";
+import { getCalculatorOptions } from "@/lib/cms/fetchers";
 import {
   getLocaleFromParams,
   type LocaleParams,
@@ -131,6 +140,25 @@ export default async function TourCalculatorPage({
   const locale = await getLocaleFromParams(params);
   setRequestLocale(locale);
   const content = CONTENT[locale === "ur" ? "ur" : "en"];
+  const [countries, airlines, departureCities, destinationCities] =
+    await Promise.all([
+      getCalculatorOptions("tour_country", locale),
+      getCalculatorOptions("tour_airline", locale),
+      getCalculatorOptions("departure_city", locale),
+      getCalculatorOptions("destination_city", locale),
+    ]);
+  const resolvedCountries = countries?.map((option) => option.label) ?? [
+    ...TOUR_COUNTRIES,
+  ];
+  const resolvedAirlines = airlines?.map((option) => option.label) ?? [
+    ...TOUR_AIRLINES,
+  ];
+  const resolvedDepartureCities = departureCities?.map((option) => option.label) ?? [
+    ...DEPARTURE_CITIES,
+  ];
+  const resolvedDestinationCities = destinationCities?.map((option) => option.label) ?? [
+    ...DESTINATION_CITIES,
+  ];
 
   return (
     <div className="pb-24">
@@ -172,18 +200,18 @@ export default async function TourCalculatorPage({
           </div>
 
           <div className="flex flex-col gap-4">
-            <article className="rounded-[2rem] border border-brand-gold/20 bg-brand-gold/[0.06] p-6">
-              <Globe className="mb-3 h-8 w-8 text-brand-gold" />
-              <h2 className="font-display text-xl font-bold text-white">{content.cardOneTitle}</h2>
-              <p className="mt-2 text-sm leading-6 text-white/60">
+            <article className="rounded-[2rem] border border-gold/25 bg-gold/[0.08] p-6 shadow-brand">
+              <Globe className="mb-3 h-8 w-8 text-gold" />
+              <h2 className="font-display text-xl font-bold text-foreground">{content.cardOneTitle}</h2>
+              <p className="mt-2 text-sm leading-6 text-foreground-muted">
                 {content.cardOneText}
               </p>
             </article>
 
-            <article className="rounded-[2rem] border border-white/[0.08] bg-white/[0.04] p-6">
-              <Clock3 className="mb-3 h-8 w-8 text-brand-gold" />
-              <h2 className="font-display text-xl font-bold text-white">{content.cardTwoTitle}</h2>
-              <p className="mt-2 text-sm leading-6 text-white/60">
+            <article className="rounded-[2rem] border border-border bg-surface-elevated p-6 shadow-brand">
+              <Clock3 className="mb-3 h-8 w-8 text-gold" />
+              <h2 className="font-display text-xl font-bold text-foreground">{content.cardTwoTitle}</h2>
+              <p className="mt-2 text-sm leading-6 text-foreground-muted">
                 {content.cardTwoText}
               </p>
             </article>
@@ -199,8 +227,15 @@ export default async function TourCalculatorPage({
           </span>
         </div>
 
-        <div className="rounded-[2.5rem] border border-white/[0.08] bg-white/[0.03] p-1 shadow-glow">
-          <TourCalculatorWizard />
+        <div className="rounded-[2.5rem] border border-border bg-surface-elevated/40 p-1 shadow-glow">
+          <ErrorBoundary>
+            <TourCalculatorWizard
+              initialCountries={resolvedCountries}
+              initialAirlines={resolvedAirlines}
+              initialDepartureCities={resolvedDepartureCities}
+              initialDestinationCities={resolvedDestinationCities}
+            />
+          </ErrorBoundary>
         </div>
       </section>
 
@@ -233,44 +268,44 @@ export default async function TourCalculatorPage({
 
       <section className="px-6 py-20">
         <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-2">
-          <article className="rounded-[2rem] border border-white/[0.08] bg-white/[0.04] p-5 backdrop-blur-sm md:p-6">
-            <h2 className="mb-6 font-display text-2xl font-black text-white">
+          <article className="rounded-[2rem] border border-border bg-surface-elevated p-5 shadow-brand backdrop-blur-sm md:p-6">
+            <h2 className="mb-6 font-display text-2xl font-black text-foreground">
               {content.coversTitle}
             </h2>
 
             <div className="space-y-3">
               {content.included.map((item) => (
                 <div key={item} className="flex items-center gap-3">
-                  <CheckCircle2 className="h-4 w-4 shrink-0 text-brand-gold" />
-                  <span className="text-sm text-white/75">{item}</span>
+                  <CheckCircle2 className="h-4 w-4 shrink-0 text-gold" />
+                  <span className="text-sm text-foreground-muted">{item}</span>
                 </div>
               ))}
             </div>
           </article>
 
-          <article className="rounded-[2rem] border border-brand-gold/20 bg-brand-gold/[0.04] p-5 backdrop-blur-sm md:p-6">
-            <h2 className="font-display text-2xl font-bold text-brand-gold">
+          <article className="rounded-[2rem] border border-gold/25 bg-gold/[0.08] p-5 shadow-brand backdrop-blur-sm md:p-6">
+            <h2 className="font-display text-2xl font-bold text-gold">
               {content.callTitle}
             </h2>
-            <p className="mt-2 text-sm leading-6 text-white/60">
+            <p className="mt-2 text-sm leading-6 text-foreground-muted">
               {content.callText}
             </p>
 
             <div className="mt-6 space-y-4">
-              <div className="flex items-center gap-3 text-sm text-white/70">
-                <Phone className="h-5 w-5 text-brand-gold" />
+              <div className="flex items-center gap-3 text-sm text-foreground-muted">
+                <Phone className="h-5 w-5 text-gold" />
                 <span>UAN: 111-786-788</span>
               </div>
-              <div className="flex items-center gap-3 text-sm text-white/70">
-                <MessageCircle className="h-5 w-5 text-brand-gold" />
+              <div className="flex items-center gap-3 text-sm text-foreground-muted">
+                <MessageCircle className="h-5 w-5 text-gold" />
                 <span>{content.whatsapp} 0304-111-9-786</span>
               </div>
-              <div className="flex items-center gap-3 text-sm text-white/70">
-                <Mail className="h-5 w-5 text-brand-gold" />
+              <div className="flex items-center gap-3 text-sm text-foreground-muted">
+                <Mail className="h-5 w-5 text-gold" />
                 <span>info@tfctours.com.pk</span>
               </div>
-              <div className="flex items-center gap-3 text-sm text-white/70">
-                <MapPin className="h-5 w-5 text-brand-gold" />
+              <div className="flex items-center gap-3 text-sm text-foreground-muted">
+                <MapPin className="h-5 w-5 text-gold" />
                 <span>{content.office}</span>
               </div>
             </div>

@@ -7,6 +7,8 @@
     "viewGuide": "View guide",
     "readMore": "Read more",
     "switchLocale": "Switch language",
+    "themeToggleToDark": "Switch to dark mode",
+    "themeToggleToLight": "Switch to light mode",
     "openMenu": "Open menu",
     "closeMenu": "Close menu",
     "backHome": "Back to homepage",
@@ -43,12 +45,17 @@
     "tours": "Tours"
   },
   "hero": {
-    "eyebrow": "IATA Certified Travel & Tours Agency",
-    "line1": "Your Gateway",
-    "line2": "to the World",
-    "subtitle": "Pakistan's most trusted travel agency — flights, tours, Umrah packages, hotel bookings and visit visas. All under one roof.",
-    "ctaPrimary": "Explore Tours",
-    "ctaSecondary": "Contact Us Now"
+    "eyebrow": "IATA-Certified · Gujranwala · Since 2005",
+    "line1": "Fly anywhere.",
+    "line2": "Booked in 24 hours.",
+    "subtitle": "Tickets, Umrah, tours, visit visas and hotels — handled end-to-end by Pakistan's IATA-certified travel desk. Quotes the same day. Tickets the next.",
+    "ctaPrimary": "Get an instant quote",
+    "ctaSecondary": "Talk to a consultant",
+    "iataBadge": "IATA Certified",
+    "scrollLabel": "Scroll",
+    "trustOpenNow": "Open now",
+    "trustResponse": "Replies in under 1 hour",
+    "uanLabel": "Call UAN"
   },
   "trust": {
     "offices": "Licensed Offices",
@@ -127,6 +134,29 @@
         }
       ]
     },
+    "logoStrip": {
+      "eyebrow": "Verified partners & coverage",
+      "title": "Booked with airlines you already know.",
+      "description": "IATA-accredited handling. Direct relationships with every major carrier flying from Pakistan.",
+      "iataLabel": "IATA Accredited",
+      "airlinesLabel": "Booked daily",
+      "airlines": [
+        "Emirates",
+        "Qatar Airways",
+        "Etihad",
+        "Saudia",
+        "Turkish Airlines",
+        "PIA",
+        "Air Sial",
+        "Airblue",
+        "Air Arabia",
+        "FlyDubai",
+        "Gulf Air",
+        "Oman Air"
+      ],
+      "statValue": "10,000+",
+      "statLabel": "Tickets issued"
+    },
     "trustBar": {
       "stats": {
         "offices": {
@@ -141,13 +171,46 @@
         "experience": {
           "label": "Years Experience"
         }
-      }
+      },
+      "eyebrow": "By the numbers",
+      "title": "Two decades. Two offices. One IATA agency."
     },
     "services": {
-      "eyebrow": "What we handle",
-      "title": "Every step from the visa desk to the boarding gate",
-      "description": "The site is structured around the real services you provide, with clear detail pages for each core offering and a dedicated spotlight on Saudi Wakala handling.",
-      "cardCta": "Open service"
+      "eyebrow": "All services. One desk.",
+      "title": "From the visa stamp to the boarding gate — handled.",
+      "description": "Six core services covered in-house. No third-party handoffs, no waiting on someone else's quote. Pick what you need.",
+      "cardCta": "Open service",
+      "notice": "Looking to book a flight online? ",
+      "noticeLink": "Use our booking portal at theflightcentre.pk →"
+    },
+    "whyTfc": {
+      "eyebrow": "Why The Flight Centre",
+      "title": "Four reasons clients book here first.",
+      "description": "Not the cheapest agency in Pakistan. The most accountable. Here's what that means in practice.",
+      "pillars": [
+        {
+          "title": "IATA-accredited",
+          "description": "Direct ticketing relationships with every major carrier. No reseller markup, no third-party delay between you and your seat.",
+          "metric": "Since 2005"
+        },
+        {
+          "title": "Two decades, one desk",
+          "description": "20+ years of operation from Gujranwala. Same family, same office, same UAN you can call this evening.",
+          "metric": "20+ years"
+        },
+        {
+          "title": "24/7 helpdesk",
+          "description": "Quotes the same day. Tickets the next. Visa or flight emergency at 3am? The UAN is staffed.",
+          "metric": "<1 hour reply"
+        },
+        {
+          "title": "Bilingual, end-to-end",
+          "description": "Every consultant works in English and Urdu. Every quotation, ticket and visa file delivered in your language.",
+          "metric": "English · Urdu"
+        }
+      ],
+      "ctaPrimary": "Talk to a consultant",
+      "ctaSecondary": "See our services"
     },
     "wakala": {
       "eyebrow": "Saudi focus",
@@ -160,10 +223,63 @@
       ],
       "cta": "Talk to the Saudi desk"
     },
+    "umrahFeature": {
+      "eyebrow": "Umrah Specialists",
+      "urduLine": "عمرہ پیکجز - بہترین قیمت، بہترین خدمات",
+      "title": "Complete Umrah Packages - 15, 21 & 28 Days",
+      "description": "The Flight Centre offers all-inclusive Umrah packages from Pakistan. Hotel, flights, transport and visa - everything handled under one roof.",
+      "bullets": [
+        "15, 21 & 28 day package options available",
+        "Hotel accommodation near Haram included",
+        "Air tickets from Pakistan on all airlines",
+        "Umrah visa processing support",
+        "Ziyarat and ground transport included"
+      ],
+      "chips": [
+        "All-Inclusive Support",
+        "Pakistan to Haram"
+      ],
+      "primary": "View Umrah Packages",
+      "secondary": "Get Instant Quote ->",
+      "cardTitle": "Complete Umrah Packages",
+      "cardText": "15, 21 and 28 day options with flights, hotels, transport, visa support and guided Ziyarat coordination.",
+      "floatingLabel": "Package Options",
+      "floatingValue": "15 / 21 / 28 Days",
+      "imageAlt": "Umrah packages by The Flight Centre"
+    },
+    "b2b": {
+      "eyebrow": "For Travel Agents",
+      "title": "Obtain Your Web Portal ID - Within the Same Day",
+      "description": "The Flight Centre offers Pakistan's travel agents a powerful B2B booking portal with same-day activation.",
+      "features": [
+        "Top B2B solution for travel agencies",
+        "Multiple user ID support",
+        "Fast top-up feature",
+        "Swift ticket management (issue/void/refund/exchange)",
+        "Round-the-clock connectivity"
+      ],
+      "requirementsTitle": "Requirements",
+      "requirements": [
+        "Deposit of One Lakh Rupees",
+        "DTS Copy",
+        "Visiting Card",
+        "Owner CNIC Copy"
+      ],
+      "portalCta": "Get Portal ID",
+      "callCta": "Call for Inquiry - 0300-6569091",
+      "imageAlt": "B2B travel portal",
+      "access": "Portal Access",
+      "cardTitle": "Same-Day Agent Activation",
+      "cardText": "Multi-user IDs, ticket operations, top-ups and continuous connectivity for modern travel agencies.",
+      "floatingLabel": "B2B Ready",
+      "floatingValue": "Multiple User IDs"
+    },
     "faq": {
       "eyebrow": "Frequently asked questions",
       "title": "Straight answers before you visit the office",
       "description": "These are the questions most clients ask first when planning travel, visit visas or overseas work processing.",
+      "bottomTitle": "Still have questions?",
+      "bottomDescription": "Our team is ready to help — reach out any time.",
       "items": [
         {
           "q": "Is The Flight Centre IATA certified?",
@@ -203,6 +319,15 @@
       "eyebrow": "Destinations and pathways",
       "title": "A visual snapshot of where your enquiries can lead",
       "description": "The imagery balances manpower routes, faith travel cues and aspirational destinations to make the experience feel both grounded and expansive.",
+      "view": "View",
+      "captions": {
+        "dubai": "Dubai, UAE — Tours & Visit Visas",
+        "malaysia": "Kuala Lumpur, Malaysia — Tour Packages",
+        "thailand": "Thailand — Beach & Culture Tours",
+        "singapore": "Singapore — City Tour Packages",
+        "bahrain": "Bahrain — Visit Visa & Tours",
+        "azerbaijan": "Azerbaijan — Scenic Tour Packages"
+      },
       "items": {
         "saudi": "Saudi Arabia work, Umrah and Wakala pathways",
         "uae": "Visit visa and city-break enquiries",
@@ -270,6 +395,17 @@
           "description": "Dedicated Saudi Arabia Wakala handling highlighted as a specialist service line."
         }
       ]
+    },
+    "h1": "About The Flight Centre Travel & Tours",
+    "mission": "Pakistan's IATA-certified travel agency operating from Gujranwala for over 20 years. We provide Umrah packages, international tour packages, flight ticket booking, hotel reservations, visit visa documentation, and travel insurance for clients across Pakistan.",
+    "facts": {
+      "legalNameLabel": "Legal Name",
+      "headquartersLabel": "Headquarters",
+      "certificationsLabel": "Certifications",
+      "foundedLabel": "Founded",
+      "servicesLabel": "Services",
+      "languagesLabel": "Languages",
+      "areasServedLabel": "Areas Served"
     }
   },
   "contact": {
@@ -289,6 +425,16 @@
     "emailPlaceholder": "you@example.com",
     "servicePlaceholder": "Select a service",
     "messagePlaceholder": "Tell us about your destination, visa requirement, travel dates or work visa case.",
+    "serviceOptions": {
+      "ticket": "Ticket",
+      "visa": "Visa",
+      "tours": "Tours",
+      "umrahPackages": "Umrah Packages",
+      "worldwideHotels": "Worldwide Hotels",
+      "travelInsurance": "Travel Insurance Deals",
+      "agentPortal": "Agent Portal / B2B",
+      "other": "Other"
+    },
     "meta": {
       "title": "Contact The Flight Centre Travel & Tours | Gujranwala",
       "description": "Reach The Flight Centre Travel & Tours by phone, UAN, WhatsApp or office visit. Main Office: Jinnah Stadium Gujranwala. Branch: DC Colony Gujranwala."
@@ -349,11 +495,11 @@
       "Confirm the booking or application step with support from our travel desk."
     ],
     "whyUsTitle": "Why travellers choose us",
-      "whyUs": [
-        "Trusted and reliable service for families, businesses and individual travellers",
-        "Best-price guidance across tickets, hotels, tours and packages",
-        "24/7 customer support backed by a global travel network"
-      ]
+    "whyUs": [
+      "Trusted and reliable service for families, businesses and individual travellers",
+      "Best-price guidance across tickets, hotels, tours and packages",
+      "24/7 customer support backed by a global travel network"
+    ]
   },
   "guidesPage": {
     "meta": {
@@ -608,7 +754,25 @@
           "body": "A good first conversation should not feel vague. The goal is to leave knowing the next required document, booking or follow-up point."
         }
       ],
-      "note": "Saudi case requirements can vary by file type, so this guide should be treated as a starting point rather than a final checklist."
+      "note": "Saudi case requirements can vary by file type, so this guide should be treated as a starting point rather than a final checklist.",
+      "howto": {
+        "title": "How to Get a Saudi Arabia Work Visa from Pakistan",
+        "description": "Follow these essential steps to successfully prepare and process your Saudi Arabia work visa application from Pakistan.",
+        "steps": [
+          {
+            "name": "Verify the Employer Job Offer or Demand",
+            "text": "Review the employer side of the file, including demand papers, a job offer, or an existing Saudi employment route."
+          },
+          {
+            "name": "Conduct a Professional Document Review",
+            "text": "Check your passport, CNIC, and supporting paperwork with a licensed office to identify any missing items early."
+          },
+          {
+            "name": "Complete Medical and Legal Clearances",
+            "text": "Undergo the required medical examinations, verify employer documents, handle Wakala processing, and complete regulatory protector steps before final travel."
+          }
+        ]
+      }
     },
     "visit-visa-guide": {
       "meta": {
@@ -638,8 +802,87 @@
           "body": "Visit visa support becomes stronger when the traveller also thinks about flights, hotel reservations and insurance as part of the same planning flow."
         }
       ],
-      "note": "Final visit visa requirements depend on the country and the traveller’s case, so use this page as an orientation guide."
+      "note": "Final visit visa requirements depend on the country and the traveller’s case, so use this page as an orientation guide.",
+      "howto": {
+        "title": "How to Prepare a Successful Visit Visa Application",
+        "description": "Follow these structured steps to ensure your visit visa application has the highest chances of success.",
+        "steps": [
+          {
+            "name": "Define Travel Purpose and Destination",
+            "text": "Choose the target country and define the exact purpose of travel clearly."
+          },
+          {
+            "name": "Gather Core Personal and Financial Documents",
+            "text": "Collect passport, CNIC, solid 6-month financial statements, and purpose-related documents."
+          },
+          {
+            "name": "Coordinate Accommodations and Flight Plans",
+            "text": "Match hotel bookings, host details, and ticket planning to your visit visa category."
+          },
+          {
+            "name": "Audit the File for Consistency",
+            "text": "Review the entire case for document consistency and logical alignment before submission."
+          },
+          {
+            "name": "Obtain Expert Destination-Specific Guidance",
+            "text": "Contact a specialized travel visa desk to get custom requirements tailored to your specific destination."
+          }
+        ]
+      }
+    }
+  },
+  "extendedServices": {
+    "work-visa": {
+      "meta": {
+        "title": "Work Visa Services Pakistan | The Flight Centre",
+        "description": "Work visa documentation and application guidance for clients in Pakistan. The Flight Centre Travel & Tours offers preparation and submission support for major destinations.",
+        "keywords": [
+          "work visa Pakistan",
+          "employment visa services",
+          "The Flight Centre",
+          "tfctours"
+        ]
+      },
+      "page": {
+        "eyebrow": "Work Visa Services",
+        "title": "Work Visa Documentation & Application Support",
+        "description": "Documentation guidance and application support for work visas to major destinations — handled by The Flight Centre.",
+        "body": {
+          "h2": "What we cover",
+          "p1": "Document preparation, embassy appointment booking, and application submission assistance for skilled and professional work visa categories.",
+          "p2": "Our team reviews your case, advises on documentation requirements, and supports you through every step until decision."
+        },
+        "cta": "Speak to a consultant"
+      }
+    },
+    "saudi-wakala": {
+      "meta": {
+        "title": "Saudi Wakala Services | Umrah & Hajj | The Flight Centre",
+        "description": "Saudi Wakala documentation services for Umrah and Hajj groups. The Flight Centre Travel & Tours provides authorised wakala processing in Pakistan.",
+        "keywords": [
+          "Saudi wakala Pakistan",
+          "Umrah wakala",
+          "Hajj wakala",
+          "The Flight Centre"
+        ]
+      },
+      "page": {
+        "eyebrow": "Saudi Wakala",
+        "title": "Saudi Wakala Documentation",
+        "description": "Authorised wakala processing for Umrah and Hajj groups — handled by The Flight Centre Travel & Tours.",
+        "body": {
+          "h2": "Service overview",
+          "p1": "We process wakala authorisations for Umrah and Hajj operators with full documentation support and submission to the Saudi consulate.",
+          "p2": "Timelines, fees, and group requirements are confirmed with you in advance."
+        },
+        "cta": "Request wakala support"
+      }
+    }
+  },
+  "umrahCalculator": {
+    "meta": {
+      "title": "Umrah Package Quotation Calculator | The Flight Centre",
+      "description": "Get a detailed Umrah package quotation instantly - flights, hotels, transport, and visa all in one quote. The Flight Centre Travel & Tours, Gujranwala."
     }
   }
 }
-

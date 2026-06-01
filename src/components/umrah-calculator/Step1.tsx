@@ -1,3 +1,4 @@
+﻿// src/components/umrah-calculator/Step1.tsx
 "use client";
 
 import { useLocale } from "next-intl";
@@ -6,14 +7,14 @@ import { isUrdu, umrahCopy } from "./copy";
 import type { Step1Data } from "./types";
 
 const SURFACE_CARD_CLASS =
-  "rounded-[2rem] border border-white/[0.08] bg-white/[0.04] backdrop-blur-sm";
+  "rounded-[2rem] border border-border bg-surface-elevated/40 backdrop-blur-sm";
 const INPUT_CLASS =
-  "w-full rounded-2xl border border-white/[0.08] bg-white/[0.05] px-4 py-3 text-white placeholder-white/30 outline-none transition focus:border-brand-red focus:bg-white/[0.08]";
-const ERROR_CLASS = "mt-1 text-xs text-brand-red";
-const TITLE_CLASS = "font-display text-2xl font-black text-white";
-const SUB_LABEL_CLASS = "mb-2 text-sm font-medium text-white/70";
+  "w-full rounded-2xl border border-input-border bg-input px-4 py-3 text-input-foreground placeholder:text-input-placeholder outline-none transition focus:border-accent focus:ring-2 focus:ring-accent-ring/30 autofill:shadow-[inset_0_0_0_1000px_rgb(var(--tfc-input))] autofill:[-webkit-text-fill-color:rgb(var(--tfc-input-foreground))]";
+const ERROR_CLASS = "mt-1 text-xs text-danger";
+const TITLE_CLASS = "font-display text-2xl font-black text-foreground";
+const SUB_LABEL_CLASS = "mb-2 text-sm font-medium text-foreground-muted";
 const COUNTER_BUTTON_CLASS =
-  "flex h-10 w-10 items-center justify-center rounded-full border border-brand-red bg-brand-red/10 text-brand-red hover:bg-brand-red hover:text-white";
+  "flex h-10 w-10 items-center justify-center rounded-full border border-accent bg-accent-soft text-accent hover:bg-accent hover:text-accent-foreground";
 
 interface Step1Props {
   data: Step1Data;
@@ -46,8 +47,8 @@ function CounterCard({
 }: CounterCardProps) {
   return (
     <div className={`${SURFACE_CARD_CLASS} p-5`}>
-      <p className="text-lg font-semibold text-white">{label}</p>
-      <p className="mt-1 text-sm text-white/55">{subtext}</p>
+      <p className="text-lg font-semibold text-foreground">{label}</p>
+      <p className="mt-1 text-sm text-foreground-muted">{subtext}</p>
 
       <div className="mt-5 flex items-center justify-between">
         <button
@@ -59,7 +60,7 @@ function CounterCard({
         >
           -
         </button>
-        <span className="text-2xl font-bold text-white">{value}</span>
+        <span className="text-2xl font-bold text-foreground">{value}</span>
         <button
           type="button"
           onClick={() => onChange(Math.min(max, value + 1))}
@@ -84,7 +85,7 @@ export function Step1({ data, errors, onChange }: Step1Props) {
     <div className="space-y-6">
       <div>
         <h2 className={TITLE_CLASS}>{copy.title}</h2>
-        <p className="mt-3 text-sm leading-7 text-white/70">
+        <p className="mt-3 text-sm leading-7 text-foreground-muted">
           {copy.description}
         </p>
       </div>

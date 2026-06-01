@@ -1,3 +1,4 @@
+// src/lib/utils.ts
 import type { Metadata } from "next";
 
 import { defaultLocale } from "@/i18n";
@@ -69,8 +70,12 @@ export function buildMetadata({
 }: MetadataOptions): Metadata {
   const canonicalPath = localizePath(locale, path);
   const canonical = absoluteUrl(canonicalPath);
+  const LOCALE_TO_BCP47: Record<(typeof LOCALES)[number], string> = {
+    en: "en-PK",
+    ur: "ur-PK",
+  };
   const languageAlternates = Object.fromEntries(
-    LOCALES.map((item) => [item, absoluteUrl(localizePath(item, path))]),
+    LOCALES.map((item) => [LOCALE_TO_BCP47[item], absoluteUrl(localizePath(item, path))]),
   );
 
   return {
@@ -81,7 +86,7 @@ export function buildMetadata({
       canonical,
       languages: {
         ...languageAlternates,
-        "x-default": absoluteUrl(path),
+        "x-default": absoluteUrl(localizePath("en", path)),
       },
     },
     openGraph: {

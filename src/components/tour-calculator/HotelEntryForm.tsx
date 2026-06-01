@@ -1,3 +1,4 @@
+﻿// src/components/tour-calculator/HotelEntryForm.tsx
 "use client";
 
 import { X } from "lucide-react";
@@ -16,9 +17,9 @@ interface HotelEntryFormProps {
 }
 
 const INPUT_CLASS =
-  "w-full rounded-2xl border border-white/[0.08] bg-white/[0.05] px-4 py-3 text-white placeholder-white/30 outline-none transition focus:border-brand-red focus:bg-white/[0.08]";
+  "w-full rounded-2xl border border-input-border bg-input px-4 py-3 text-input-foreground placeholder:text-input-placeholder outline-none transition focus:border-accent focus:ring-2 focus:ring-accent-ring/30 autofill:shadow-[inset_0_0_0_1000px_rgb(var(--tfc-input))] autofill:[-webkit-text-fill-color:rgb(var(--tfc-input-foreground))]";
 const REMOVE_BUTTON_CLASS =
-  "flex h-8 w-8 items-center justify-center rounded-full border border-brand-red/20 bg-brand-red/5 text-brand-red transition hover:bg-brand-red hover:text-white";
+  "flex h-8 w-8 items-center justify-center rounded-full border border-accent/30 bg-accent-soft text-accent transition hover:bg-accent hover:text-accent-foreground";
 
 export function HotelEntryForm({
   hotel,
@@ -45,9 +46,9 @@ export function HotelEntryForm({
     new Date(hotel.checkOut).getTime() <= new Date(hotel.checkIn).getTime();
 
   return (
-    <article className="space-y-4 rounded-[2rem] border border-white/[0.08] bg-white/[0.04] p-5 backdrop-blur-sm md:p-6">
+    <article className="space-y-4 rounded-[2rem] border border-border bg-surface-elevated/40 p-5 backdrop-blur-sm md:p-6">
       <div className="flex items-center justify-between gap-4">
-        <h4 className="font-display text-xl font-bold text-white">
+        <h4 className="font-display text-xl font-bold text-foreground">
           {copy.hotel} {index + 1}
         </h4>
 
@@ -65,7 +66,7 @@ export function HotelEntryForm({
 
       <div className="grid gap-4 md:grid-cols-2">
         <label className="block">
-          <span className="mb-1.5 block text-sm font-medium text-white/70">
+          <span className="mb-1.5 block text-sm font-medium text-foreground-muted">
             {copy.hotelName}
           </span>
           <input
@@ -75,14 +76,14 @@ export function HotelEntryForm({
             placeholder={copy.hotelPlaceholder}
           />
           {errors[`hotel_name_${hotel.id}`] ? (
-            <p className="mt-1 text-xs text-brand-red">
+            <p className="mt-1 text-xs text-danger">
               {errors[`hotel_name_${hotel.id}`]}
             </p>
           ) : null}
         </label>
 
         <label className="block">
-          <span className="mb-1.5 block text-sm font-medium text-white/70">
+          <span className="mb-1.5 block text-sm font-medium text-foreground-muted">
             {copy.pricePerNight}
           </span>
           <input
@@ -94,14 +95,14 @@ export function HotelEntryForm({
             placeholder={copy.pricePlaceholder}
           />
           {errors[`hotel_price_${hotel.id}`] ? (
-            <p className="mt-1 text-xs text-brand-red">
+            <p className="mt-1 text-xs text-danger">
               {errors[`hotel_price_${hotel.id}`]}
             </p>
           ) : null}
         </label>
 
         <label className="block">
-          <span className="mb-1.5 block text-sm font-medium text-white/70">
+          <span className="mb-1.5 block text-sm font-medium text-foreground-muted">
             {copy.checkIn}
           </span>
           <input
@@ -111,14 +112,14 @@ export function HotelEntryForm({
             className={INPUT_CLASS}
           />
           {errors[`hotel_checkin_${hotel.id}`] ? (
-            <p className="mt-1 text-xs text-brand-red">
+            <p className="mt-1 text-xs text-danger">
               {errors[`hotel_checkin_${hotel.id}`]}
             </p>
           ) : null}
         </label>
 
         <label className="block">
-          <span className="mb-1.5 block text-sm font-medium text-white/70">
+          <span className="mb-1.5 block text-sm font-medium text-foreground-muted">
             {copy.checkOut}
           </span>
           <input
@@ -128,7 +129,7 @@ export function HotelEntryForm({
             className={INPUT_CLASS}
           />
           {errors[`hotel_checkout_${hotel.id}`] ? (
-            <p className="mt-1 text-xs text-brand-red">
+            <p className="mt-1 text-xs text-danger">
               {errors[`hotel_checkout_${hotel.id}`]}
             </p>
           ) : null}
@@ -138,18 +139,18 @@ export function HotelEntryForm({
       {(nights > 0 || hasInvalidDateOrder) && (
         <div className="flex flex-wrap items-center gap-3">
           {nights > 0 ? (
-            <span className="rounded-full border border-brand-gold/20 bg-brand-gold/10 px-3 py-1 text-xs text-brand-gold">
+            <span className="rounded-full border border-gold/20 bg-gold/10 px-3 py-1 text-xs text-gold">
               {nights} {copy.nights}
             </span>
           ) : null}
           {hasInvalidDateOrder ? (
-            <span className="text-xs text-brand-red">{copy.dateOrder}</span>
+            <span className="text-xs text-danger">{copy.dateOrder}</span>
           ) : null}
         </div>
       )}
 
       {errors[`hotel_dates_${hotel.id}`] ? (
-        <p className="mt-1 text-xs text-brand-red">{errors[`hotel_dates_${hotel.id}`]}</p>
+        <p className="mt-1 text-xs text-danger">{errors[`hotel_dates_${hotel.id}`]}</p>
       ) : null}
     </article>
   );

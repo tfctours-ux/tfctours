@@ -1,3 +1,4 @@
+﻿// src/components/tour-calculator/Step4Review.tsx
 "use client";
 
 import type { ReactNode } from "react";
@@ -39,13 +40,13 @@ function ReviewCard({ title, children, className }: ReviewCardProps) {
   return (
     <article
       className={[
-        "rounded-[2rem] border border-white/[0.08] bg-white/[0.04] p-6",
+        "rounded-[2rem] border border-border bg-surface-elevated/40 p-6",
         className,
       ]
         .filter(Boolean)
         .join(" ")}
     >
-      <p className="text-[10px] font-bold uppercase tracking-[0.32em] text-brand-gold">
+      <p className="text-[10px] font-bold uppercase tracking-[0.32em] text-gold">
         {title}
       </p>
       <div className="mt-4">{children}</div>
@@ -55,12 +56,12 @@ function ReviewCard({ title, children, className }: ReviewCardProps) {
 
 function ReviewRow({ label, value, highlight = false }: ReviewRowProps) {
   return (
-    <div className="flex items-baseline justify-between gap-4 border-b border-white/[0.05] py-2 last:border-0">
-      <span className="text-sm text-white/50">{label}</span>
+    <div className="flex items-baseline justify-between gap-4 border-b border-border py-2 last:border-0">
+      <span className="text-sm text-foreground-muted">{label}</span>
       <span
         className={[
-          "text-right text-sm font-medium text-white",
-          highlight && "font-display text-base font-bold text-brand-gold",
+          "text-right text-sm font-medium text-foreground",
+          highlight && "font-display text-base font-bold text-gold",
         ]
           .filter(Boolean)
           .join(" ")}
@@ -78,15 +79,15 @@ export function Step4Review({ formData, onCouponChange }: Step4ReviewProps) {
 
   return (
     <section>
-      <h2 className="font-display text-2xl font-black text-white">
+      <h2 className="font-display text-2xl font-black text-foreground">
         {copy.title}
       </h2>
-      <p className="mb-6 mt-2 text-sm text-white/55">
+      <p className="mb-6 mt-2 text-sm text-foreground-muted">
         {copy.description}
       </p>
 
-      <div className="mb-8 rounded-[2rem] border border-white/[0.08] bg-white/[0.04] p-5">
-        <p className="mb-3 text-[10px] font-bold uppercase tracking-[0.32em] text-brand-gold">
+      <div className="mb-8 rounded-[2rem] border border-border bg-surface-elevated/40 p-5">
+        <p className="mb-3 text-[10px] font-bold uppercase tracking-[0.32em] text-gold">
           {copy.couponTitle}
         </p>
         <input
@@ -94,9 +95,9 @@ export function Step4Review({ formData, onCouponChange }: Step4ReviewProps) {
           placeholder={copy.couponPlaceholder}
           value={formData.step4.coupon}
           onChange={(event) => onCouponChange(event.target.value)}
-          className="w-full rounded-2xl border border-white/[0.08] bg-white/[0.05] px-4 py-3 text-white placeholder-white/30 outline-none transition focus:border-brand-red focus:bg-white/[0.08]"
+          className="w-full rounded-2xl border border-input-border bg-input px-4 py-3 text-input-foreground placeholder:text-input-placeholder outline-none transition focus:border-accent focus:ring-2 focus:ring-accent-ring/30"
         />
-        <p className="mt-2 text-xs text-white/35">
+        <p className="mt-2 text-xs text-foreground-subtle">
           {copy.couponNote}
         </p>
       </div>
@@ -127,7 +128,7 @@ export function Step4Review({ formData, onCouponChange }: Step4ReviewProps) {
 
             return (
               <div key={country.countryId} className="mt-4 first:mt-0">
-                <p className="mb-3 text-xs font-bold uppercase text-white/50">
+                <p className="mb-3 text-xs font-bold uppercase text-foreground-muted">
                   {MAP_PIN} {country.country || copy.selectedCountry}
                 </p>
 
@@ -143,7 +144,7 @@ export function Step4Review({ formData, onCouponChange }: Step4ReviewProps) {
                   return (
                     <div
                       key={derivedHotel.hotelId}
-                      className="mb-4 rounded-[1.5rem] border border-white/[0.05] bg-black/10 p-4 last:mb-0"
+                      className="mb-4 rounded-[1.5rem] border border-border bg-surface-muted p-4 last:mb-0"
                     >
                       <ReviewRow label={copy.hotelName} value={hotel?.hotelName || copy.notProvided} />
                       <ReviewRow
@@ -160,11 +161,11 @@ export function Step4Review({ formData, onCouponChange }: Step4ReviewProps) {
                   );
                 })}
 
-                <div className="flex items-baseline justify-between gap-4 border-b border-white/[0.05] py-2 last:border-0">
-                  <span className="text-sm font-semibold text-white">
+                <div className="flex items-baseline justify-between gap-4 border-b border-border py-2 last:border-0">
+                  <span className="text-sm font-semibold text-foreground">
                     {country.country || copy.countryFallback} {copy.subtotal}
                   </span>
-                  <span className="text-sm font-semibold text-white">
+                  <span className="text-sm font-semibold text-foreground">
                     {formatPKR(country.countryCost)}
                   </span>
                 </div>
@@ -196,11 +197,11 @@ export function Step4Review({ formData, onCouponChange }: Step4ReviewProps) {
 
             return (
               <div key={derivedFlight.flightId} className="mt-4 first:mt-0">
-                <p className="mb-3 text-xs font-bold uppercase text-white/50">
+                <p className="mb-3 text-xs font-bold uppercase text-foreground-muted">
                   {PLANE} {copy.flight} {index + 1}: {flight.from || EM_DASH} {RIGHT_ARROW}{" "}
                   {flight.to || EM_DASH}
                 </p>
-                <div className="rounded-[1.5rem] border border-white/[0.05] bg-black/10 p-4">
+                <div className="rounded-[1.5rem] border border-border bg-surface-muted p-4">
                   <ReviewRow label={copy.airline} value={flight.airline || copy.notProvided} />
                   <ReviewRow
                     label={copy.date}
@@ -246,7 +247,7 @@ export function Step4Review({ formData, onCouponChange }: Step4ReviewProps) {
             value={formData.step4.coupon || copy.none}
           />
           {formData.step4.coupon ? (
-            <p className="mt-3 text-sm text-white/55">
+            <p className="mt-3 text-sm text-foreground-muted">
               {copy.discountNote}
             </p>
           ) : null}
@@ -254,21 +255,21 @@ export function Step4Review({ formData, onCouponChange }: Step4ReviewProps) {
 
         <ReviewCard
           title={copy.totalSummary}
-          className="border-brand-gold/20 bg-brand-gold/[0.04]"
+          className="border-gold/20 bg-gold/10"
         >
           <ReviewRow label={copy.totalHotelCost} value={formatPKR(derived.totalHotelCost)} />
           <ReviewRow label={copy.totalFlightCost} value={formatPKR(derived.totalFlightCost)} />
 
-          <div className="my-4 h-px bg-white/[0.08]" />
+          <div className="my-4 h-px bg-border" />
 
           <div className="flex items-end justify-between gap-4">
-            <span className="text-sm text-white/50">{copy.grandTotal}</span>
-            <span className="font-display text-2xl font-bold text-brand-gold">
+            <span className="text-sm text-foreground-muted">{copy.grandTotal}</span>
+            <span className="font-display text-2xl font-bold text-gold">
               {formatPKR(derived.grandTotal)}
             </span>
           </div>
 
-          <p className="mt-5 border-t border-white/[0.06] pt-4 text-xs leading-5 text-white/30">
+          <p className="mt-5 border-t border-border pt-4 text-xs leading-5 text-foreground-subtle">
             {copy.estimateNote}
           </p>
         </ReviewCard>

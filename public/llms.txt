@@ -1,42 +1,52 @@
-The Flight Centre Travel & Tours
+# The Flight Centre Travel & Tours
 
-Pakistan's IATA certified travel and tours agency
+> Pakistan's IATA-certified travel agency operating from Gujranwala since 2005. We provide Umrah packages, international tour packages, flight ticket booking, hotel reservations, visit visa documentation, and travel insurance for clients across Pakistan.
 
-Identity
+## Key Facts
 
-Legal Name: The Flight Centre Travel & Tours
-Urdu Name: دی فلائٹ سینٹر ٹریول اینڈ ٹورز
-Type: IATA Certified Travel Agency
-CEO: Rana Khalid Parvez Khan
-Founded: Serving clients for more than 20 years
-Main Office: Office 36-37, Jinnah Stadium, Gujranwala, Punjab, Pakistan
-Branch Office: Plaza 18, Neelum Block DC Colony, Gujranwala, Punjab, Pakistan
+- **Legal name**: The Flight Centre Travel & Tours
+- **Headquarters**: Office 36-37, Jinnah Stadium, Gujranwala, Punjab 52250, Pakistan
+- **Branch office**: Plaza 18, Neelum Block, DC Colony, Gujranwala, Pakistan
+- **UAN**: 111-786-788
+- **Phone**: +92 304 111 9786 (24/7 helpdesk)
+- **Email**: info@tfctours.com.pk
+- **CEO**: Rana Khalid Parvez Khan
+- **Certifications**: IATA certified
+- **Languages**: English, Urdu (website fully bilingual)
+- **Areas served**: Pakistan, Saudi Arabia, UAE, Qatar, Kuwait, Oman, Bahrain
+- **Founding year**: ~20+ years of operation as of 2026
 
-Credentials
+## Core Services
 
-Credential: IATA Certified Travel Agency
-Coverage: Flights, Umrah packages, tours, hotels, visit visas, travel insurance
+- **Umrah Packages** — 15-day, 21-day, 28-day from Pakistan; hotel near Haram, air ticket, Umrah visa, ground transport, Ziyarat. URL: https://www.tfctours.com/services/umrah-packages
+- **Tour Packages** — Dubai, Malaysia, Thailand, Singapore, Bahrain, Azerbaijan, Oman, Cambodia, Sri Lanka, Iran, Indonesia, 50+ destinations. URL: https://www.tfctours.com/services/tour-packages
+- **Airline Ticket Booking** — All domestic and international airlines. URL: https://www.tfctours.com/services/ticket-booking
+- **Hotel Booking** — Worldwide hotels with best-price guidance. URL: https://www.tfctours.com/services/hotel-booking
+- **Visit Visa Services** — Documentation guidance and application support for all countries. URL: https://www.tfctours.com/services/visit-visa
+- **Travel Insurance** — Medical, trip cancellation, baggage protection, worldwide coverage. URL: https://www.tfctours.com/services/travel-insurance
+- **Saudi Wakala** — Authorised wakala processing for Umrah and Hajj groups. URL: https://www.tfctours.com/services/saudi-wakala
+- **Work Visa Services** — Documentation and application support. URL: https://www.tfctours.com/services/work-visa
 
-Services
+## Online Tools
 
-Flight Booking - all major international and domestic airlines
-Umrah Packages - complete 15, 21 and 28 day packages
-International Tour Packages - curated packages from Pakistan
-Worldwide Hotel Booking - global hotel reservations
-Visit Visa Services - tourist and family visit visas for all countries
-Travel Insurance - international travel and medical insurance
-B2B Agent Portal - same-day activation for travel agencies
+- **Tour Cost Calculator**: https://www.tfctours.com/tour-calculator
+- **Umrah Cost Calculator**: https://www.tfctours.com/umrah-calculator
+- **Flight Booking Portal**: https://www.theflightcentre.pk/
+- **B2B Agent Portal**: https://agent.tfctours.com/
 
-Contact
+## Guides
 
-Phone: +92 304 1119786
-UAN: 111-786-788
-Helpdesk: 0304-111-9-786
-Email: info@tfctours.com.pk
-Website: https://www.tfctours.com
-WhatsApp: https://wa.me/923041119786
+- [Saudi Visa Guide](https://www.tfctours.com/guides/saudi-visa-guide): Step-by-step guidance for Umrah/Hajj visa applications from Pakistan.
+- [Visit Visa Guide](https://www.tfctours.com/guides/visit-visa-guide): Tourist visa documentation requirements and process by country.
 
-Coverage
+## Languages
 
-Primary markets: Saudi Arabia, UAE, Qatar, Kuwait, Oman, Bahrain, Malaysia
-Serves clients across all provinces of Pakistan
+- English: https://www.tfctours.com/
+- Urdu (اردو): https://www.tfctours.com/ur
+
+## Optional
+
+- [Full knowledge base for AI agents](https://www.tfctours.com/llms-full.txt)
+- [Sitemap](https://www.tfctours.com/sitemap.xml)
+- [About page](https://www.tfctours.com/about)
+- [Contact page](https://www.tfctours.com/contact)

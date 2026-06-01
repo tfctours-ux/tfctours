@@ -1,14 +1,11 @@
 {
   "name": "The Flight Centre Travel & Tours",
   "short_name": "TFC Tours",
-  "description": "Pakistan's IATA certified travel agency. Umrah packages, tours, flights and visas.",
+  "description": "Pakistan's IATA certified travel agency. Umrah packages, international tours, flight booking, hotel reservations, visit visas.",
   "start_url": "/",
-  "scope": "/",
   "display": "standalone",
   "background_color": "#080808",
-  "theme_color": "#CC0000",
-  "orientation": "portrait",
-  "lang": "en-PK",
+  "theme_color": "#cc0000",
   "icons": [
     {
       "src": "/icons/icon-192.png",
@@ -21,11 +18,9 @@
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
-    },
-    {
-      "src": "/apple-touch-icon.png",
-      "sizes": "180x180",
-      "type": "image/png"
     }
-  ]
+  ],
+  "categories": ["travel", "business"],
+  "lang": "en",
+  "dir": "ltr"
 }

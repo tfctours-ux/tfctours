@@ -1,3 +1,4 @@
+// src/components/shared/UmrahPackageImageRow.tsx
 import Image from "next/image";
 
 import { type Locale } from "@/lib/constants";
@@ -77,8 +78,8 @@ export function UmrahPackageImageRow({
           className={cn(
             "group relative min-h-[19rem] overflow-hidden rounded-[1.75rem] shadow-brand",
             tone === "dark"
-              ? "border border-white/[0.08] bg-white/[0.04]"
-              : "border border-black/[0.08] bg-white",
+              ? "border border-border bg-surface-elevated/40"
+              : "border border-border bg-surface-elevated",
           )}
         >
           <Image
@@ -89,18 +90,19 @@ export function UmrahPackageImageRow({
             className="object-cover transition duration-700 group-hover:scale-105"
             priority={index === 0}
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/88 via-black/28 to-transparent" />
-          <div className="absolute inset-x-0 bottom-0 p-5">
+          <div className="absolute inset-0 bg-black/18" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/70 to-black/15" />
+          <div className="absolute inset-x-0 bottom-0 z-10 p-5">
             <div className="flex items-center gap-2">
-              <span className="h-px w-8 bg-brand-gold" />
-              <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-brand-gold">
+              <span className="h-px w-8 bg-gold" />
+              <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-gold [text-shadow:0_2px_8px_rgb(0_0_0_/_0.85)]">
                 {isUrdu ? "عمرہ پیکج" : "Umrah Package"}
               </p>
             </div>
-            <h3 className="mt-3 font-display text-2xl font-black text-white">
+            <h3 className="mt-3 font-display text-2xl font-black text-white [text-shadow:0_2px_10px_rgb(0_0_0_/_0.9)]">
               {item.title[locale]}
             </h3>
-            <p className="mt-2 text-sm leading-7 text-white/72">
+            <p className="mt-2 text-sm font-medium leading-7 text-white/90 [text-shadow:0_2px_8px_rgb(0_0_0_/_0.85)]">
               {item.description[locale]}
             </p>
           </div>

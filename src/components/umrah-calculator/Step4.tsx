@@ -1,22 +1,31 @@
+﻿// src/components/umrah-calculator/Step4.tsx
 "use client";
 
 import { Plus } from "lucide-react";
 import { useLocale } from "next-intl";
 
-import { MADINAH_HOTELS, createEmptyHotelBlock } from "./config";
+import { createEmptyHotelBlock } from "./config";
 import { isUrdu, umrahCopy } from "./copy";
 import { HotelBlockForm } from "./HotelBlockForm";
 import type { HotelBlock } from "./types";
 
-const TITLE_CLASS = "font-display text-2xl font-black text-white";
+const TITLE_CLASS = "font-display text-2xl font-black text-foreground";
 
 interface Step4Props {
   hotels: HotelBlock[];
+  hotelOptions: string[];
+  roomTypeOptions: string[];
   errors: Record<string, string>;
   onChange: (hotels: HotelBlock[]) => void;
 }
 
-export function Step4({ hotels, errors, onChange }: Step4Props) {
+export function Step4({
+  hotels,
+  hotelOptions,
+  roomTypeOptions,
+  errors,
+  onChange,
+}: Step4Props) {
   const locale = useLocale();
   const copy = umrahCopy[isUrdu(locale) ? "ur" : "en"].step4;
 
@@ -37,7 +46,7 @@ export function Step4({ hotels, errors, onChange }: Step4Props) {
     <div className="space-y-6">
       <div>
         <h2 className={TITLE_CLASS}>{copy.title}</h2>
-        <p className="mt-3 text-sm leading-7 text-white/70">
+        <p className="mt-3 text-sm leading-7 text-foreground-muted">
           {copy.description}
         </p>
       </div>
@@ -48,7 +57,8 @@ export function Step4({ hotels, errors, onChange }: Step4Props) {
             key={block.id}
             block={block}
             index={index}
-            hotelOptions={MADINAH_HOTELS}
+            hotelOptions={hotelOptions}
+            roomTypeOptions={roomTypeOptions}
             cityLabel={copy.city}
             errors={errors}
             onChange={updateBlock}
@@ -61,7 +71,7 @@ export function Step4({ hotels, errors, onChange }: Step4Props) {
       <button
         type="button"
         onClick={addBlock}
-        className="flex items-center gap-2 rounded-full border border-brand-gold/30 bg-brand-gold/[0.06] px-5 py-2.5 text-xs font-semibold uppercase tracking-[0.18em] text-brand-gold transition hover:border-brand-gold/60 hover:bg-brand-gold/10"
+        className="flex items-center gap-2 rounded-full border border-gold/30 bg-gold/10 px-5 py-2.5 text-xs font-semibold uppercase tracking-[0.18em] text-gold transition hover:border-gold/60 hover:bg-gold/10"
       >
         <Plus className="h-4 w-4" />
         {copy.add}

@@ -1,47 +1,94 @@
-import type { MetadataRoute } from 'next'
+// src/app/sitemap.ts
+import type { MetadataRoute } from "next";
 
-const BASE_URL = 'https://www.tfctours.com'
+import { GUIDES, SERVICES, getBaseUrl } from "@/lib/constants";
 
-const englishRoutes: Array<{
-  path: string
-  changeFrequency: MetadataRoute.Sitemap[number]['changeFrequency']
-  priority: number
-}> = [
-  { path: '/',                          changeFrequency: 'daily',   priority: 1.0  },
-  { path: '/umrah',                     changeFrequency: 'weekly',  priority: 0.95 },
-  { path: '/umrah-calculator',          changeFrequency: 'monthly', priority: 0.8  },
-  { path: '/tour-calculator',           changeFrequency: 'monthly', priority: 0.8  },
-  { path: '/tours',                     changeFrequency: 'weekly',  priority: 0.9  },
-  { path: '/services',                  changeFrequency: 'weekly',  priority: 0.9  },
-  { path: '/about',                     changeFrequency: 'monthly', priority: 0.7  },
-  { path: '/contact',                   changeFrequency: 'monthly', priority: 0.7  },
-  { path: '/services/ticket-booking',   changeFrequency: 'weekly',  priority: 0.9  },
-  { path: '/services/visit-visa',       changeFrequency: 'weekly',  priority: 0.8  },
-  { path: '/services/tour-packages',    changeFrequency: 'weekly',  priority: 0.9  },
-  { path: '/services/umrah-packages',   changeFrequency: 'weekly',  priority: 0.8  },
-  { path: '/services/hotel-booking',    changeFrequency: 'weekly',  priority: 0.8  },
-  { path: '/services/travel-insurance', changeFrequency: 'weekly',  priority: 0.8  },
-]
+type ChangeFrequency = MetadataRoute.Sitemap[number]["changeFrequency"];
+
+interface RouteSpec {
+  path: string;
+  changeFrequency: ChangeFrequency;
+  priority: number;
+}
+
+// Manually-curated static routes (everything that is NOT a service or guide).
+const STATIC_ROUTES: RouteSpec[] = [
+  { path: "/", changeFrequency: "daily", priority: 1.0 },
+  { path: "/umrah", changeFrequency: "weekly", priority: 0.95 },
+  { path: "/umrah-calculator", changeFrequency: "monthly", priority: 0.80 },
+  { path: "/tour-calculator", changeFrequency: "monthly", priority: 0.80 },
+  { path: "/tours", changeFrequency: "weekly", priority: 0.90 },
+  { path: "/services", changeFrequency: "weekly", priority: 0.90 },
+  { path: "/guides", changeFrequency: "monthly", priority: 0.70 },
+  { path: "/about", changeFrequency: "monthly", priority: 0.70 },
+  { path: "/contact", changeFrequency: "monthly", priority: 0.70 },
+];
+
+const SERVICE_ROUTES: RouteSpec[] = SERVICES.map((service) => ({
+  path: service.href,
+  changeFrequency: "weekly" as const,
+  priority: service.featured ? 0.85 : 0.80,
+}));
+
+const GUIDE_ROUTES: RouteSpec[] = GUIDES.map((guide) => ({
+  path: guide.href,
+  changeFrequency: "monthly" as const,
+  priority: 0.75,
+}));
+
+const ALL_ROUTES: RouteSpec[] = [
+  ...STATIC_ROUTES,
+  ...SERVICE_ROUTES,
+  ...GUIDE_ROUTES,
+];
+
+function normalizePriority(priority: number) {
+  return Number(priority.toFixed(2));
+}
+
+// Build-time baseline lastModified. Bumping NEXT_PUBLIC_BUILD_TIME
+// (set during CI build) will surface as a fresh sitemap signal.
+const LAST_MODIFIED = process.env.NEXT_PUBLIC_BUILD_TIME
+  ? new Date(process.env.NEXT_PUBLIC_BUILD_TIME)
+  : new Date();
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const now = new Date()
+  const base = getBaseUrl();
 
-  const englishEntries: MetadataRoute.Sitemap = englishRoutes.map(({ path, changeFrequency, priority }) => ({
-    url: `${BASE_URL}${path}`,
-    lastModified: now,
-    changeFrequency,
-    priority,
-  }))
-
-  const urduEntries: MetadataRoute.Sitemap = englishRoutes.map(({ path, changeFrequency, priority }) => {
-    const urduPath = path === '/' ? '/ur' : `/ur${path}`
-    return {
-      url: `${BASE_URL}${urduPath}`,
-      lastModified: now,
+  const englishEntries: MetadataRoute.Sitemap = ALL_ROUTES.map(
+    ({ path, changeFrequency, priority }) => ({
+      url: `${base}${path}`,
+      lastModified: LAST_MODIFIED,
       changeFrequency,
-      priority: Math.max(priority - 0.05, 0.5),
-    }
-  })
+      priority: normalizePriority(priority),
+      alternates: {
+        languages: {
+          "en-PK": `${base}${path}`,
+          "ur-PK": `${base}${path === "/" ? "/ur" : `/ur${path}`}`,
+          "x-default": `${base}${path}`,
+        },
+      },
+    }),
+  );
 
-  return [...englishEntries, ...urduEntries]
+  const urduEntries: MetadataRoute.Sitemap = ALL_ROUTES.map(
+    ({ path, changeFrequency, priority }) => {
+      const urduPath = path === "/" ? "/ur" : `/ur${path}`;
+      return {
+        url: `${base}${urduPath}`,
+        lastModified: LAST_MODIFIED,
+        changeFrequency,
+        priority: normalizePriority(Math.max(priority - 0.05, 0.5)),
+        alternates: {
+          languages: {
+            "en-PK": `${base}${path}`,
+            "ur-PK": `${base}${urduPath}`,
+            "x-default": `${base}${path}`,
+          },
+        },
+      };
+    },
+  );
+
+  return [...englishEntries, ...urduEntries];
 }

@@ -1,3 +1,4 @@
+// src/components/shared/ServiceCard.tsx
 "use client";
 
 import Image from "next/image";
@@ -51,7 +52,7 @@ export function ServiceCard({ locale, service, index = 0 }: ServiceCardProps) {
     >
       <Link
         href={href}
-        className="group relative flex h-full flex-col overflow-hidden rounded-3xl bg-white shadow-brand ring-1 ring-black/[0.06] transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_32px_80px_rgba(8,8,8,0.22)]"
+        className="group relative flex h-full flex-col overflow-hidden rounded-3xl bg-surface-elevated shadow-brand ring-1 ring-border transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_32px_80px_rgb(var(--tfc-scrim)/0.22)]"
       >
         {/* Image panel */}
         <div className="relative h-52 overflow-hidden">
@@ -72,7 +73,7 @@ export function ServiceCard({ locale, service, index = 0 }: ServiceCardProps) {
 
           {/* Featured ribbon */}
           {isFeatured && (
-            <div className="absolute right-4 top-4 rounded-full bg-brand-gold px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-black">
+            <div className="absolute right-4 top-4 rounded-full bg-gold px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-gold-foreground">
               {locale === "ur" ? "نمایاں" : "Featured"}
             </div>
           )}
@@ -80,15 +81,15 @@ export function ServiceCard({ locale, service, index = 0 }: ServiceCardProps) {
           {/* Icon + tag row */}
           <div className="absolute inset-x-0 bottom-0 flex items-end justify-between p-5">
             <div className="flex items-center gap-3">
-              <span className="flex h-11 w-11 items-center justify-center rounded-2xl border border-white/20 bg-black/30 text-white backdrop-blur-md">
+              <span className="flex h-11 w-11 items-center justify-center rounded-2xl border border-accent-foreground/20 bg-scrim/30 text-accent-foreground backdrop-blur-md">
                 <Icon className="h-5 w-5" />
               </span>
-              <span className="rounded-full border border-white/20 bg-white/15 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-white backdrop-blur-sm">
+              <span className="rounded-full border border-accent-foreground/20 bg-accent-foreground/15 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-accent-foreground backdrop-blur-sm">
                 {t(`${service.slug}.tag`)}
               </span>
             </div>
             {/* Arrow hint */}
-            <span className="flex h-9 w-9 translate-y-1 items-center justify-center rounded-full bg-white/15 text-white opacity-0 backdrop-blur-md transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
+            <span className="flex h-9 w-9 translate-y-1 items-center justify-center rounded-full bg-accent-foreground/15 text-accent-foreground opacity-0 backdrop-blur-md transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
               <ArrowUpRight className="h-4 w-4" />
             </span>
           </div>
@@ -97,27 +98,27 @@ export function ServiceCard({ locale, service, index = 0 }: ServiceCardProps) {
         {/* Content */}
         <div className="flex flex-1 flex-col gap-4 p-6">
           <div className="flex-1">
-            <h3 className="font-display text-xl font-bold leading-snug text-brand-black">
+            <h3 className="font-display text-xl font-bold leading-snug text-foreground">
               {t(`${service.slug}.title`)}
             </h3>
-            <p className="mt-2.5 text-sm leading-7 text-zinc-500">
+            <p className="mt-2.5 text-sm leading-7 text-foreground-muted">
               {t(`${service.slug}.summary`)}
             </p>
           </div>
 
           {/* CTA row */}
-          <div className="flex items-center justify-between border-t border-black/[0.06] pt-4">
-            <span className="text-[11px] font-bold uppercase tracking-[0.22em] text-brand-red transition-colors group-hover:text-brand-darkred">
+          <div className="flex items-center justify-between border-t border-border pt-4">
+            <span className="text-[11px] font-bold uppercase tracking-[0.22em] text-accent transition-colors group-hover:text-accent-hover">
               {locale === "ur" ? common("readMore") : "Learn More"}
             </span>
-            <span className="flex h-8 w-8 items-center justify-center rounded-full bg-brand-red/8 text-brand-red transition-colors group-hover:bg-brand-red group-hover:text-white">
+            <span className="flex h-8 w-8 items-center justify-center rounded-full bg-accent/10 text-accent transition-colors group-hover:bg-accent group-hover:text-accent-foreground">
               <ArrowUpRight className="h-4 w-4" />
             </span>
           </div>
         </div>
 
         {/* Shimmer effect on hover */}
-        <div className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/[0.06] to-transparent transition-transform duration-700 group-hover:translate-x-full" />
+        <div className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-foreground/[0.06] to-transparent transition-transform duration-700 group-hover:translate-x-full" />
       </Link>
     </motion.article>
   );

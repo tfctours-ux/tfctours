@@ -1,19 +1,28 @@
+// src/lib/page-metadata.ts
+import { existsSync } from "node:fs";
+import { join } from "node:path";
+
 import type { Metadata } from "next";
 
 import { getTranslations } from "next-intl/server";
 
 import {
+  EXTENDED_SERVICE_META,
   GUIDES,
   SERVICES,
+  type ExtendedServiceSlug,
   type GuideSlug,
   type Locale,
   type ServiceSlug,
 } from "./constants";
+import { getSeoOverride } from "./cms/fetchers";
 import { buildMetadata } from "./utils";
 
 export type LocaleParams = Promise<{ locale: string }>;
 
 type ServiceSeoKey = ServiceSlug;
+
+const DEFAULT_OG_IMAGE = "/images/og-image.jpg";
 
 const SERVICE_SEO: Partial<
   Record<ServiceSeoKey, { title: string; description: string; keywords: string[] }>
@@ -103,13 +112,70 @@ export async function buildLocalizedPageMetadata(
 ): Promise<Metadata> {
   const locale = await getLocaleFromParams(params);
   const t = await getTranslations({ locale, namespace });
+  let title = t("title");
+  let description = t("description");
+  let resolvedKeywords = keywords;
+  let image: string | undefined;
+  let noIndex = false;
+
+  try {
+    const override = await getSeoOverride(path, locale);
+    if (override) {
+      title = override.title ?? title;
+      description = override.description ?? description;
+      resolvedKeywords = override.keywords;
+      image = override.ogImage ?? undefined;
+      noIndex = override.noIndex;
+    }
+  } catch (error) {
+    console.error({ action: "seo_override_metadata_failed", path, locale, error });
+  }
+
+  const metadata = buildMetadata({
+    locale,
+    title,
+    description,
+    path,
+    keywords: resolvedKeywords,
+    image,
+  });
+
+  return noIndex ? { ...metadata, robots: { index: false, follow: false } } : metadata;
+}
+
+export async function buildCmsPageMetadata(
+  locale: Locale,
+  slug: string,
+  fallbackTitle: string,
+  fallbackDescription: string,
+): Promise<Metadata> {
+  const path = `/${slug}`;
+
+  try {
+    const override = await getSeoOverride(path, locale);
+    if (override) {
+      const metadata = buildMetadata({
+        locale,
+        title: override.title ?? fallbackTitle,
+        description: override.description ?? fallbackDescription,
+        path,
+        keywords: override.keywords,
+        image: override.ogImage ?? undefined,
+      });
+
+      return override.noIndex
+        ? { ...metadata, robots: { index: false, follow: false } }
+        : metadata;
+    }
+  } catch (error) {
+    console.error({ action: "cms_page_seo_override_failed", path, locale, error });
+  }
 
   return buildMetadata({
     locale,
-    title: t("title"),
-    description: t("description"),
+    title: fallbackTitle,
+    description: fallbackDescription,
     path,
-    keywords,
   });
 }
 
@@ -137,6 +203,38 @@ export async function buildServiceMetadata(
     image: service?.image,
     imageAlt: seo.title,
     keywords: seo.keywords,
+  });
+}
+
+function getExistingPublicImage(image: string | undefined): string {
+  if (!image) {
+    return DEFAULT_OG_IMAGE;
+  }
+
+  const publicPath = join(process.cwd(), "public", image.replace(/^\//, ""));
+  return existsSync(publicPath) ? image : DEFAULT_OG_IMAGE;
+}
+
+export async function buildExtendedServiceMetadata(
+  params: LocaleParams,
+  slug: ExtendedServiceSlug,
+): Promise<Metadata> {
+  const locale = await getLocaleFromParams(params);
+  const t = await getTranslations({
+    locale,
+    namespace: `extendedServices.${slug}.meta`,
+  });
+  const meta = EXTENDED_SERVICE_META[slug];
+
+  return buildMetadata({
+    locale,
+    title: t("title"),
+    absoluteTitle: t("title"),
+    description: t("description"),
+    path: meta.href,
+    image: getExistingPublicImage(meta.image),
+    imageAlt: t("title"),
+    keywords: t.raw("keywords") as string[],
   });
 }
 

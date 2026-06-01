@@ -7,7 +7,7 @@ import { getTranslations } from "next-intl/server";
 
 import { AboutGallerySection } from "@/components/about/AboutGallerySection";
 import { Breadcrumb } from "@/components/layout/Breadcrumb";
-import { OrganizationJsonLd } from "@/components/shared/JsonLd";
+import { OrganizationJsonLd, SpeakableJsonLd } from "@/components/shared/JsonLd";
 import { PageHero } from "@/components/shared/PageHero";
 import {
   ABOUT_GALLERY_IMAGES,
@@ -225,6 +225,7 @@ export default async function AboutPage({
   return (
     <div className="pb-20">
       <OrganizationJsonLd description={factualContent.paragraphs[0]} />
+      <SpeakableJsonLd path="/about" cssSelectors={["#about-h1", "#about-mission"]} />
       <Breadcrumb />
       <PageHero
         locale={locale}
@@ -264,14 +265,111 @@ export default async function AboutPage({
         }
       />
 
+      <section className="bg-background py-12">
+        <div className="mx-auto max-w-5xl px-6">
+          <h1
+            id="about-h1"
+            className="font-display text-4xl font-black text-foreground md:text-5xl"
+          >
+            {t("h1")}
+          </h1>
+          <p
+            id="about-mission"
+            className="mt-4 max-w-3xl text-base leading-8 text-foreground-muted md:text-lg"
+          >
+            {t("mission")}
+          </p>
+
+          <dl
+            id="about-key-facts"
+            className="mt-10 grid gap-x-8 gap-y-4 rounded-2xl border border-border bg-surface-elevated p-6 md:grid-cols-2"
+          >
+            <div>
+              <dt className="text-[11px] font-bold uppercase tracking-[0.18em] text-foreground-subtle">
+                {t("facts.legalNameLabel")}
+              </dt>
+              <dd className="mt-1 text-foreground">
+                The Flight Centre Travel &amp; Tours
+              </dd>
+            </div>
+            <div>
+              <dt className="text-[11px] font-bold uppercase tracking-[0.18em] text-foreground-subtle">
+                {t("facts.headquartersLabel")}
+              </dt>
+              <dd className="mt-1 text-foreground">
+                Office 36-37, Jinnah Stadium, Gujranwala, Pakistan
+              </dd>
+            </div>
+            <div>
+              <dt className="text-[11px] font-bold uppercase tracking-[0.18em] text-foreground-subtle">
+                UAN
+              </dt>
+              <dd className="mt-1 text-foreground" dir="ltr">111-786-788</dd>
+            </div>
+            <div>
+              <dt className="text-[11px] font-bold uppercase tracking-[0.18em] text-foreground-subtle">
+                {t("facts.certificationsLabel")}
+              </dt>
+              <dd className="mt-1 text-foreground">
+                IATA Certified
+              </dd>
+            </div>
+            <div>
+              <dt className="text-[11px] font-bold uppercase tracking-[0.18em] text-foreground-subtle">
+                {t("facts.foundedLabel")}
+              </dt>
+              <dd className="mt-1 text-foreground">
+                20+ years of operation
+              </dd>
+            </div>
+            <div>
+              <dt className="text-[11px] font-bold uppercase tracking-[0.18em] text-foreground-subtle">
+                CEO
+              </dt>
+              <dd className="mt-1 text-foreground">
+                Rana Khalid Parvez Khan
+              </dd>
+            </div>
+            <div className="md:col-span-2">
+              <dt className="text-[11px] font-bold uppercase tracking-[0.18em] text-foreground-subtle">
+                {t("facts.servicesLabel")}
+              </dt>
+              <dd className="mt-1 text-foreground">
+                Umrah Packages, Tour Packages, Airline Ticket Booking, Hotel Booking, Visit Visa Services, Travel Insurance, Saudi Wakala, Work Visa Services
+              </dd>
+            </div>
+            <div>
+              <dt className="text-[11px] font-bold uppercase tracking-[0.18em] text-foreground-subtle">
+                {t("facts.languagesLabel")}
+              </dt>
+              <dd className="mt-1 text-foreground">
+                English, Urdu (اردو)
+              </dd>
+            </div>
+            <div>
+              <dt className="text-[11px] font-bold uppercase tracking-[0.18em] text-foreground-subtle">
+                {t("facts.areasServedLabel")}
+              </dt>
+              <dd className="mt-1 text-foreground">
+                Pakistan, Saudi Arabia, UAE, Qatar, Kuwait, Oman, Bahrain
+              </dd>
+            </div>
+          </dl>
+        </div>
+      </section>
+
       <section className="mx-auto mt-12 grid max-w-7xl gap-8 px-6 lg:grid-cols-[1.02fr_0.98fr]">
         <div className="rounded-[2rem] border border-black/10 bg-white p-6 shadow-brand md:p-8">
           <h2 className="font-display text-3xl font-bold text-brand-black">
             {t("story.title")}
           </h2>
           <div className="mt-5 space-y-5 text-base leading-8 text-zinc-700">
-            {story.map((paragraph) => (
-              <p key={paragraph}>{paragraph}</p>
+            {story.map((paragraph, i) => (
+              <p
+                key={paragraph}
+              >
+                {paragraph}
+              </p>
             ))}
           </div>
         </div>
@@ -342,12 +440,18 @@ export default async function AboutPage({
       <section className="mx-auto mt-12 max-w-7xl px-6">
         <div className="grid gap-8 lg:grid-cols-[1.05fr_0.95fr]">
           <div className="rounded-[2rem] border border-black/10 bg-white p-6 shadow-brand md:p-8">
-            <h2 className="font-display text-3xl font-bold text-brand-black">
+            <h2
+              className="font-display text-3xl font-bold text-brand-black"
+            >
               {factualContent.title}
             </h2>
             <div className="mt-5 space-y-5 text-base leading-8 text-zinc-700">
-              {factualContent.paragraphs.map((paragraph) => (
-                <p key={paragraph}>{paragraph}</p>
+              {factualContent.paragraphs.map((paragraph, i) => (
+                <p
+                  key={paragraph}
+                >
+                  {paragraph}
+                </p>
               ))}
             </div>
           </div>

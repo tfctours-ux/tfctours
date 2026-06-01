@@ -1,24 +1,25 @@
+﻿// src/components/umrah-calculator/HotelBlockForm.tsx
 "use client";
 
 import { X } from "lucide-react";
 import { useLocale } from "next-intl";
 
-import { ROOM_TYPES } from "./config";
 import { isUrdu, umrahCopy } from "./copy";
 import type { HotelBlock } from "./types";
 
 const SURFACE_CARD_CLASS =
-  "rounded-[2rem] border border-white/[0.08] bg-white/[0.04] backdrop-blur-sm";
+  "rounded-[2rem] border border-border bg-surface-elevated/40 backdrop-blur-sm";
 const INPUT_CLASS =
-  "w-full rounded-2xl border border-white/[0.08] bg-white/[0.05] px-4 py-3 text-white placeholder-white/30 outline-none transition focus:border-brand-red focus:bg-white/[0.08]";
+  "w-full rounded-2xl border border-input-border bg-input px-4 py-3 text-input-foreground placeholder:text-input-placeholder outline-none transition focus:border-accent focus:ring-2 focus:ring-accent-ring/30 autofill:shadow-[inset_0_0_0_1000px_rgb(var(--tfc-input))] autofill:[-webkit-text-fill-color:rgb(var(--tfc-input-foreground))]";
 const SELECT_CLASS = `${INPUT_CLASS} appearance-none`;
-const ERROR_CLASS = "mt-1 text-xs text-brand-red";
-const SUB_LABEL_CLASS = "mb-2 text-sm font-medium text-white/70";
+const ERROR_CLASS = "mt-1 text-xs text-danger";
+const SUB_LABEL_CLASS = "mb-2 text-sm font-medium text-foreground-muted";
 
 interface HotelBlockFormProps {
   block: HotelBlock;
   index: number;
   hotelOptions: readonly string[];
+  roomTypeOptions: readonly string[];
   cityLabel: string;
   errors: Record<string, string>;
   onChange: (id: string, updated: Partial<HotelBlock>) => void;
@@ -30,6 +31,7 @@ export function HotelBlockForm({
   block,
   index,
   hotelOptions,
+  roomTypeOptions,
   cityLabel,
   errors,
   onChange,
@@ -52,17 +54,17 @@ export function HotelBlockForm({
     <div className={`${SURFACE_CARD_CLASS} p-6`}>
       <div className="flex items-start justify-between gap-4">
         <div>
-          <p className="text-[10px] font-bold uppercase tracking-[0.32em] text-brand-gold">
+          <p className="text-[10px] font-bold uppercase tracking-[0.32em] text-gold">
             {cityLabel}
           </p>
-          <h3 className="mt-3 text-xl font-semibold text-white">
+          <h3 className="mt-3 text-xl font-semibold text-foreground">
             {copy.block} {index + 1}
           </h3>
         </div>
 
         <div className="flex items-center gap-3">
           {nights > 0 ? (
-            <span className="rounded-full border border-brand-gold/20 bg-brand-gold/10 px-3 py-1 text-xs text-brand-gold">
+            <span className="rounded-full border border-gold/20 bg-gold/10 px-3 py-1 text-xs text-gold">
               {nights} {copy.nights}
             </span>
           ) : null}
@@ -70,7 +72,7 @@ export function HotelBlockForm({
             <button
               type="button"
               onClick={() => onRemove(block.id)}
-              className="rounded-full border border-brand-red/20 bg-brand-red/5 p-2 text-brand-red transition hover:bg-brand-red hover:text-white"
+              className="rounded-full border border-accent/30 bg-accent-soft p-2 text-accent transition hover:bg-accent hover:text-accent-foreground"
               aria-label={`${copy.remove} ${index + 1}`}
             >
               <X className="h-4 w-4" />
@@ -87,9 +89,9 @@ export function HotelBlockForm({
             onChange={(event) => onChange(block.id, { roomType: event.target.value })}
             className={SELECT_CLASS}
           >
-            <option value="">{copy.selectRoomType}</option>
-            {ROOM_TYPES.map((option) => (
-              <option key={option} value={option}>
+            <option value="" className="bg-input text-input-foreground">{copy.selectRoomType}</option>
+            {roomTypeOptions.map((option) => (
+              <option key={option} value={option} className="bg-input text-input-foreground">
                 {option}
               </option>
             ))}
@@ -106,9 +108,9 @@ export function HotelBlockForm({
             onChange={(event) => onChange(block.id, { hotelName: event.target.value })}
             className={SELECT_CLASS}
           >
-            <option value="">{copy.selectHotel}</option>
+            <option value="" className="bg-input text-input-foreground">{copy.selectHotel}</option>
             {hotelOptions.map((option) => (
-              <option key={option} value={option}>
+              <option key={option} value={option} className="bg-input text-input-foreground">
                 {option}
               </option>
             ))}

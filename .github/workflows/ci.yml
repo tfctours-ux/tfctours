@@ -1,0 +1,142 @@
+# tfctours/.github/workflows/ci.yml
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+  pull_request:
+    branches:
+      - main
+
+env:
+  NEON_DATABASE_URL: ""
+  NEXTAUTH_URL: https://www.tfctours.com
+  NEXT_PUBLIC_SITE_URL: https://www.tfctours.com
+  UPSTASH_REDIS_REST_URL: https://placeholder.upstash.io
+  UPSTASH_REDIS_REST_TOKEN: placeholder-token
+  RESEND_API_KEY: re_placeholder_ci_key
+  CLOUDFLARE_TURNSTILE_SECRET_KEY: placeholder-turnstile-secret
+  TURNSTILE_SECRET_KEY: placeholder-turnstile-secret
+  NEXT_PUBLIC_TURNSTILE_SITE_KEY: placeholder-turnstile-site-key
+  RESEND_FROM_EMAIL: The Flight Centre <no-reply@example.com>
+  CONTACT_TO_EMAIL: info@example.com
+  QUOTATION_OWNER_EMAIL: quotes@example.com
+  REVALIDATE_SECRET: 0000000000000000000000000000000000000000000000000000000000000000
+
+jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run lint
+        run: npm run lint
+
+  typecheck:
+    name: Typecheck
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run typecheck
+        run: npm run typecheck
+
+  unit-tests:
+    name: Unit Tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run unit tests
+        run: npm run test:unit
+
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run build
+        run: npm run build
+
+  e2e-smoke:
+    name: E2E Smoke
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Build fallback-mode site
+        run: npm run build
+
+      - name: Start site
+        run: |
+          npm run start > /tmp/tfctours.log 2>&1 &
+          for i in {1..45}; do
+            if curl -sf http://localhost:3000 >/dev/null; then
+              exit 0
+            fi
+            sleep 2
+          done
+          cat /tmp/tfctours.log
+          exit 1
+
+      - name: Run smoke tests
+        env:
+          BASE_URL: http://localhost:3000
+        run: npm run test:e2e

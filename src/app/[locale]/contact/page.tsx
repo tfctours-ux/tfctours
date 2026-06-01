@@ -7,6 +7,7 @@ import { getTranslations } from "next-intl/server";
 
 import { Breadcrumb } from "@/components/layout/Breadcrumb";
 import { ContactForm } from "@/components/shared/ContactForm";
+import { SpeakableJsonLd } from "@/components/shared/JsonLd";
 import { Button } from "@/components/ui/Button";
 import { BRAND, BRAND_IMAGES } from "@/lib/constants";
 import {
@@ -129,6 +130,10 @@ export default async function ContactPage({
 
   return (
     <div className="pb-20">
+      <SpeakableJsonLd
+        path={localizePath(locale, "/contact")}
+        cssSelectors={["#contact-h1", "#contact-lede"]}
+      />
       <Breadcrumb />
       <section className="mx-auto mt-6 max-w-7xl px-6">
         <div className="overflow-hidden rounded-[2.75rem] bg-brand-mesh shadow-glow">
@@ -137,10 +142,10 @@ export default async function ContactPage({
               <p className="text-xs uppercase tracking-[0.28em] text-brand-gold">
                 {t("hero.eyebrow")}
               </p>
-              <h1 className="display-copy mt-6 max-w-3xl font-display text-4xl font-black leading-tight md:text-6xl">
+              <h1 id="contact-h1" className="display-copy mt-6 max-w-3xl font-display text-4xl font-black leading-tight md:text-6xl">
                 {t("title")}
               </h1>
-              <p className="mt-5 max-w-2xl text-base leading-8 text-white/78 md:text-lg">
+              <p id="contact-lede" className="mt-5 max-w-2xl text-base leading-8 text-white/78 md:text-lg">
                 {t("hero.description")}
               </p>
               <div className="mt-8 rounded-[1.75rem] border border-white/10 bg-white/10 p-5 backdrop-blur">

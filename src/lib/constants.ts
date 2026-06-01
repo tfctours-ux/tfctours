@@ -1,3 +1,4 @@
+// src/lib/constants.ts
 import { locales, type AppLocale } from "@/i18n";
 
 export const LOCALES = locales;
@@ -35,6 +36,9 @@ export type ServiceSlug =
 
 export type AnyServiceSlug = ServiceSlug;
 
+export type ExtendedServiceSlug = "work-visa" | "saudi-wakala";
+export type AnyExtendedServiceSlug = ServiceSlug | ExtendedServiceSlug;
+
 export type GuideSlug = "saudi-visa-guide" | "visit-visa-guide";
 
 export type ServiceIconName =
@@ -55,10 +59,24 @@ export interface BrandProfile {
   helpdesk?: string;
   email: string;
   office: string;
+  officeUr?: string;
   mainOffice?: string;
+  mainOfficeUr?: string;
   branchOffice?: string;
+  branchOfficeUr?: string;
   mainPhone?: string;
   branchPhone?: string;
+  geoLatitude?: string;
+  geoLongitude?: string;
+  logoLightUrl?: string;
+  logoDarkUrl?: string;
+  postalAddress?: {
+    streetAddress: string;
+    addressLocality: string;
+    addressRegion: string;
+    postalCode?: string;
+    addressCountry: string;
+  };
   website: string;
   iata?: boolean;
   social?: {
@@ -71,8 +89,8 @@ export interface BrandProfile {
 }
 
 export interface ServiceConfig {
-  slug: ServiceSlug;
-  href: `/services/${ServiceSlug}`;
+  slug: ServiceSlug | string;
+  href: `/services/${string}`;
   icon: ServiceIconName;
   image: string;
   accentClass: string;
@@ -174,6 +192,23 @@ export const SERVICES: readonly ServiceConfig[] = [
   },
 ] as const;
 
+export const EXTENDED_SERVICE_META: Record<
+  ExtendedServiceSlug,
+  {
+    image: string;
+    href: `/services/${ExtendedServiceSlug}`;
+  }
+> = {
+  "work-visa": {
+    image: "/images/work-visa.webp",
+    href: "/services/work-visa",
+  },
+  "saudi-wakala": {
+    image: "/images/saudi-wakala.webp",
+    href: "/services/saudi-wakala",
+  },
+};
+
 export const GUIDES: readonly GuideConfig[] = [
   {
     slug: "saudi-visa-guide",
@@ -206,7 +241,8 @@ export const GALLERY_IMAGES: readonly GalleryImage[] = [
 ] as const;
 
 export const BRAND_IMAGES = {
-  logo: "/images/tfc-logo-light.webp",
+  logo: "/images/tfc-logo-light.webp",      // light-coloured (for dark backgrounds)
+  logoDark: "/images/tfc-logo-dark.webp",   // dark-coloured (for light backgrounds)
   office: "/images/tfc-office.webp",
   hero: "/images/hero-1.webp",
   favicon: "/images/favicon.png",

@@ -1,44 +1,29 @@
-"use client";
+// src/components/home/TrustBar.tsx
+import { getLocale, getTranslations } from "next-intl/server";
 
-import { motion } from "framer-motion";
-import { useTranslations } from "next-intl";
+import { TrustBarClient } from "@/components/home/TrustBarClient";
+import { getHomeStats } from "@/lib/cms/fetchers";
+import type { HomeStatView } from "@/lib/cms/types";
+import { HOME_STATS, type Locale } from "@/lib/constants";
 
-import { HOME_STATS } from "@/lib/constants";
-import { fadeInUp, staggerChildren } from "@/lib/motion";
+export { TrustBarSkeleton } from "./TrustBarSkeleton";
 
-import { AnimatedCounter } from "@/components/shared/AnimatedCounter";
+export async function TrustBar() {
+  const locale = (await getLocale()) as Locale;
+  const [stats, t] = await Promise.all([
+    getHomeStats(locale),
+    getTranslations("home.trustBar"),
+  ]);
+  const resolvedStats =
+    stats ??
+    HOME_STATS.map<HomeStatView>((stat) => ({
+      key: stat.id,
+      from: stat.from,
+      to: stat.to,
+      suffix: stat.suffix,
+      label: t(`stats.${stat.id}.label`),
+      sortOrder: 0,
+    }));
 
-export function TrustBar() {
-  const t = useTranslations("trust");
-
-  return (
-    <motion.section
-      className="relative z-10 w-full overflow-hidden bg-brand-red"
-      initial="hidden"
-      whileInView="show"
-      viewport={{ once: true, amount: 0.45 }}
-      variants={fadeInUp}
-    >
-      <motion.div
-        className="mx-auto grid max-w-7xl divide-y divide-brand-gold/45 px-4 py-3 md:grid-cols-2 md:divide-x md:divide-y-0 lg:grid-cols-4"
-        variants={staggerChildren}
-      >
-        {HOME_STATS.map((stat, index) => (
-          <motion.div
-            key={stat.id}
-            variants={fadeInUp}
-            className={index > 1 ? "lg:border-l-0" : ""}
-          >
-            <AnimatedCounter
-              from={stat.from}
-              to={stat.to}
-              suffix={stat.suffix}
-              label={t(stat.id)}
-              duration={1.8}
-            />
-          </motion.div>
-        ))}
-      </motion.div>
-    </motion.section>
-  );
+  return <TrustBarClient stats={resolvedStats} />;
 }

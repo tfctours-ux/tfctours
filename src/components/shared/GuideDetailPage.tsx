@@ -1,3 +1,4 @@
+// src/components/shared/GuideDetailPage.tsx
 import { notFound } from "next/navigation";
 
 import { useTranslations } from "next-intl";
@@ -39,8 +40,8 @@ export function GuideDetailPage({ locale, slug }: GuideDetailPageProps) {
         secondaryHref="/guides"
         secondaryLabel={common("allGuides")}
         aside={
-          <div className="rounded-[1.75rem] border border-white/10 bg-white/10 p-5 text-white backdrop-blur">
-            <p className="text-xs uppercase tracking-[0.24em] text-brand-gold">
+          <div className="rounded-[1.75rem] border border-accent-foreground/10 bg-accent-foreground/10 p-5 text-accent-foreground backdrop-blur">
+            <p className="text-xs uppercase tracking-[0.24em] text-gold">
               {common("readTime")}
             </p>
             <p className="mt-2 font-display text-3xl font-bold">
@@ -51,18 +52,18 @@ export function GuideDetailPage({ locale, slug }: GuideDetailPageProps) {
       />
 
       <section className="mx-auto mt-12 grid max-w-7xl gap-8 px-6 lg:grid-cols-[0.85fr_1.15fr]">
-        <aside className="rounded-[2rem] border border-black/10 bg-white p-6 shadow-brand md:p-8">
+        <aside className="rounded-[2rem] border border-border bg-surface-elevated p-6 shadow-brand md:p-8">
           <Badge>{guideT("checklistTitle")}</Badge>
           <div className="mt-6 space-y-4">
             {checklist.map((item) => (
               <div key={item} className="flex items-start gap-3">
-                <FileCheck2 className="mt-1 h-5 w-5 text-brand-red" />
-                <p className="text-sm leading-7 text-zinc-700">{item}</p>
+                <FileCheck2 className="mt-1 h-5 w-5 text-accent" />
+                <p className="text-sm leading-7 text-foreground-muted">{item}</p>
               </div>
             ))}
           </div>
-          <div className="mt-8 rounded-[1.5rem] bg-brand-light p-5">
-            <p className="text-sm leading-7 text-zinc-700">{guideT("note")}</p>
+          <div className="mt-8 rounded-[1.5rem] bg-surface p-5">
+            <p className="text-sm leading-7 text-foreground-muted">{guideT("note")}</p>
           </div>
         </aside>
 
@@ -70,15 +71,15 @@ export function GuideDetailPage({ locale, slug }: GuideDetailPageProps) {
           {sections.map((section, index) => (
             <article
               key={section.title}
-              className="rounded-[2rem] border border-black/10 bg-white p-6 shadow-brand md:p-8"
+              className="rounded-[2rem] border border-border bg-surface-elevated p-6 shadow-brand md:p-8"
             >
-              <p className="text-xs uppercase tracking-[0.24em] text-brand-red">
+              <p className="text-xs uppercase tracking-[0.24em] text-accent">
                 {common("topic")} {index + 1}
               </p>
-              <h2 className="mt-3 font-display text-3xl font-bold text-brand-black">
+              <h2 className="mt-3 font-display text-3xl font-bold text-foreground">
                 {section.title}
               </h2>
-              <p className="mt-4 text-base leading-8 text-zinc-700">{section.body}</p>
+              <p className="mt-4 text-base leading-8 text-foreground-muted">{section.body}</p>
             </article>
           ))}
         </div>

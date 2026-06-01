@@ -1,14 +1,29 @@
-import { BRAND, SERVICES, type Locale, type ServiceSlug } from "@/lib/constants";
+import { headers } from "next/headers";
+import {
+  BRAND,
+  SERVICES,
+  type BrandProfile,
+  type Locale,
+  type ServiceSlug,
+} from "@/lib/constants";
+import { getFaqItems } from "@/lib/cms/fetchers";
+import type { FaqView } from "@/lib/cms/types";
 import { absoluteUrl, localizePath } from "@/lib/utils";
+import { TFC_FAQ_ITEMS, type FaqItem } from "@/lib/seo/faq-items";
+import {
+  POSTAL_ADDRESS_MAIN,
+  POSTAL_ADDRESS_BRANCH,
+  GEO_COORDINATES,
+  TELEPHONES,
+  buildContactPoints,
+  buildSameAs,
+  localBusinessId,
+  brandId,
+} from "@/lib/seo/schemas";
 
 type BreadcrumbItem = {
   name: string;
   path: string;
-};
-
-type FaqItem = {
-  question: string;
-  answer: string;
 };
 
 type HowToStep = {
@@ -16,87 +31,59 @@ type HowToStep = {
   text: string;
 };
 
-const TFC_FAQ_ITEMS: FaqItem[] = [
-  {
-    question: "Is The Flight Centre IATA certified?",
-    answer:
-      "Yes. The Flight Centre Travel & Tours is an IATA certified travel agency based in Gujranwala, Pakistan. We operate from two offices and have been serving clients for over 20 years.",
-  },
-  {
-    question: "Which travel agency in Gujranwala offers Umrah packages?",
-    answer:
-      "The Flight Centre Travel & Tours at Office 36-37 Jinnah Stadium, Gujranwala offers complete Umrah packages including hotel, air ticket, transport and Umrah visa. Call UAN 111-786-788.",
-  },
-  {
-    question: "What Umrah package durations are available?",
-    answer:
-      "The Flight Centre offers 15-day, 21-day and 28-day Umrah packages from Pakistan, covering hotel near Haram, return air ticket, Umrah visa, ground transport and Ziyarat.",
-  },
-  {
-    question: "Does The Flight Centre book international flights?",
-    answer:
-      "Yes. We provide airline ticket booking for all international and domestic routes. Visit our flight booking portal at www.theflightcentre.pk for online bookings.",
-  },
-  {
-    question: "What tour destinations does The Flight Centre cover?",
-    answer:
-      "We offer curated tour packages to Dubai, Malaysia, Thailand, Singapore, Bahrain, Azerbaijan, Oman, Cambodia, Sri Lanka, Iran, Indonesia and 50+ more destinations.",
-  },
-  {
-    question: "How do I get a visit visa through The Flight Centre?",
-    answer:
-      "Contact our office with your destination and travel dates. We provide document guidance, application support and processing assistance for all countries.",
-  },
-  {
-    question: "Does The Flight Centre offer a B2B portal for travel agents?",
-    answer:
-      "Yes. The Flight Centre offers a web portal ID for travel agencies with same-day activation. Features include multi-user ID support, ticket management and round-the-clock connectivity. Visit agent.tfctours.com.",
-  },
-  {
-    question: "What is the UAN number for The Flight Centre?",
-    answer:
-      "The UAN is 111-786-788. You can also call 0304-111-9-786 or reach our 24/7 helpdesk on the same number.",
-  },
-];
-
-function JsonLdScript({ data }: { data: unknown }) {
+async function JsonLdScript({ data }: { data: unknown }) {
+  const h = await headers();
+  const nonce = h.get("x-nonce") ?? undefined;
   return (
     <script
+      suppressHydrationWarning
       type="application/ld+json"
+      nonce={nonce}
       dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
     />
   );
 }
 
-export function LocalBusinessJsonLd({ locale }: { locale: Locale }) {
-  const sameAs = [
-    BRAND.social?.facebook,
-    BRAND.social?.instagram,
-    BRAND.social?.linkedin,
-    BRAND.social?.twitter,
-  ].filter((value): value is string => Boolean(value));
+export async function LocalBusinessJsonLd({
+  brand,
+  locale,
+}: {
+  brand: BrandProfile;
+  locale: Locale;
+}) {
+  const telephones = [brand.phone, brand.phone2, brand.mainPhone, brand.branchPhone]
+    .filter((value): value is string => Boolean(value));
+  const address = brand.postalAddress
+    ? {
+        "@type": "PostalAddress",
+        ...brand.postalAddress,
+      }
+    : POSTAL_ADDRESS_MAIN;
+  const geo =
+    brand.geoLatitude && brand.geoLongitude
+      ? {
+          "@type": "GeoCoordinates",
+          latitude: brand.geoLatitude,
+          longitude: brand.geoLongitude,
+        }
+      : GEO_COORDINATES;
+  const sameAs = brand.social
+    ? Object.values(brand.social).filter((value): value is string =>
+        Boolean(value),
+      )
+    : buildSameAs();
 
   const schema = {
     "@context": "https://schema.org",
     "@type": ["TravelAgency", "LocalBusiness"],
-    "@id": absoluteUrl("/#localbusiness"),
-    name: "The Flight Centre Travel & Tours",
+    "@id": localBusinessId(),
+    name: brand.companyName,
     alternateName: "دی فلائٹ سینٹر ٹریول اینڈ ٹورز",
     url: absoluteUrl("/"),
-    telephone: ["+923041119786", "111786788"],
-    email: "info@tfctours.com.pk",
-    address: {
-      "@type": "PostalAddress",
-      streetAddress: "Office 36-37, Jinnah Stadium",
-      addressLocality: "Gujranwala",
-      addressRegion: "Punjab",
-      addressCountry: "PK",
-    },
-    geo: {
-      "@type": "GeoCoordinates",
-      latitude: "32.1617",
-      longitude: "74.1883",
-    },
+    telephone: telephones.length > 0 ? telephones : TELEPHONES,
+    email: brand.email,
+    address,
+    geo,
     openingHoursSpecification: [
       {
         "@type": "OpeningHoursSpecification",
@@ -118,7 +105,7 @@ export function LocalBusinessJsonLd({ locale }: { locale: Locale }) {
       {
         "@type": "PropertyValue",
         name: "Branch Office",
-        value: "Plaza 18, Neelum Block DC Colony, Gujranwala",
+        value: brand.branchOffice ?? POSTAL_ADDRESS_BRANCH.streetAddress,
       },
     ],
     areaServed: [
@@ -144,7 +131,7 @@ export function LocalBusinessJsonLd({ locale }: { locale: Locale }) {
   return <JsonLdScript data={schema} />;
 }
 
-export function ServiceJsonLd({
+export async function ServiceJsonLd({
   locale,
   slug,
   name,
@@ -173,18 +160,12 @@ export function ServiceJsonLd({
     areaServed: ["Pakistan", "Saudi Arabia", "UAE", "Qatar", "Kuwait", "Oman"],
     provider: {
       "@type": "TravelAgency",
-      "@id": absoluteUrl("/#organization"),
+      "@id": brandId(),
       name: BRAND.companyName,
       url: absoluteUrl("/"),
       telephone: BRAND.phone,
       email: BRAND.email,
-      address: {
-        "@type": "PostalAddress",
-        streetAddress: "Office 36-37, Jinnah Stadium",
-        addressLocality: "Gujranwala",
-        addressRegion: "Punjab",
-        addressCountry: "PK",
-      },
+      address: POSTAL_ADDRESS_MAIN,
     },
     availableChannel: {
       "@type": "ServiceChannel",
@@ -196,15 +177,36 @@ export function ServiceJsonLd({
   return <JsonLdScript data={schema} />;
 }
 
-export function FAQJsonLd({ items = TFC_FAQ_ITEMS }: { items?: FaqItem[] }) {
-  if (items.length === 0) {
-    return null;
-  }
+export async function FAQJsonLd({
+  items = TFC_FAQ_ITEMS,
+  locale = "en",
+}: {
+  items?: FaqItem[];
+  locale?: "en" | "ur";
+}) {
+  const resolvedItems =
+    items === TFC_FAQ_ITEMS
+      ? ((await getFaqItems(locale)) ??
+        TFC_FAQ_ITEMS.map<FaqView>((item, index) => ({
+          id: item.id,
+          question: item.question[locale],
+          answer: item.answer[locale],
+          sortOrder: index,
+        })))
+      : items.map<FaqView>((item, index) => ({
+          id: item.id,
+          question: item.question[locale],
+          answer: item.answer[locale],
+          sortOrder: index,
+        }));
+
+  if (resolvedItems.length === 0) return null;
 
   const schema = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
-    mainEntity: items.map((item) => ({
+    inLanguage: locale === "ur" ? "ur-PK" : "en-PK",
+    mainEntity: resolvedItems.map((item) => ({
       "@type": "Question",
       name: item.question,
       acceptedAnswer: {
@@ -213,11 +215,11 @@ export function FAQJsonLd({ items = TFC_FAQ_ITEMS }: { items?: FaqItem[] }) {
       },
     })),
   };
-
   return <JsonLdScript data={schema} />;
 }
 
-export function BreadcrumbJsonLd({ items }: { items: BreadcrumbItem[] }) {
+
+export async function BreadcrumbJsonLd({ items }: { items: BreadcrumbItem[] }) {
   const schema = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
@@ -232,67 +234,32 @@ export function BreadcrumbJsonLd({ items }: { items: BreadcrumbItem[] }) {
   return <JsonLdScript data={schema} />;
 }
 
-export function OrganizationJsonLd({
+export async function OrganizationJsonLd({
   description,
 }: {
   description: string;
 }) {
-  const sameAs = [
-    BRAND.social?.facebook,
-    BRAND.social?.instagram,
-    BRAND.social?.linkedin,
-    BRAND.social?.twitter,
-  ].filter((value): value is string => Boolean(value));
-
   const schema = {
     "@context": "https://schema.org",
     "@type": "Organization",
-    "@id": absoluteUrl("/#organization"),
+    "@id": brandId(),
     name: "The Flight Centre Travel & Tours",
     alternateName: "دی فلائٹ سینٹر ٹریول اینڈ ٹورز",
     url: absoluteUrl("/"),
     logo: absoluteUrl("/images/tfc-logo-light.webp"),
     description,
-    email: "info@tfctours.com.pk",
-    telephone: ["+923041119786", "111786788"],
-    address: {
-      "@type": "PostalAddress",
-      streetAddress: "Office 36-37, Jinnah Stadium",
-      addressLocality: "Gujranwala",
-      addressRegion: "Punjab",
-      addressCountry: "PK",
-    },
-    contactPoint: [
-      {
-        "@type": "ContactPoint",
-        contactType: "customer service",
-        telephone: "+923041119786",
-        areaServed: "PK",
-        availableLanguage: ["en", "ur"],
-      },
-      {
-        "@type": "ContactPoint",
-        contactType: "customer service",
-        telephone: "111786788",
-        areaServed: "PK",
-        availableLanguage: ["en", "ur"],
-      },
-      {
-        "@type": "ContactPoint",
-        contactType: "24/7 helpdesk",
-        telephone: "+923041119786",
-        areaServed: "PK",
-        availableLanguage: ["en", "ur"],
-      },
-    ],
-    sameAs,
+    email: BRAND.email,
+    telephone: TELEPHONES,
+    address: POSTAL_ADDRESS_MAIN,
+    contactPoint: buildContactPoints(),
+    sameAs: buildSameAs(),
     hasCredential: "IATA Certified Travel Agency",
   };
 
   return <JsonLdScript data={schema} />;
 }
 
-export function ArticleJsonLd({
+export async function ArticleJsonLd({
   headline,
   description,
   path,
@@ -335,7 +302,7 @@ export function ArticleJsonLd({
   return <JsonLdScript data={schema} />;
 }
 
-export function HowToJsonLd({
+export async function HowToJsonLd({
   name,
   description,
   path,
@@ -363,5 +330,25 @@ export function HowToJsonLd({
     mainEntityOfPage: absoluteUrl(path),
   };
 
+  return <JsonLdScript data={schema} />;
+}
+
+export async function SpeakableJsonLd({
+  path,
+  cssSelectors,
+}: {
+  path: string;
+  cssSelectors: string[];
+}) {
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": `${absoluteUrl(path)}#webpage`,
+    url: absoluteUrl(path),
+    speakable: {
+      "@type": "SpeakableSpecification",
+      cssSelector: cssSelectors,
+    },
+  };
   return <JsonLdScript data={schema} />;
 }

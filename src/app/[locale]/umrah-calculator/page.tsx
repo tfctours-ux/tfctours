@@ -1,3 +1,4 @@
+// src/app/[locale]/umrah-calculator/page.tsx
 import type { Metadata } from "next";
 
 import {
@@ -13,8 +14,24 @@ import {
 import { setRequestLocale } from "next-intl/server";
 
 import { Breadcrumb } from "@/components/layout/Breadcrumb";
+import ErrorBoundary from "@/components/shared/ErrorBoundary";
 import { UmrahCalculatorWizard } from "@/components/umrah-calculator";
+import {
+  AIRLINES,
+  MADINAH_HOTELS,
+  MAKKAH_HOTELS,
+  PK_CITIES,
+  ROOM_TYPES,
+  SAUDI_CITIES,
+  TRANSPORT_OPTIONS,
+} from "@/components/umrah-calculator/config";
 import { Badge } from "@/components/ui/Badge";
+import { getCalculatorOptions, getTransportOptions } from "@/lib/cms/fetchers";
+import {
+  buildLocalizedPageMetadata,
+  getLocaleFromParams,
+  type LocaleParams,
+} from "@/lib/page-metadata";
 
 const CONTENT = {
   en: {
@@ -93,35 +110,84 @@ const CONTENT = {
   },
 } as const;
 
-export const metadata: Metadata = {
-  title: "Umrah Package Quotation Calculator | The Flight Centre",
-  description:
-    "Get a detailed Umrah package quotation instantly - flights, hotels, transport, and visa all in one quote. The Flight Centre Travel & Tours, Gujranwala.",
-  keywords: [
-    "Umrah quotation calculator",
-    "Umrah package quote Pakistan",
-    "custom Umrah package",
-    "The Flight Centre",
-  ],
-};
+const META_KEYWORDS = [
+  "Umrah quotation calculator",
+  "Umrah package quote Pakistan",
+  "custom Umrah package",
+  "The Flight Centre",
+];
+
+export async function generateMetadata({
+  params,
+}: {
+  params: LocaleParams;
+}): Promise<Metadata> {
+  return buildLocalizedPageMetadata(
+    params,
+    "umrahCalculator.meta",
+    "/umrah-calculator",
+    META_KEYWORDS,
+  );
+}
 
 export default async function UmrahCalculatorPage({
   params,
 }: {
-  params: Promise<{ locale: string }>;
+  params: LocaleParams;
 }) {
-  const { locale } = await params;
+  const locale = await getLocaleFromParams(params);
   setRequestLocale(locale);
   const content = CONTENT[locale === "ur" ? "ur" : "en"];
+  const [
+    airlines,
+    pakistanCities,
+    saudiCities,
+    roomTypes,
+    makkahHotels,
+    madinahHotels,
+    transportOptions,
+  ] = await Promise.all([
+    getCalculatorOptions("umrah_airline", locale),
+    getCalculatorOptions("pk_city", locale),
+    getCalculatorOptions("saudi_city", locale),
+    getCalculatorOptions("room_type", locale),
+    getCalculatorOptions("makkah_hotel", locale),
+    getCalculatorOptions("madinah_hotel", locale),
+    getTransportOptions(locale),
+  ]);
+  const resolvedAirlines = airlines?.map((option) => option.label) ?? [...AIRLINES];
+  const resolvedPakistanCities = pakistanCities?.map((option) => option.label) ?? [
+    ...PK_CITIES,
+  ];
+  const resolvedSaudiCities = saudiCities?.map((option) => option.label) ?? [
+    ...SAUDI_CITIES,
+  ];
+  const resolvedRoomTypes = roomTypes?.map((option) => option.label) ?? [
+    ...ROOM_TYPES,
+  ];
+  const resolvedMakkahHotels = makkahHotels?.map((option) => option.label) ?? [
+    ...MAKKAH_HOTELS,
+  ];
+  const resolvedMadinahHotels = madinahHotels?.map((option) => option.label) ?? [
+    ...MADINAH_HOTELS,
+  ];
+  const resolvedTransportOptions =
+    transportOptions?.map((option) => ({
+      label: option.label,
+      sar: option.sarRate,
+    })) ?? TRANSPORT_OPTIONS;
 
   return (
     <div className="pb-24">
       <Breadcrumb />
 
       <section className="mx-auto max-w-7xl px-6 py-12">
-        <div className="grid gap-8 lg:grid-cols-[0.92fr_1.08fr]">
+        <div className="grid gap-8">
           <div className="rounded-[2.5rem] bg-gradient-to-br from-brand-red/90 to-brand-darkred p-10 text-white">
-            <Badge variant="dark" className="border-white/20 bg-white/10 text-white">
+            <Badge
+              variant="dark"
+              className="border-white/30 bg-white/15 !text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.18)]"
+            >
               {content.badge}
             </Badge>
             <h1 className="mt-6 font-display text-4xl font-black leading-tight text-white md:text-5xl">
@@ -153,7 +219,17 @@ export default async function UmrahCalculatorPage({
           </div>
 
           <div className="rounded-[2.5rem] border border-white/[0.08] bg-white/[0.03] p-1">
-            <UmrahCalculatorWizard />
+            <ErrorBoundary>
+              <UmrahCalculatorWizard
+                initialAirlines={resolvedAirlines}
+                initialPakistanCities={resolvedPakistanCities}
+                initialSaudiCities={resolvedSaudiCities}
+                initialRoomTypes={resolvedRoomTypes}
+                initialMakkahHotels={resolvedMakkahHotels}
+                initialMadinahHotels={resolvedMadinahHotels}
+                initialTransportOptions={resolvedTransportOptions}
+              />
+            </ErrorBoundary>
           </div>
         </div>
       </section>

@@ -5,8 +5,10 @@ import { CheckCircle2 } from "lucide-react";
 import { Breadcrumb } from "@/components/layout/Breadcrumb";
 import { PageHero } from "@/components/shared/PageHero";
 import { UmrahPackageImageRow } from "@/components/shared/UmrahPackageImageRow";
+import { SpeakableJsonLd } from "@/components/shared/JsonLd";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
+import { getUmrahPackages } from "@/lib/cms/fetchers";
 import {
   getLocaleFromParams,
   type LocaleParams,
@@ -143,9 +145,21 @@ export default async function UmrahPage({
 }) {
   const locale = await getLocaleFromParams(params);
   const content = CONTENT[locale === "ur" ? "ur" : "en"];
+  const cmsPackages = await getUmrahPackages(locale);
+  const packageOptions =
+    cmsPackages && cmsPackages.length > 0
+      ? cmsPackages.map((item) => ({
+          title: item.title,
+          description: item.description,
+        }))
+      : content.packageOptions;
 
   return (
     <div className="pb-24">
+      <SpeakableJsonLd
+        path={localizePath(locale, "/umrah")}
+        cssSelectors={["#umrah-h1", "#umrah-lede"]}
+      />
       <Breadcrumb />
 
       <PageHero
@@ -157,22 +171,24 @@ export default async function UmrahPage({
         imageAlt={content.imageAlt}
         primaryHref="tel:03041119786"
         primaryLabel={content.primaryLabel}
+        h1Id="umrah-h1"
+        pId="umrah-lede"
         aside={
-          <div className="rounded-[1.75rem] border border-white/10 bg-white/10 p-5 text-white backdrop-blur">
-            <p className="text-xs uppercase tracking-[0.24em] text-brand-gold">
+          <div className="rounded-[1.75rem] border border-white/15 bg-black/65 p-5 text-white shadow-[0_18px_55px_rgb(0_0_0_/_0.35)] backdrop-blur-md">
+            <p className="text-xs font-bold uppercase tracking-[0.24em] text-gold [text-shadow:0_2px_8px_rgb(0_0_0_/_0.85)]">
               {content.completePackage}
             </p>
             <div className="mt-4 flex flex-wrap gap-2">
-              {content.packageOptions.map((option) => (
+              {packageOptions.map((option) => (
                 <Badge
                   key={option.title}
-                  className="border-white/15 bg-black/35 text-white"
+                  className="border-white/20 bg-white/15 text-white shadow-[0_2px_10px_rgb(0_0_0_/_0.25)]"
                 >
                   {option.title}
                 </Badge>
               ))}
             </div>
-            <p className="mt-4 text-sm leading-7 text-white/75">
+            <p className="mt-4 text-sm font-medium leading-7 text-white/90 [text-shadow:0_2px_8px_rgb(0_0_0_/_0.85)]">
               {content.asideText}
             </p>
           </div>
@@ -199,7 +215,7 @@ export default async function UmrahPage({
           <section className="rounded-[2rem] border border-black/10 bg-white p-6 shadow-brand md:p-8">
             <Badge>{content.optionsBadge}</Badge>
             <div className="mt-6 grid gap-4">
-              {content.packageOptions.map((option) => (
+              {packageOptions.map((option) => (
                 <article
                   key={option.title}
                   className="rounded-[1.75rem] bg-brand-red p-5 text-white shadow-[0_16px_40px_rgba(204,0,0,0.16)]"

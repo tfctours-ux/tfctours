@@ -1,30 +1,38 @@
+﻿// src/components/umrah-calculator/Step5.tsx
 "use client";
 
 import { useLocale } from "next-intl";
 
-import { TRANSPORT_OPTIONS } from "./config";
+import type { TransportOption } from "./config";
 import { isUrdu, umrahCopy } from "./copy";
 import type { Step5Data } from "./types";
 
 const INPUT_CLASS =
-  "w-full rounded-2xl border border-white/[0.08] bg-white/[0.05] px-4 py-3 text-white placeholder-white/30 outline-none transition focus:border-brand-red focus:bg-white/[0.08]";
+  "w-full rounded-2xl border border-input-border bg-input px-4 py-3 text-input-foreground placeholder:text-input-placeholder outline-none transition focus:border-accent focus:ring-2 focus:ring-accent-ring/30 autofill:shadow-[inset_0_0_0_1000px_rgb(var(--tfc-input))] autofill:[-webkit-text-fill-color:rgb(var(--tfc-input-foreground))]";
 const SELECT_CLASS = `${INPUT_CLASS} appearance-none`;
-const ERROR_CLASS = "mt-1 text-xs text-brand-red";
-const TITLE_CLASS = "font-display text-2xl font-black text-white";
-const SUB_LABEL_CLASS = "mb-2 text-sm font-medium text-white/70";
+const ERROR_CLASS = "mt-1 text-xs text-danger";
+const TITLE_CLASS = "font-display text-2xl font-black text-foreground";
+const SUB_LABEL_CLASS = "mb-2 text-sm font-medium text-foreground-muted";
 
 interface Step5Props {
   data: Step5Data;
+  transportOptions: TransportOption[];
   errors: Record<string, string>;
   onChange: (d: Partial<Step5Data>) => void;
   passengers: { adults: number; children: number; infants: number };
 }
 
-export function Step5({ data, errors, onChange, passengers }: Step5Props) {
+export function Step5({
+  data,
+  transportOptions,
+  errors,
+  onChange,
+  passengers,
+}: Step5Props) {
   const locale = useLocale();
   const copy = umrahCopy[isUrdu(locale) ? "ur" : "en"].step5;
   const selectedOption =
-    TRANSPORT_OPTIONS.find((option) => option.label === data.transportVisa) ?? null;
+    transportOptions.find((option) => option.label === data.transportVisa) ?? null;
   const rate = Number.parseFloat(data.exchangeRate || "0") || 0;
   const ticketAdult = Number.parseFloat(data.ticketAdult || "0") || 0;
   const ticketChild = Number.parseFloat(data.ticketChild || "0") || 0;
@@ -36,7 +44,7 @@ export function Step5({ data, errors, onChange, passengers }: Step5Props) {
     <div className="space-y-6">
       <div>
         <h2 className={TITLE_CLASS}>{copy.title}</h2>
-        <p className="mt-3 text-sm leading-7 text-white/70">
+        <p className="mt-3 text-sm leading-7 text-foreground-muted">
           {copy.description}
         </p>
       </div>
@@ -48,9 +56,9 @@ export function Step5({ data, errors, onChange, passengers }: Step5Props) {
           onChange={(event) => onChange({ transportVisa: event.target.value })}
           className={SELECT_CLASS}
         >
-          <option value="">{copy.selectPackage}</option>
-          {TRANSPORT_OPTIONS.map((option) => (
-            <option key={option.label} value={option.label}>
+          <option value="" className="bg-input text-input-foreground">{copy.selectPackage}</option>
+          {transportOptions.map((option) => (
+            <option key={option.label} value={option.label} className="bg-input text-input-foreground">
               {`${option.label} \u2014 ${option.sar} SAR`}
             </option>
           ))}
@@ -60,7 +68,7 @@ export function Step5({ data, errors, onChange, passengers }: Step5Props) {
         ) : null}
         {selectedOption ? (
           <div className="mt-3">
-            <span className="rounded-full border border-brand-gold/20 bg-brand-gold/10 px-3 py-1 text-xs text-brand-gold">
+            <span className="rounded-full border border-gold/20 bg-gold/10 px-3 py-1 text-xs text-gold">
               {selectedOption.sar} SAR {copy.selected}
             </span>
           </div>
@@ -127,50 +135,50 @@ export function Step5({ data, errors, onChange, passengers }: Step5Props) {
           className={INPUT_CLASS}
           placeholder={copy.couponPlaceholder}
         />
-        <p className="mt-2 text-xs text-white/50">
+        <p className="mt-2 text-xs text-foreground-muted">
           {copy.couponNote}
         </p>
       </div>
 
-      <div className="rounded-[2rem] border border-brand-gold/20 bg-white/[0.04] p-6 backdrop-blur-sm">
-        <p className="text-[10px] font-bold uppercase tracking-[0.32em] text-brand-gold">
+      <div className="rounded-[2rem] border border-gold/20 bg-surface-elevated/40 p-6 backdrop-blur-sm">
+        <p className="text-[10px] font-bold uppercase tracking-[0.32em] text-gold">
           {copy.totals}
         </p>
-        <div className="mt-5 space-y-3 text-sm text-white/78">
+        <div className="mt-5 space-y-3 text-sm text-foreground-muted">
           <div className="flex items-center justify-between gap-4">
             <span>{copy.totalPassengers}</span>
-            <span className="font-semibold text-white">{totalPassengers}</span>
+            <span className="font-semibold text-foreground">{totalPassengers}</span>
           </div>
           <div className="flex items-center justify-between gap-4">
             <span>{copy.transportCost}</span>
-            <span className="text-right font-semibold text-white">
+            <span className="text-right font-semibold text-foreground">
               {selectedOption?.sar ?? 0} SAR ={" "}
               {Math.round((selectedOption?.sar ?? 0) * rate)} PKR
             </span>
           </div>
           <div className="flex items-center justify-between gap-4">
             <span>{copy.ticketAdults}</span>
-            <span className="text-right font-semibold text-white">
+            <span className="text-right font-semibold text-foreground">
               {data.ticketAdult || 0} {"\u00D7"} {passengers.adults} ={" "}
               {Math.round(ticketAdult * passengers.adults)} PKR
             </span>
           </div>
           <div className="flex items-center justify-between gap-4">
             <span>{copy.ticketChildren}</span>
-            <span className="text-right font-semibold text-white">
+            <span className="text-right font-semibold text-foreground">
               {data.ticketChild || 0} {"\u00D7"} {passengers.children} ={" "}
               {Math.round(ticketChild * passengers.children)} PKR
             </span>
           </div>
           <div className="flex items-center justify-between gap-4">
             <span>{copy.ticketInfants}</span>
-            <span className="text-right font-semibold text-white">
+            <span className="text-right font-semibold text-foreground">
               {data.ticketInfant || 0} {"\u00D7"} {passengers.infants} ={" "}
               {Math.round(ticketInfant * passengers.infants)} PKR
             </span>
           </div>
         </div>
-        <p className="mt-5 text-xs text-white/50">
+        <p className="mt-5 text-xs text-foreground-muted">
           {copy.hotelNote}
         </p>
       </div>

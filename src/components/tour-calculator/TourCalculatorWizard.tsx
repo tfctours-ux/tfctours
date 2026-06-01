@@ -1,6 +1,7 @@
+// src/components/tour-calculator/TourCalculatorWizard.tsx
 "use client";
 
-import { useState } from "react";
+import { useCallback, useState } from "react";
 
 import { AnimatePresence, motion } from "framer-motion";
 import {
@@ -13,10 +14,18 @@ import {
 import { useLocale } from "next-intl";
 
 import { Button } from "@/components/ui/Button";
+import { Turnstile } from "@/components/shared/Turnstile";
 import { EASE_OUT_EXPO } from "@/lib/motion";
+import { EMAIL_REGEX, hasValidDateRange, WIZARD_CARD_CLASS } from "@/lib/validation";
 
 import { computeTourDerived } from "./calculations";
-import { INITIAL_TOUR_STATE } from "./config";
+import {
+  DEPARTURE_CITIES,
+  DESTINATION_CITIES,
+  INITIAL_TOUR_STATE,
+  TOUR_AIRLINES,
+  TOUR_COUNTRIES,
+} from "./config";
 import { isUrdu, tourCopy } from "./copy";
 import { Step1 } from "./Step1";
 import { Step2 } from "./Step2";
@@ -33,18 +42,25 @@ import type {
   TourWizardState,
 } from "./types";
 
-const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-const WIZARD_CARD_CLASS =
-  "rounded-[2rem] border border-white/[0.08] bg-white/[0.03] backdrop-blur-xl p-6 md:p-8";
+type TourCalculatorWizardProps = {
+  initialCountries?: string[];
+  initialAirlines?: string[];
+  initialDepartureCities?: string[];
+  initialDestinationCities?: string[];
+};
 
-function hasValidDateRange(checkIn: string, checkOut: string) {
-  if (!checkIn || !checkOut) return false;
-  return new Date(checkOut).getTime() > new Date(checkIn).getTime();
-}
-
-export function TourCalculatorWizard() {
+export function TourCalculatorWizard({
+  initialCountries,
+  initialAirlines,
+  initialDepartureCities,
+  initialDestinationCities,
+}: TourCalculatorWizardProps) {
   const locale = useLocale();
   const copy = tourCopy[isUrdu(locale) ? "ur" : "en"];
+  const countries = initialCountries ?? [...TOUR_COUNTRIES];
+  const airlines = initialAirlines ?? [...TOUR_AIRLINES];
+  const departureCities = initialDepartureCities ?? [...DEPARTURE_CITIES];
+  const destinationCities = initialDestinationCities ?? [...DESTINATION_CITIES];
   const [currentStep, setCurrentStep] = useState(1);
   const [direction, setDirection] = useState<1 | -1>(1);
   const [formData, setFormData] = useState<TourWizardState>(INITIAL_TOUR_STATE);
@@ -53,6 +69,15 @@ export function TourCalculatorWizard() {
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [submitSuccess, setSubmitSuccess] = useState(false);
   const [referenceId, setReferenceId] = useState("");
+  const [turnstileToken, setTurnstileToken] = useState("");
+
+  const handleTurnstileToken = useCallback((token: string) => {
+    setTurnstileToken(token);
+  }, []);
+
+  const handleTurnstileError = useCallback(() => {
+    setTurnstileToken("");
+  }, []);
 
   function updateStep1(data: Partial<Step1Data>) {
     setFormData((prev) => ({ ...prev, step1: { ...prev.step1, ...data } }));
@@ -207,6 +232,7 @@ export function TourCalculatorWizard() {
       totalHotelCost: derived.totalHotelCost,
       totalFlightCost: derived.totalFlightCost,
       grandTotal: derived.grandTotal,
+      turnstileToken,
     };
 
     try {
@@ -222,13 +248,13 @@ export function TourCalculatorWizard() {
         referenceId?: string;
       };
       if (!res.ok || !result.ok) {
-        throw new Error(copy.nav.submissionFailed);
+        throw new Error(result.error ?? copy.nav.submissionFailed);
       }
       setReferenceId(result.referenceId ?? "");
       setSubmitSuccess(true);
     } catch (err) {
       setSubmitError(
-        err instanceof Error ? err.message : copy.nav.genericError,
+        isUrdu(locale) || !(err instanceof Error) ? copy.nav.genericError : err.message,
       );
     } finally {
       setIsSubmitting(false);
@@ -264,36 +290,36 @@ export function TourCalculatorWizard() {
                 <div
                   className={[
                     "flex h-9 w-9 items-center justify-center rounded-full border",
-                    isCompleted && "border-brand-gold/40 bg-brand-gold/20",
+                    isCompleted && "border-gold/40 bg-gold/20",
                     isActive &&
-                      "ring-2 ring-brand-red/30 ring-offset-2 ring-offset-transparent border-brand-red bg-brand-red",
+                      "ring-2 ring-accent-ring ring-offset-2 ring-offset-background border-accent bg-accent",
                     !isCompleted &&
                       !isActive &&
-                      "border-white/[0.10] bg-white/[0.06]",
+                      "border-border bg-surface-muted",
                   ]
                     .filter(Boolean)
                     .join(" ")}
                 >
                   {isCompleted ? (
-                    <CheckCircle2 className="h-4 w-4 text-brand-gold" />
+                    <CheckCircle2 className="h-4 w-4 text-gold" />
                   ) : (
                     <span
                       className={[
                         "text-sm",
-                        isActive ? "font-bold text-white" : "text-white/40",
+                        isActive ? "font-bold text-accent-foreground" : "text-foreground-subtle",
                       ].join(" ")}
                     >
                       {stepNumber}
                     </span>
                   )}
                 </div>
-                <span className="hidden text-[10px] uppercase tracking-[0.14em] text-white/40 sm:block">
+                <span className="hidden text-[10px] uppercase tracking-[0.14em] text-foreground-subtle sm:block">
                   {label}
                 </span>
               </div>
 
               {stepNumber < copy.steps.length ? (
-                <div className="mx-2 h-px flex-1 bg-white/[0.08]" />
+                <div className="mx-2 h-px flex-1 bg-border" />
               ) : null}
             </div>
           );
@@ -324,6 +350,7 @@ export function TourCalculatorWizard() {
           {currentStep === 2 && (
             <Step2
               countries={formData.step2.countries}
+              countryOptions={countries}
               errors={errors}
               onChange={updateStep2}
             />
@@ -331,6 +358,9 @@ export function TourCalculatorWizard() {
           {currentStep === 3 && (
             <Step3
               flights={formData.step3.flights}
+              airlineOptions={airlines}
+              departureCityOptions={departureCities}
+              destinationCityOptions={destinationCities}
               errors={errors}
               onChange={updateStep3}
               passengers={{
@@ -349,13 +379,27 @@ export function TourCalculatorWizard() {
         </motion.div>
       </AnimatePresence>
 
-      <div className="mt-6 flex items-center justify-between border-t border-white/[0.08] pt-6">
+      {/* Turnstile renders on review step (Step 4) */}
+      {currentStep === 4 ? (
+        <div className="mt-4">
+          <Turnstile
+            onToken={handleTurnstileToken}
+            onError={handleTurnstileError}
+            action="tour-quote"
+          />
+          <p className="mt-1 text-xs text-foreground-subtle">
+            {isUrdu(locale) ? "آپ انسان ہیں، تصدیق ہو رہی ہے…" : "Verifying you're human…"}
+          </p>
+        </div>
+      ) : null}
+
+      <div className="mt-6 flex items-center justify-between border-t border-border pt-6">
         <div>
           {currentStep > 1 ? (
             <Button
               variant="outline"
               onClick={goBack}
-              className="border-white/20 text-white hover:border-white hover:bg-white hover:text-brand-black"
+              className="border-foreground/30 text-foreground hover:border-foreground hover:bg-foreground hover:text-background"
             >
               <ChevronLeft className="h-4 w-4" />
               {copy.nav.previous}
@@ -372,7 +416,7 @@ export function TourCalculatorWizard() {
               <ChevronRight className="h-4 w-4" />
             </Button>
           ) : (
-            <Button variant="primary" onClick={handleSubmit} disabled={isSubmitting}>
+            <Button variant="primary" onClick={handleSubmit} disabled={isSubmitting || !turnstileToken}>
               {isSubmitting ? (
                 <>
                   <LoaderCircle className="h-4 w-4 animate-spin" />
@@ -393,7 +437,7 @@ export function TourCalculatorWizard() {
         <motion.div
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
-          className="mt-4 rounded-2xl border border-brand-red/20 bg-brand-red/5 px-4 py-3 text-sm text-brand-red"
+          className="mt-4 rounded-2xl border border-danger/30 bg-danger-soft px-4 py-3 text-sm text-danger"
         >
           {submitError}
         </motion.div>

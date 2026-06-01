@@ -1,3 +1,6 @@
+// src/components/tour-calculator/calculations.ts
+import { computeNights, formatPKR } from "@/lib/calculator-utils";
+
 import type {
   CountryDerived,
   FlightBlock,
@@ -8,13 +11,7 @@ import type {
   TourWizardState,
 } from "./types";
 
-// Compute nights between two date strings. Returns 0 for invalid/missing/negative.
-export function computeNights(checkIn: string, checkOut: string): number {
-  if (!checkIn || !checkOut) return 0;
-  const diff = new Date(checkOut).getTime() - new Date(checkIn).getTime();
-  const nights = Math.round(diff / 86_400_000);
-  return nights > 0 ? nights : 0;
-}
+export { computeNights, formatPKR };
 
 // Compute cost for a single hotel entry
 export function computeHotelDerived(hotel: HotelEntry): HotelDerived {
@@ -91,10 +88,4 @@ export function computeTourDerived(state: TourWizardState): TourDerivedValues {
     totalFlightCost,
     grandTotal: totalHotelCost + totalFlightCost,
   };
-}
-
-// Format PKR with commas — returns "PKR 0" for zero, never NaN
-export function formatPKR(amount: number | null | undefined): string {
-  const safe = typeof amount === 'number' && !Number.isNaN(amount) && Number.isFinite(amount) ? amount : 0;
-  return `PKR ${safe.toLocaleString("en-PK")}`;
 }

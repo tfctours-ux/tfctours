@@ -1,20 +1,23 @@
+﻿// src/components/umrah-calculator/Step6Review.tsx
 "use client";
 
 import { useLocale } from "next-intl";
 
 import { computeDerivedValues, computeNights, formatPKR } from "./calculations";
+import type { TransportOption } from "./config";
 import { isUrdu, umrahCopy, type UmrahReviewCopy } from "./copy";
 import type { FlightLeg, HotelBlock, WizardState } from "./types";
 
 const REVIEW_CARD_CLASS =
-  "rounded-[2rem] border border-white/[0.08] bg-white/[0.04] p-6";
+  "rounded-[2rem] border border-border bg-surface-elevated/40 p-6";
 const SECTION_LABEL_CLASS =
-  "mb-4 text-[10px] font-bold uppercase tracking-[0.32em] text-brand-gold";
+  "mb-4 text-[10px] font-bold uppercase tracking-[0.32em] text-gold";
 const EMPTY_VALUE = "\u2014";
 const MULTIPLY_SIGN = "\u00D7";
 
 interface Step6ReviewProps {
   formData: WizardState;
+  transportOptions: TransportOption[];
 }
 
 interface ReviewRowProps {
@@ -26,8 +29,8 @@ interface ReviewRowProps {
 function ReviewRow({ label, value, valueClassName }: ReviewRowProps) {
   return (
     <div className="flex justify-between gap-4 text-sm">
-      <span className="text-white/50">{label}</span>
-      <span className={["font-medium text-white", valueClassName].filter(Boolean).join(" ")}>
+      <span className="text-foreground-muted">{label}</span>
+      <span className={["font-medium text-foreground", valueClassName].filter(Boolean).join(" ")}>
         {value}
       </span>
     </div>
@@ -45,7 +48,7 @@ function FlightSection({
 }) {
   return (
     <div className="space-y-3">
-      <p className="mb-2 text-xs font-semibold text-white/40">{title}</p>
+      <p className="mb-2 text-xs font-semibold text-foreground-subtle">{title}</p>
       <ReviewRow label={copy.airline} value={flight.airline || EMPTY_VALUE} />
       <ReviewRow label={copy.from} value={flight.from || EMPTY_VALUE} />
       <ReviewRow label={copy.to} value={flight.to || EMPTY_VALUE} />
@@ -66,7 +69,7 @@ function HotelSection({
 }) {
   return (
     <div className="space-y-3">
-      <p className="mb-2 text-xs font-semibold text-white/40">{copy.hotelNumber} {index + 1}</p>
+      <p className="mb-2 text-xs font-semibold text-foreground-subtle">{copy.hotelNumber} {index + 1}</p>
       <ReviewRow label={copy.hotel} value={block.hotelName || EMPTY_VALUE} />
       <ReviewRow label={copy.roomType} value={block.roomType || EMPTY_VALUE} />
       <ReviewRow label={copy.rooms} value={block.rooms} />
@@ -80,18 +83,18 @@ function HotelSection({
   );
 }
 
-export function Step6Review({ formData }: Step6ReviewProps) {
+export function Step6Review({ formData, transportOptions }: Step6ReviewProps) {
   const locale = useLocale();
   const copy = umrahCopy[isUrdu(locale) ? "ur" : "en"].review;
-  const derived = computeDerivedValues(formData);
+  const derived = computeDerivedValues(formData, transportOptions);
 
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="font-display text-2xl font-black text-white">
+        <h2 className="font-display text-2xl font-black text-foreground">
           {copy.title}
         </h2>
-        <p className="mt-3 text-sm text-white/60">
+        <p className="mt-3 text-sm text-foreground-muted">
           {copy.description}
         </p>
       </div>
@@ -114,7 +117,7 @@ export function Step6Review({ formData }: Step6ReviewProps) {
           <ReviewRow
             label={copy.totalPassengers}
             value={derived.totalPassengers}
-            valueClassName="font-bold text-brand-gold"
+            valueClassName="font-bold text-gold"
           />
         </div>
       </div>
@@ -133,11 +136,11 @@ export function Step6Review({ formData }: Step6ReviewProps) {
           {formData.step3.hotels.map((block, index) => (
             <HotelSection key={block.id} block={block} index={index} copy={copy} />
           ))}
-          <div className="border-t border-white/[0.08] pt-2">
+          <div className="border-t border-border pt-2">
             <ReviewRow
               label={copy.totalMakkahNights}
               value={`${derived.makkahNights} ${copy.nights}`}
-              valueClassName="font-bold text-brand-gold"
+              valueClassName="font-bold text-gold"
             />
           </div>
         </div>
@@ -149,11 +152,11 @@ export function Step6Review({ formData }: Step6ReviewProps) {
           {formData.step4.hotels.map((block, index) => (
             <HotelSection key={block.id} block={block} index={index} copy={copy} />
           ))}
-          <div className="border-t border-white/[0.08] pt-2">
+          <div className="border-t border-border pt-2">
             <ReviewRow
               label={copy.totalMadinahNights}
               value={`${derived.madinahNights} ${copy.nights}`}
-              valueClassName="font-bold text-brand-gold"
+              valueClassName="font-bold text-gold"
             />
           </div>
         </div>
@@ -196,18 +199,18 @@ export function Step6Review({ formData }: Step6ReviewProps) {
         </div>
       </div>
 
-      <div className="rounded-[2rem] border border-brand-gold/20 bg-brand-gold/[0.04] p-6">
+      <div className="rounded-[2rem] border border-gold/20 bg-gold/10 p-6">
         <p className={SECTION_LABEL_CLASS}>{copy.totalSummary}</p>
         <div className="space-y-4">
           <div className="flex justify-between gap-4">
-            <span className="text-sm text-white/50">{copy.totalTicketCost}</span>
-            <span className="font-display text-2xl font-black text-white">
+            <span className="text-sm text-foreground-muted">{copy.totalTicketCost}</span>
+            <span className="font-display text-2xl font-black text-foreground">
               {formatPKR(derived.ticketGrandTotal)}
             </span>
           </div>
           <ReviewRow label={copy.transportCost} value={formatPKR(derived.transportPKR)} />
         </div>
-        <div className="mt-4 border-t border-white/[0.06] pt-4 text-xs text-white/30">
+        <div className="mt-4 border-t border-border pt-4 text-xs text-foreground-subtle">
           {copy.note}
         </div>
       </div>

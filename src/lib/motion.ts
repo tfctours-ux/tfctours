@@ -1,3 +1,7 @@
+// src/lib/motion.ts
+// Re-export the small `m` component for use with LazyMotion.
+export { LazyMotion, domAnimation, m } from "framer-motion";
+
 // Shared easing curve used throughout the app
 export const EASE_OUT_EXPO = [0.16, 1, 0.3, 1] as const;
 

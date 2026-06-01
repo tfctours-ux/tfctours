@@ -1,23 +1,26 @@
+﻿// src/components/umrah-calculator/Step2.tsx
 "use client";
 
 import { PlaneTakeoff } from "lucide-react";
 import { useLocale } from "next-intl";
 
-import { AIRLINES, PK_CITIES, SAUDI_CITIES } from "./config";
 import { isUrdu, umrahCopy, type UmrahStep2Copy } from "./copy";
 import type { FlightLeg, Step2Data } from "./types";
 
 const SURFACE_CARD_CLASS =
-  "rounded-[2rem] border border-white/[0.08] bg-white/[0.04] backdrop-blur-sm";
+  "rounded-[2rem] border border-border bg-surface-elevated/40 backdrop-blur-sm";
 const INPUT_CLASS =
-  "w-full rounded-2xl border border-white/[0.08] bg-white/[0.05] px-4 py-3 text-white placeholder-white/30 outline-none transition focus:border-brand-red focus:bg-white/[0.08]";
+  "w-full rounded-2xl border border-input-border bg-input px-4 py-3 text-input-foreground placeholder:text-input-placeholder outline-none transition focus:border-accent focus:ring-2 focus:ring-accent-ring/30 autofill:shadow-[inset_0_0_0_1000px_rgb(var(--tfc-input))] autofill:[-webkit-text-fill-color:rgb(var(--tfc-input-foreground))]";
 const SELECT_CLASS = `${INPUT_CLASS} appearance-none`;
-const ERROR_CLASS = "mt-1 text-xs text-brand-red";
-const TITLE_CLASS = "font-display text-2xl font-black text-white";
-const SUB_LABEL_CLASS = "mb-2 text-sm font-medium text-white/70";
+const ERROR_CLASS = "mt-1 text-xs text-danger";
+const TITLE_CLASS = "font-display text-2xl font-black text-foreground";
+const SUB_LABEL_CLASS = "mb-2 text-sm font-medium text-foreground-muted";
 
 interface Step2Props {
   data: Step2Data;
+  airlineOptions: string[];
+  pakistanCityOptions: string[];
+  saudiCityOptions: string[];
   errors: Record<string, string>;
   onChange: (d: Partial<Step2Data>) => void;
 }
@@ -28,6 +31,7 @@ interface FlightPanelProps {
   flight: FlightLeg;
   fromOptions: readonly string[];
   toOptions: readonly string[];
+  airlineOptions: readonly string[];
   errors: Record<string, string>;
   onUpdate: (flight: FlightLeg) => void;
   copy: UmrahStep2Copy;
@@ -39,6 +43,7 @@ function FlightPanel({
   flight,
   fromOptions,
   toOptions,
+  airlineOptions,
   errors,
   onUpdate,
   copy,
@@ -50,8 +55,8 @@ function FlightPanel({
   return (
     <div className={`${SURFACE_CARD_CLASS} p-6`}>
       <div className="flex items-center gap-3">
-        <PlaneTakeoff className="h-5 w-5 text-brand-gold" />
-        <h3 className="text-lg font-semibold text-white">{title}</h3>
+        <PlaneTakeoff className="h-5 w-5 text-gold" />
+        <h3 className="text-lg font-semibold text-foreground">{title}</h3>
       </div>
 
       <div className="mt-6 grid gap-4">
@@ -62,9 +67,9 @@ function FlightPanel({
             onChange={(event) => update("airline", event.target.value)}
             className={SELECT_CLASS}
           >
-            <option value="">{copy.selectAirline}</option>
-            {AIRLINES.map((option) => (
-              <option key={option} value={option}>
+            <option value="" className="bg-input text-input-foreground">{copy.selectAirline}</option>
+            {airlineOptions.map((option) => (
+              <option key={option} value={option} className="bg-input text-input-foreground">
                 {option}
               </option>
             ))}
@@ -81,9 +86,9 @@ function FlightPanel({
             onChange={(event) => update("from", event.target.value)}
             className={SELECT_CLASS}
           >
-            <option value="">{copy.selectDeparture}</option>
+            <option value="" className="bg-input text-input-foreground">{copy.selectDeparture}</option>
             {fromOptions.map((option) => (
-              <option key={option} value={option}>
+              <option key={option} value={option} className="bg-input text-input-foreground">
                 {option}
               </option>
             ))}
@@ -100,9 +105,9 @@ function FlightPanel({
             onChange={(event) => update("to", event.target.value)}
             className={SELECT_CLASS}
           >
-            <option value="">{copy.selectArrival}</option>
+            <option value="" className="bg-input text-input-foreground">{copy.selectArrival}</option>
             {toOptions.map((option) => (
-              <option key={option} value={option}>
+              <option key={option} value={option} className="bg-input text-input-foreground">
                 {option}
               </option>
             ))}
@@ -142,7 +147,14 @@ function FlightPanel({
   );
 }
 
-export function Step2({ data, errors, onChange }: Step2Props) {
+export function Step2({
+  data,
+  airlineOptions,
+  pakistanCityOptions,
+  saudiCityOptions,
+  errors,
+  onChange,
+}: Step2Props) {
   const locale = useLocale();
   const copy = umrahCopy[isUrdu(locale) ? "ur" : "en"].step2;
 
@@ -150,7 +162,7 @@ export function Step2({ data, errors, onChange }: Step2Props) {
     <div className="space-y-6">
       <div>
         <h2 className={TITLE_CLASS}>{copy.title}</h2>
-        <p className="mt-3 text-sm leading-7 text-white/70">
+        <p className="mt-3 text-sm leading-7 text-foreground-muted">
           {copy.description}
         </p>
       </div>
@@ -160,8 +172,9 @@ export function Step2({ data, errors, onChange }: Step2Props) {
           title={copy.departure}
           prefix="departureFlight"
           flight={data.departureFlight}
-          fromOptions={PK_CITIES}
-          toOptions={SAUDI_CITIES}
+          fromOptions={pakistanCityOptions}
+          toOptions={saudiCityOptions}
+          airlineOptions={airlineOptions}
           errors={errors}
           onUpdate={(departureFlight) => onChange({ departureFlight })}
           copy={copy}
@@ -170,8 +183,9 @@ export function Step2({ data, errors, onChange }: Step2Props) {
           title={copy.return}
           prefix="returnFlight"
           flight={data.returnFlight}
-          fromOptions={SAUDI_CITIES}
-          toOptions={PK_CITIES}
+          fromOptions={saudiCityOptions}
+          toOptions={pakistanCityOptions}
+          airlineOptions={airlineOptions}
           errors={errors}
           onUpdate={(returnFlight) => onChange({ returnFlight })}
           copy={copy}

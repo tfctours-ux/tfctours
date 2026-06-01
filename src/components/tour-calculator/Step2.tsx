@@ -1,3 +1,4 @@
+﻿// src/components/tour-calculator/Step2.tsx
 "use client";
 
 import { Plus } from "lucide-react";
@@ -10,12 +11,13 @@ import type { CountryBlock } from "./types";
 
 interface Step2Props {
   countries: CountryBlock[];
+  countryOptions: string[];
   errors: Record<string, string>;
   onChange: (countries: CountryBlock[]) => void;
 }
 
 const ADD_BUTTON_CLASS =
-  "flex items-center gap-2 rounded-full border border-brand-gold/30 bg-brand-gold/[0.06] px-5 py-2.5 text-xs font-semibold uppercase tracking-[0.18em] text-brand-gold transition hover:border-brand-gold/60 hover:bg-brand-gold/10";
+  "flex items-center gap-2 rounded-full border border-gold/30 bg-gold/10 px-5 py-2.5 text-xs font-semibold uppercase tracking-[0.18em] text-gold transition hover:border-gold/60 hover:bg-gold/10";
 
 function getHotelNights(checkIn: string, checkOut: string) {
   if (!checkIn || !checkOut) return 0;
@@ -23,7 +25,7 @@ function getHotelNights(checkIn: string, checkOut: string) {
   return Math.max(0, Math.round(diff / 86_400_000));
 }
 
-export function Step2({ countries, errors, onChange }: Step2Props) {
+export function Step2({ countries, countryOptions, errors, onChange }: Step2Props) {
   const locale = useLocale();
   const copy = tourCopy[isUrdu(locale) ? "ur" : "en"].step2;
   const totalNights = countries.reduce((countrySum, country) => {
@@ -37,13 +39,13 @@ export function Step2({ countries, errors, onChange }: Step2Props) {
 
   return (
     <section>
-      <p className="text-[10px] font-bold uppercase tracking-[0.32em] text-brand-gold">
+      <p className="text-[10px] font-bold uppercase tracking-[0.32em] text-gold">
         {copy.step}
       </p>
-      <h2 className="mt-4 font-display text-3xl font-black text-white">
+      <h2 className="mt-4 font-display text-3xl font-black text-foreground">
         {copy.title}
       </h2>
-      <p className="mt-3 max-w-2xl text-sm leading-7 text-white/65">
+      <p className="mt-3 max-w-2xl text-sm leading-7 text-foreground-muted">
         {copy.description}
       </p>
 
@@ -54,6 +56,7 @@ export function Step2({ countries, errors, onChange }: Step2Props) {
             block={block}
             index={index}
             errors={errors}
+            countryOptions={countryOptions}
             onChange={(blockId, updatedBlock) => {
               onChange(
                 countries.map((country) =>
@@ -78,7 +81,7 @@ export function Step2({ countries, errors, onChange }: Step2Props) {
         </button>
 
         {totalNights > 0 ? (
-          <span className="rounded-full border border-brand-gold/20 bg-brand-gold/10 px-4 py-2 text-xs text-brand-gold">
+          <span className="rounded-full border border-gold/20 bg-gold/10 px-4 py-2 text-xs text-gold">
             {copy.total}: {totalNights} {copy.nightsAcross} {countries.length} {copy.destinations}
           </span>
         ) : null}

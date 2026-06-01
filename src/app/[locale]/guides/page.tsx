@@ -9,7 +9,7 @@ import { Breadcrumb } from "@/components/layout/Breadcrumb";
 import { PageHero } from "@/components/shared/PageHero";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
-import { GUIDES } from "@/lib/constants";
+import { getEffectiveGuides } from "@/lib/cms/effective";
 import {
   buildLocalizedPageMetadata,
   getLocaleFromParams,
@@ -35,6 +35,7 @@ export default async function GuidesPage({
   params: LocaleParams;
 }) {
   const locale = await getLocaleFromParams(params);
+  const guides = await getEffectiveGuides(locale);
   const t = await getTranslations({ locale, namespace: "guidesPage" });
   const guideT = await getTranslations({ locale, namespace: "guidesData" });
   const common = await getTranslations({ locale, namespace: "common" });
@@ -61,7 +62,7 @@ export default async function GuidesPage({
       />
 
       <section className="mx-auto mt-12 grid max-w-7xl gap-6 px-6 md:grid-cols-2">
-        {GUIDES.map((guide) => (
+        {guides.map((guide) => (
           <article
             key={guide.slug}
             className="overflow-hidden rounded-[2rem] border border-black/10 bg-white shadow-brand"

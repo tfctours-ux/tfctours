@@ -263,7 +263,10 @@ export default async function VisitVisaGuidePage({
 }) {
   const locale = await getLocaleFromParams(params);
   const common = await getTranslations({ locale, namespace: "common" });
+  const tHowTo = await getTranslations({ locale, namespace: "guidePages.visit-visa-guide.howto" });
   const page = content[locale];
+
+  const howToSteps = tHowTo.raw("steps") as Array<{ name: string; text: string }>;
 
   return (
     <div className="pb-20">
@@ -274,15 +277,28 @@ export default async function VisitVisaGuidePage({
         image="/images/uae.webp"
       />
       <HowToJsonLd
-        name={page.title}
-        description={page.description}
+        name={tHowTo("title")}
+        description={tHowTo("description")}
         path={localizePath(locale, "/guides/visit-visa-guide")}
-        steps={page.steps.map((step, index) => ({
-          name: `${common("step")} ${index + 1}`,
-          text: step,
+        steps={howToSteps.map((step) => ({
+          name: step.name,
+          text: step.text,
         }))}
       />
-      <FAQJsonLd items={page.faq} />
+      <FAQJsonLd
+        locale={locale as "en" | "ur"}
+        items={page.faq.map((item, idx) => ({
+          id: `faq-${idx}`,
+          question: {
+            en: locale === "en" ? item.question : "",
+            ur: locale === "ur" ? item.question : "",
+          },
+          answer: {
+            en: locale === "en" ? item.answer : "",
+            ur: locale === "ur" ? item.answer : "",
+          },
+        }))}
+      />
       <Breadcrumb />
 
       <section className="mx-auto mt-6 max-w-6xl px-6">

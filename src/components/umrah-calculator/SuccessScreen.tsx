@@ -1,3 +1,4 @@
+﻿// src/components/umrah-calculator/SuccessScreen.tsx
 "use client";
 
 import { useEffect, useRef, useState } from "react";
@@ -80,60 +81,60 @@ export function SuccessScreen({
         transition={{ delay: 0.2, type: "spring", stiffness: 200, damping: 15 }}
         className="relative"
       >
-        <div className="flex h-24 w-24 items-center justify-center rounded-full border border-emerald-500/30 bg-emerald-500/20">
-          <CheckCircle2 className="h-12 w-12 text-emerald-400" />
+        <div className="flex h-24 w-24 items-center justify-center rounded-full border border-success/30 bg-success-soft">
+          <CheckCircle2 className="h-12 w-12 text-success" />
         </div>
 
         <motion.div
-          className="absolute inset-0 rounded-full border-2 border-emerald-400/30"
+          className="absolute inset-0 rounded-full border-2 border-success/30"
           animate={{ scale: [1, 1.4, 1], opacity: [0.6, 0, 0.6] }}
           transition={{ duration: 2.5, repeat: Infinity }}
         />
       </motion.div>
 
       <div className="space-y-4">
-        <h2 className="font-display text-3xl font-black text-white">
+        <h2 className="font-display text-3xl font-black text-foreground">
           {copy.title} {"\u{1F54B}"}
         </h2>
-        <p className="max-w-md text-base leading-7 text-white/65">
+        <p className="max-w-md text-base leading-7 text-foreground-muted">
           {copy.description}
         </p>
       </div>
 
       {referenceId ? (
-        <div className="rounded-2xl border border-brand-gold/25 bg-brand-gold/[0.07] px-6 py-4">
-          <p className="text-[10px] uppercase tracking-[0.25em] text-brand-gold/70">
+        <div className="rounded-2xl border border-gold bg-gold px-6 py-4">
+          <p className="text-[10px] uppercase tracking-[0.25em] text-gold-foreground/70">
             {copy.reference}
           </p>
-          <p className="mt-1 font-display text-2xl font-bold text-brand-gold">
+          <p className="mt-1 font-display text-2xl font-bold text-gold-foreground">
             {referenceId}
           </p>
         </div>
       ) : null}
 
       <div className="flex flex-wrap justify-center gap-3">
-        <div className="flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.05] px-4 py-2 text-sm text-white/65">
-          <Phone className="h-4 w-4 text-brand-red" />
+        <div className="flex items-center gap-2 rounded-full border border-border bg-surface-elevated/50 px-4 py-2 text-sm text-foreground-muted">
+          <Phone className="h-4 w-4 text-accent" />
           {copy.call} {contactNumber}
         </div>
-        <div className="flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.05] px-4 py-2 text-sm text-white/65">
-          <Mail className="h-4 w-4 text-brand-red" />
+        <div className="flex items-center gap-2 rounded-full border border-border bg-surface-elevated/50 px-4 py-2 text-sm text-foreground-muted">
+          <Mail className="h-4 w-4 text-accent" />
           {copy.confirmation} {email}
         </div>
       </div>
 
       <div className="space-y-3">
-        <div className="flex items-center gap-2 text-sm text-white/40">
+        <div className="flex items-center gap-2 text-sm text-foreground-subtle">
           <Clock className="h-4 w-4" />
           <span>
             {copy.returning}{" "}
-            <span className="font-bold text-white/70">{countdown}s</span>...
+            <span className="font-bold text-foreground-muted">{countdown}s</span>...
           </span>
         </div>
 
-        <div className="h-1 w-full max-w-xs overflow-hidden rounded-full bg-white/[0.08]">
+        <div className="h-1 w-full max-w-xs overflow-hidden rounded-full bg-border">
           <motion.div
-            className="h-full rounded-full bg-brand-red"
+            className="h-full rounded-full bg-accent"
             initial={{ width: "100%" }}
             animate={{ width: "0%" }}
             transition={{ duration: 15, ease: "linear" }}
@@ -144,7 +145,7 @@ export function SuccessScreen({
       <Button
         variant="outline"
         onClick={goHomeNow}
-        className="border-white/20 text-white hover:border-white hover:bg-white hover:text-brand-black"
+        className="border-foreground/30 text-foreground hover:border-foreground hover:bg-foreground hover:text-background"
       >
         {copy.goHome}
       </Button>

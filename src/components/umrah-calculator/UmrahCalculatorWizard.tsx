@@ -1,16 +1,29 @@
+// src/components/umrah-calculator/UmrahCalculatorWizard.tsx
 "use client";
 
-import { useState } from "react";
+import { useCallback, useState } from "react";
 
 import { AnimatePresence, motion } from "framer-motion";
 import { Check, LoaderCircle } from "lucide-react";
 import { useLocale } from "next-intl";
 
 import { Button } from "@/components/ui/Button";
+import { Turnstile } from "@/components/shared/Turnstile";
 import { EASE_OUT_EXPO } from "@/lib/motion";
+import { EMAIL_REGEX, hasValidDateRange, WIZARD_CARD_CLASS } from "@/lib/validation";
 
 import { computeDerivedValues } from "./calculations";
-import { INITIAL_WIZARD_STATE } from "./config";
+import {
+  AIRLINES,
+  INITIAL_WIZARD_STATE,
+  MADINAH_HOTELS,
+  MAKKAH_HOTELS,
+  PK_CITIES,
+  ROOM_TYPES,
+  SAUDI_CITIES,
+  TRANSPORT_OPTIONS,
+  type TransportOption,
+} from "./config";
 import { isUrdu, umrahCopy, type UmrahErrorCopy } from "./copy";
 import { SuccessScreen } from "./SuccessScreen";
 import { Step1 } from "./Step1";
@@ -28,14 +41,15 @@ import type {
   WizardState,
 } from "./types";
 
-const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-const WIZARD_CARD_CLASS =
-  "rounded-[2rem] border border-white/[0.08] bg-white/[0.03] p-6 backdrop-blur-xl md:p-8";
-
-function hasValidHotelDates(checkIn: string, checkOut: string) {
-  if (!checkIn || !checkOut) return false;
-  return new Date(checkOut).getTime() > new Date(checkIn).getTime();
-}
+type UmrahCalculatorWizardProps = {
+  initialAirlines?: string[];
+  initialPakistanCities?: string[];
+  initialSaudiCities?: string[];
+  initialRoomTypes?: string[];
+  initialMakkahHotels?: string[];
+  initialMadinahHotels?: string[];
+  initialTransportOptions?: TransportOption[];
+};
 
 function validateFlightLeg(
   prefix: "departureFlight" | "returnFlight",
@@ -80,7 +94,7 @@ function validateHotels(
       nextErrors[`hotel_${block.id}_checkOut`] = errorCopy.checkOut;
     }
 
-    if (block.checkIn && block.checkOut && !hasValidHotelDates(block.checkIn, block.checkOut)) {
+    if (block.checkIn && block.checkOut && !hasValidDateRange(block.checkIn, block.checkOut)) {
       nextErrors[`hotel_${block.id}_checkOut`] = errorCopy.dateOrder;
     }
   }
@@ -106,14 +120,14 @@ function StepIndicator({
               <div className="flex flex-1 flex-col items-center">
                 <div className="relative">
                   {isActive ? (
-                    <span className="absolute inset-0 animate-ping rounded-full bg-brand-red/35" />
+                    <span className="absolute inset-0 animate-ping rounded-full bg-accent/35" />
                   ) : null}
                   <span
                     className={[
-                      "relative flex h-11 w-11 items-center justify-center rounded-full text-sm font-bold transition",
-                      isCompleted && "bg-brand-gold text-brand-black",
-                      isActive && "bg-brand-red text-white",
-                      !isCompleted && !isActive && "bg-white/10 text-white/40",
+                      "relative flex h-11 w-11 items-center justify-center rounded-full border text-sm font-bold transition",
+                      isCompleted && "border-gold/40 bg-gold/20 text-gold",
+                      isActive && "border-accent bg-accent text-accent-foreground ring-2 ring-accent-ring ring-offset-2 ring-offset-background",
+                      !isCompleted && !isActive && "border-border bg-surface-muted text-foreground-subtle",
                     ]
                       .filter(Boolean)
                       .join(" ")}
@@ -121,12 +135,12 @@ function StepIndicator({
                     {isCompleted ? <Check className="h-5 w-5" /> : stepNumber}
                   </span>
                 </div>
-                <span className="mt-3 hidden text-[10px] font-medium uppercase tracking-[0.18em] text-white/50 sm:block">
+                <span className="mt-3 hidden text-[10px] font-medium uppercase tracking-[0.18em] text-foreground-muted sm:block">
                   {label}
                 </span>
               </div>
               {stepNumber < labels.length ? (
-                <div className="mt-5 h-px flex-1 bg-white/[0.08]" />
+                <div className="mt-5 h-px flex-1 bg-border" />
               ) : null}
             </div>
           );
@@ -136,9 +150,24 @@ function StepIndicator({
   );
 }
 
-export function UmrahCalculatorWizard() {
+export function UmrahCalculatorWizard({
+  initialAirlines,
+  initialPakistanCities,
+  initialSaudiCities,
+  initialRoomTypes,
+  initialMakkahHotels,
+  initialMadinahHotels,
+  initialTransportOptions,
+}: UmrahCalculatorWizardProps) {
   const locale = useLocale();
   const copy = umrahCopy[isUrdu(locale) ? "ur" : "en"];
+  const airlines = initialAirlines ?? [...AIRLINES];
+  const pakistanCities = initialPakistanCities ?? [...PK_CITIES];
+  const saudiCities = initialSaudiCities ?? [...SAUDI_CITIES];
+  const roomTypes = initialRoomTypes ?? [...ROOM_TYPES];
+  const makkahHotels = initialMakkahHotels ?? [...MAKKAH_HOTELS];
+  const madinahHotels = initialMadinahHotels ?? [...MADINAH_HOTELS];
+  const transportOptions = initialTransportOptions ?? TRANSPORT_OPTIONS;
   const [currentStep, setCurrentStep] = useState(1);
   const [direction, setDirection] = useState<1 | -1>(1);
   const [formData, setFormData] = useState<WizardState>(INITIAL_WIZARD_STATE);
@@ -147,6 +176,15 @@ export function UmrahCalculatorWizard() {
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [submitSuccess, setSubmitSuccess] = useState(false);
   const [referenceId, setReferenceId] = useState("");
+  const [turnstileToken, setTurnstileToken] = useState("");
+
+  const handleTurnstileToken = useCallback((token: string) => {
+    setTurnstileToken(token);
+  }, []);
+
+  const handleTurnstileError = useCallback(() => {
+    setTurnstileToken("");
+  }, []);
 
   function updateStep1(data: Partial<Step1Data>) {
     setFormData((prev) => ({ ...prev, step1: { ...prev.step1, ...data } }));
@@ -238,7 +276,7 @@ export function UmrahCalculatorWizard() {
     setIsSubmitting(true);
     setSubmitError(null);
 
-    const derived = computeDerivedValues(formData);
+    const derived = computeDerivedValues(formData, transportOptions);
 
     const payload = {
       passengerName: formData.step1.passengerName,
@@ -270,6 +308,7 @@ export function UmrahCalculatorWizard() {
       transportSAR: derived.transportSAR,
       transportPKR: derived.transportPKR,
       ticketGrandTotal: derived.ticketGrandTotal,
+      turnstileToken,
     };
 
     try {
@@ -284,12 +323,12 @@ export function UmrahCalculatorWizard() {
         message?: string;
         referenceId?: string;
       };
-      if (!res.ok || !result.ok) throw new Error(copy.nav.submissionFailed);
+      if (!res.ok || !result.ok) throw new Error(result.error ?? copy.nav.submissionFailed);
       setReferenceId(result.referenceId ?? "");
       setSubmitSuccess(true);
     } catch (err) {
       setSubmitError(
-        err instanceof Error ? err.message : copy.nav.genericError,
+        isUrdu(locale) || !(err instanceof Error) ? copy.nav.genericError : err.message,
       );
     } finally {
       setIsSubmitting(false);
@@ -330,11 +369,20 @@ export function UmrahCalculatorWizard() {
             <Step1 data={formData.step1} errors={errors} onChange={updateStep1} />
           )}
           {currentStep === 2 && (
-            <Step2 data={formData.step2} errors={errors} onChange={updateStep2} />
+            <Step2
+              data={formData.step2}
+              airlineOptions={airlines}
+              pakistanCityOptions={pakistanCities}
+              saudiCityOptions={saudiCities}
+              errors={errors}
+              onChange={updateStep2}
+            />
           )}
           {currentStep === 3 && (
             <Step3
               hotels={formData.step3.hotels}
+              hotelOptions={makkahHotels}
+              roomTypeOptions={roomTypes}
               errors={errors}
               onChange={updateStep3}
             />
@@ -342,6 +390,8 @@ export function UmrahCalculatorWizard() {
           {currentStep === 4 && (
             <Step4
               hotels={formData.step4.hotels}
+              hotelOptions={madinahHotels}
+              roomTypeOptions={roomTypes}
               errors={errors}
               onChange={updateStep4}
             />
@@ -349,6 +399,7 @@ export function UmrahCalculatorWizard() {
           {currentStep === 5 && (
             <Step5
               data={formData.step5}
+              transportOptions={transportOptions}
               errors={errors}
               onChange={updateStep5}
               passengers={{
@@ -358,17 +409,36 @@ export function UmrahCalculatorWizard() {
               }}
             />
           )}
-          {currentStep === 6 && <Step6Review formData={formData} />}
+          {currentStep === 6 && (
+            <Step6Review
+              formData={formData}
+              transportOptions={transportOptions}
+            />
+          )}
         </motion.div>
       </AnimatePresence>
 
-      <div className="mt-8 flex items-center justify-between border-t border-white/[0.08] pt-6">
+      {/* Turnstile renders on review step (Step 6) */}
+      {currentStep === 6 ? (
+        <div className="mt-4">
+          <Turnstile
+            onToken={handleTurnstileToken}
+            onError={handleTurnstileError}
+            action="umrah-quote"
+          />
+          <p className="mt-1 text-xs text-foreground-subtle">
+            {isUrdu(locale) ? "آپ انسان ہیں، تصدیق ہو رہی ہے…" : "Verifying you're human…"}
+          </p>
+        </div>
+      ) : null}
+
+      <div className="mt-8 flex items-center justify-between border-t border-border pt-6">
         <div>
           {currentStep > 1 ? (
             <Button
               variant="outline"
               onClick={goBack}
-              className="border-white/20 text-white hover:border-white hover:bg-white hover:text-brand-black"
+              className="border-foreground/30 text-foreground hover:border-foreground hover:bg-foreground hover:text-background"
             >
               {copy.nav.previous}
             </Button>
@@ -384,7 +454,7 @@ export function UmrahCalculatorWizard() {
             <Button
               variant="primary"
               onClick={handleSubmit}
-              disabled={isSubmitting}
+              disabled={isSubmitting || !turnstileToken}
             >
               {isSubmitting ? (
                 <>
@@ -400,7 +470,7 @@ export function UmrahCalculatorWizard() {
       </div>
 
       {submitError ? (
-        <div className="mt-4 rounded-2xl border border-brand-red/20 bg-brand-red/5 px-4 py-3 text-sm text-brand-red">
+        <div className="mt-4 rounded-2xl border border-danger/30 bg-danger-soft px-4 py-3 text-sm text-danger">
           {submitError}
         </div>
       ) : null}

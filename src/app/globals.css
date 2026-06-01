@@ -2,14 +2,90 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --brand-red: #cc0000;
-  --brand-darkred: #8b0000;
-  --brand-gold: #c9a84c;
-  --brand-black: #080808;
-  --brand-surface: #111111;
-  --brand-muted: #1a1a1a;
-  --brand-light: #f5f4f0;
+:root,
+html.light {
+  --tfc-background:           255 255 255;
+  --tfc-surface:              250 250 247;
+  --tfc-surface-elevated:     255 255 255;
+  --tfc-surface-muted:        242 241 236;
+  --tfc-surface-inverse:        8   8   8;
+  --tfc-foreground:            10  10  10;
+  --tfc-foreground-muted:      82  82  91;
+  --tfc-foreground-subtle:    113 113 122;
+  --tfc-foreground-inverse:   250 250 247;
+  --tfc-border:                 8   8   8;
+  --tfc-border-strong:          8   8   8;
+  --tfc-border-inverse:       255 255 255;
+  --tfc-accent:               204   0   0;
+  --tfc-accent-hover:         139   0   0;
+  --tfc-accent-foreground:    255 255 255;
+  --tfc-accent-soft:          204   0   0;
+  --tfc-accent-ring:          204   0   0;
+  --tfc-gold:                 201 168  76;
+  --tfc-gold-hover:           184 151  61;
+  --tfc-gold-foreground:       10  10  10;
+  --tfc-success:                4 120  87;
+  --tfc-success-soft:           4 120  87;
+  --tfc-warning:              180  83   9;
+  --tfc-warning-soft:         180  83   9;
+  --tfc-danger:               185  28  28;
+  --tfc-danger-soft:          185  28  28;
+  --tfc-input:                255 255 255;
+  --tfc-input-border:           8   8   8;
+  --tfc-input-foreground:      10  10  10;
+  --tfc-input-placeholder:    161 161 170;
+  --tfc-overlay:                8   8   8;
+  --tfc-scrim:                  8   8   8;
+  /* Default alpha pairs (use with Tailwind opacity utilities) */
+  --tfc-border-alpha:           0.08;
+  --tfc-border-strong-alpha:    0.16;
+  --tfc-accent-soft-alpha:      0.08;
+  --tfc-accent-ring-alpha:      0.28;
+  --tfc-overlay-alpha:          0.60;
+  --tfc-scrim-alpha:            0.78;
+  color-scheme: light;
+}
+
+html.dark {
+  --tfc-background:             8   8   8;
+  --tfc-surface:               17  17  17;
+  --tfc-surface-elevated:      26  26  26;
+  --tfc-surface-muted:         15  15  15;
+  --tfc-surface-inverse:      250 250 247;
+  --tfc-foreground:           250 250 247;
+  --tfc-foreground-muted:     250 250 247;
+  --tfc-foreground-subtle:    250 250 247;
+  --tfc-foreground-inverse:    10  10  10;
+  --tfc-border:               255 255 255;
+  --tfc-border-strong:        255 255 255;
+  --tfc-border-inverse:         8   8   8;
+  --tfc-accent:               225  29  29;
+  --tfc-accent-hover:         204   0   0;
+  --tfc-accent-foreground:    255 255 255;
+  --tfc-accent-soft:          225  29  29;
+  --tfc-accent-ring:          225  29  29;
+  --tfc-gold:                 217 185 100;
+  --tfc-gold-hover:           201 168  76;
+  --tfc-gold-foreground:        8   8   8;
+  --tfc-success:               16 185 129;
+  --tfc-success-soft:          16 185 129;
+  --tfc-warning:              245 158  11;
+  --tfc-warning-soft:         245 158  11;
+  --tfc-danger:               248 113 113;
+  --tfc-danger-soft:          248 113 113;
+  --tfc-input:                 20  20  20;
+  --tfc-input-border:          64  64  64;
+  --tfc-input-foreground:     250 250 247;
+  --tfc-input-placeholder:    161 161 170;
+  --tfc-overlay:                0   0   0;
+  --tfc-scrim:                  0   0   0;
+  --tfc-border-alpha:           0.08;
+  --tfc-border-strong-alpha:    0.16;
+  --tfc-accent-soft-alpha:      0.12;
+  --tfc-accent-ring-alpha:      0.40;
+  --tfc-overlay-alpha:          0.72;
+  --tfc-scrim-alpha:            0.88;
+  color-scheme: dark;
 }
 
 html {
@@ -19,9 +95,18 @@ html {
 body {
   min-height: 100vh;
   overflow-x: hidden;
-  background: #080808;
-  color: var(--brand-light);
+  background-color: rgb(var(--tfc-background));
+  color: rgb(var(--tfc-foreground));
   font-family: var(--font-dm-sans), sans-serif;
+  transition: background-color 200ms ease, color 200ms ease;
+}
+
+body.bg-brand-black {
+  background-color: rgb(var(--tfc-background));
+}
+
+body.text-brand-light {
+  color: rgb(var(--tfc-foreground));
 }
 
 body::before {
@@ -30,18 +115,29 @@ body::before {
   inset: 0;
   pointer-events: none;
   z-index: 0;
-  opacity: 0.06;
+  opacity: 0.025;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E");
+  mix-blend-mode: multiply;
+}
+
+html.dark body::before {
+  opacity: 0.06;
   mix-blend-mode: screen;
 }
 
+:root body::before,
+html.light body::before {
+  opacity: 0.025;
+  mix-blend-mode: multiply;
+}
+
 * {
-  border-color: rgba(8, 8, 8, 0.08);
+  border-color: rgb(var(--tfc-border) / var(--tfc-border-alpha));
 }
 
 *::selection {
-  background: rgba(204, 0, 0, 0.22);
-  color: white;
+  background: rgb(var(--tfc-accent) / 0.22);
+  color: rgb(var(--tfc-accent-foreground));
 }
 
 ::-webkit-scrollbar {
@@ -49,16 +145,16 @@ body::before {
 }
 
 ::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.06);
+  background: rgb(var(--tfc-surface));
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, var(--brand-red), var(--brand-darkred));
+  background: linear-gradient(180deg, rgb(var(--tfc-accent)), rgb(var(--tfc-accent-hover)));
   border-radius: 999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, var(--brand-darkred), var(--brand-red));
+  background: linear-gradient(180deg, rgb(var(--tfc-accent-hover)), rgb(var(--tfc-accent)));
 }
 
 .locale-shell {
@@ -75,6 +171,12 @@ body::before {
   background:
     linear-gradient(115deg, transparent 0%, rgba(201, 168, 76, 0.04) 38%, transparent 60%),
     radial-gradient(circle at bottom right, rgba(204, 0, 0, 0.1), transparent 34%);
+}
+
+html.light .locale-shell::after {
+  background:
+    linear-gradient(115deg, transparent 0%, rgba(201, 168, 76, 0.025) 38%, transparent 60%),
+    radial-gradient(circle at bottom right, rgba(204, 0, 0, 0.04), transparent 34%);
 }
 
 .locale-shell[dir="rtl"] {
@@ -142,6 +244,14 @@ html[dir="rtl"] body {
   animation: orbDrift 18s ease-in-out infinite;
 }
 
+html.light .consular-orb {
+  opacity: 0.10;
+}
+
+html.dark .consular-orb {
+  opacity: 0.22;
+}
+
 .consular-orb-crimson {
   top: 6rem;
   left: -8rem;
@@ -171,5 +281,14 @@ html[dir="rtl"] body {
 }
 
 .prose-brand {
-  @apply prose prose-zinc max-w-none prose-headings:font-display prose-headings:text-brand-black prose-p:text-zinc-700 prose-li:text-zinc-700 prose-strong:text-brand-black prose-a:text-brand-red;
+  @apply prose max-w-none
+    prose-headings:font-display prose-headings:text-foreground
+    prose-p:text-foreground-muted prose-li:text-foreground-muted
+    prose-strong:text-foreground prose-a:text-accent
+    dark:prose-invert;
+}
+
+@keyframes ken-burns {
+  from { transform: scale(1) translateZ(0); }
+  to   { transform: scale(1.08) translateZ(0); }
 }

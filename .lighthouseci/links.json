@@ -1,0 +1,11 @@
+{
+  "http://localhost:3000/": "https://storage.googleapis.com/lighthouse-infrastructure.appspot.com/reports/1779052157967-15385.report.html",
+  "http://localhost:3000/about": "https://storage.googleapis.com/lighthouse-infrastructure.appspot.com/reports/1779052159712-91608.report.html",
+  "http://localhost:3000/contact": "https://storage.googleapis.com/lighthouse-infrastructure.appspot.com/reports/1779052161311-69867.report.html",
+  "http://localhost:3000/services": "https://storage.googleapis.com/lighthouse-infrastructure.appspot.com/reports/1779052162784-70911.report.html",
+  "http://localhost:3000/services/umrah-packages": "https://storage.googleapis.com/lighthouse-infrastructure.appspot.com/reports/1779052164255-24694.report.html",
+  "http://localhost:3000/services/tour-packages": "https://storage.googleapis.com/lighthouse-infrastructure.appspot.com/reports/1779052165801-60334.report.html",
+  "http://localhost:3000/guides/saudi-visa-guide": "https://storage.googleapis.com/lighthouse-infrastructure.appspot.com/reports/1779052167412-30315.report.html",
+  "http://localhost:3000/tour-calculator": "https://storage.googleapis.com/lighthouse-infrastructure.appspot.com/reports/1779052169015-73715.report.html",
+  "http://localhost:3000/umrah-calculator": "https://storage.googleapis.com/lighthouse-infrastructure.appspot.com/reports/1779052170649-73430.report.html"
+}

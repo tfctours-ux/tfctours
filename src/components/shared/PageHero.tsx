@@ -1,3 +1,4 @@
+// src/components/shared/PageHero.tsx
 import Image from "next/image";
 import type { ReactNode } from "react";
 
@@ -19,6 +20,8 @@ interface PageHeroProps {
   secondaryHref?: string;
   secondaryLabel?: string;
   aside?: ReactNode;
+  h1Id?: string;
+  pId?: string;
 }
 
 export function PageHero({
@@ -33,16 +36,24 @@ export function PageHero({
   secondaryHref,
   secondaryLabel,
   aside,
+  h1Id,
+  pId,
 }: PageHeroProps) {
   return (
     <section className="mx-auto mt-6 grid w-full max-w-7xl gap-6 px-6 lg:grid-cols-[1.1fr_0.9fr]">
       {/* ── Left: text panel ── */}
-      <div className="overflow-hidden rounded-[2.5rem] bg-brand-mesh p-8 text-white shadow-glow md:p-12">
-        <Badge className="border-white/15 bg-white/10 text-white">{eyebrow}</Badge>
-        <h1 className="display-copy mt-6 max-w-3xl font-display text-4xl font-black leading-tight text-white md:text-5xl xl:text-6xl">
+      <div
+        className="overflow-hidden rounded-[2.5rem] p-8 text-foreground shadow-glow md:p-12"
+        style={{
+          background:
+            "radial-gradient(circle at top, rgb(var(--tfc-gold) / 0.18), transparent 36%), radial-gradient(circle at 80% 20%, rgb(var(--tfc-accent) / 0.16), transparent 34%), linear-gradient(135deg, rgb(var(--tfc-background) / 0.96) 0%, rgb(var(--tfc-surface) / 0.92) 48%, rgb(var(--tfc-background)) 100%)",
+        }}
+      >
+        <Badge className="border-foreground/15 bg-foreground/10 text-foreground">{eyebrow}</Badge>
+        <h1 id={h1Id} className="display-copy mt-6 max-w-3xl font-display text-4xl font-black leading-tight text-foreground md:text-5xl xl:text-6xl">
           {title}
         </h1>
-        <p className="mt-5 max-w-2xl text-base leading-8 text-white/70 md:text-lg">
+        <p id={pId} className="mt-5 max-w-2xl text-base leading-8 text-foreground/70 md:text-lg">
           {description}
         </p>
         {(primaryHref || secondaryHref) && (
@@ -67,7 +78,7 @@ export function PageHero({
                     : secondaryHref
                 }
                 variant="outline"
-                className="border-white/20 bg-white/8 text-white hover:border-white hover:bg-white hover:text-brand-black"
+                className="border-foreground/20 bg-foreground/10 text-foreground hover:border-foreground hover:bg-foreground hover:text-background"
               >
                 {secondaryLabel}
               </Button>
@@ -89,7 +100,8 @@ export function PageHero({
         />
 
         {/* Dark scrim so overlaid text is always readable */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-black/10" />
+        <div className="absolute inset-0 bg-black/20" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/92 via-black/55 to-black/10" />
 
         {/* Minimum height so the card has body when there's no aside */}
         <div className="relative min-h-[22rem] lg:min-h-[28rem]" />

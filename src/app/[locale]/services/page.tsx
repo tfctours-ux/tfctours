@@ -7,7 +7,10 @@ import { CheckCircle2, ArrowUpRight } from "lucide-react";
 
 import { Breadcrumb } from "@/components/layout/Breadcrumb";
 import { ServiceCard } from "@/components/shared/ServiceCard";
-import { BRAND_IMAGES, SERVICES } from "@/lib/constants";
+import { SpeakableJsonLd } from "@/components/shared/JsonLd";
+import { getEffectiveServices } from "@/lib/cms/effective";
+import { getServices } from "@/lib/cms/fetchers";
+import { BRAND_IMAGES } from "@/lib/constants";
 import { localizePath } from "@/lib/utils";
 import {
   buildLocalizedPageMetadata,
@@ -37,6 +40,8 @@ export default async function ServicesPage({
   const common = await getTranslations({ locale, namespace: "common" });
   const process = t.raw("process") as string[];
   const reasons = t.raw("whyUs") as string[];
+  const cmsServices = await getServices(locale);
+  const services = await getEffectiveServices(locale, cmsServices);
   const serviceCountCopy =
     locale === "ur"
       ? { eyebrow: "پورٹ فولیو", label: "خدمات" }
@@ -44,6 +49,10 @@ export default async function ServicesPage({
 
   return (
     <div className="pb-24">
+      <SpeakableJsonLd
+        path={localizePath(locale, "/services")}
+        cssSelectors={["#services-h1", "#services-lede"]}
+      />
       <Breadcrumb />
 
       {/* ── Hero ── */}
@@ -53,10 +62,10 @@ export default async function ServicesPage({
           <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-1.5 text-[10px] font-bold uppercase tracking-[0.26em] text-brand-gold backdrop-blur-sm">
             {t("hero.eyebrow")}
           </span>
-          <h1 className="display-copy mt-6 font-display text-4xl font-black leading-tight text-white md:text-5xl xl:text-6xl">
+          <h1 id="services-h1" className="display-copy mt-6 font-display text-4xl font-black leading-tight text-white md:text-5xl xl:text-6xl">
             {t("hero.title")}
           </h1>
-          <p className="mt-5 max-w-xl text-base leading-8 text-white/70 md:text-lg">
+          <p id="services-lede" className="mt-5 max-w-xl text-base leading-8 text-white/70 md:text-lg">
             {t("hero.description")}
           </p>
           <div className="mt-8 flex flex-wrap gap-4">
@@ -94,7 +103,7 @@ export default async function ServicesPage({
               {serviceCountCopy.eyebrow}
             </p>
             <p className="mt-0.5 font-display text-2xl font-black text-white">
-              {SERVICES.length} {serviceCountCopy.label}
+              {services.length} {serviceCountCopy.label}
             </p>
           </div>
         </div>
@@ -115,7 +124,7 @@ export default async function ServicesPage({
         </div>
 
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {SERVICES.map((service, i) => (
+          {services.map((service, i) => (
             <ServiceCard
               key={service.slug}
               locale={locale}

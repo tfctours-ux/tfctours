@@ -1,3 +1,4 @@
+// src/app/[locale]/layout.tsx
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 
@@ -6,14 +7,19 @@ import {
   Noto_Nastaliq_Urdu,
   Playfair_Display,
 } from "next/font/google";
+import { headers } from "next/headers";
 import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { getMessages, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 
+import Script from "next/script";
+
 import { Footer } from "@/components/layout/Footer";
 import { Navbar } from "@/components/layout/Navbar";
 import { LocalBusinessJsonLd } from "@/components/shared/JsonLd";
+import { ThemeProvider } from "@/components/theme/ThemeProvider";
 import { routing } from "@/i18n/routing";
+import { getEffectiveBrand } from "@/lib/cms/effective";
 import { getBaseUrl } from "@/lib/constants";
 import { absoluteUrl, cn, isRtlLocale } from "@/lib/utils";
 
@@ -104,10 +110,11 @@ export const metadata: Metadata = {
     },
   },
   alternates: {
-    canonical: getBaseUrl(),
+    canonical: "/",
     languages: {
-      en: absoluteUrl("/"),
-      ur: absoluteUrl("/ur"),
+      "en-PK": absoluteUrl("/"),
+      "ur-PK": absoluteUrl("/ur"),
+      "x-default": absoluteUrl("/"),
     },
   },
 };
@@ -133,41 +140,71 @@ export default async function LocaleLayout({
 
   const messages = await getMessages();
   const isRtl = isRtlLocale(locale);
+  const nonce = (await headers()).get("x-nonce") ?? "";
+  const brand = await getEffectiveBrand(locale);
 
   return (
     <html
       lang={locale}
       dir={isRtl ? "rtl" : "ltr"}
+      data-scroll-behavior="smooth"
+      suppressHydrationWarning
       className={cn(
         `${playfair.variable} ${dmSans.variable} ${notoNastaliq.variable} antialiased`,
       )}
     >
-      <head />
+      <head>
+        {/*
+          Inline anti-FOUC theme script. Placed in <head> so it runs before the
+          body paints (same effect as next/script's beforeInteractive). It must
+          be a native <script> with suppressHydrationWarning: the browser strips
+          the CSP nonce value from the DOM after applying it, so React would
+          otherwise flag a server/client nonce mismatch on hydration.
+        */}
+        <script
+          id="tfc-theme-init"
+          nonce={nonce}
+          suppressHydrationWarning
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var t=localStorage.getItem('tfc-theme');var v=t==='light'||t==='dark'?t:'light';var r=document.documentElement;r.classList.remove('light','dark');r.classList.add(v);r.setAttribute('data-tfc-theme',v);r.style.colorScheme=v;}catch(e){}})();`,
+          }}
+        />
+        <LocalBusinessJsonLd locale={locale} brand={brand} />
+        {process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN && (
+          <Script
+            defer
+            data-domain={process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN}
+            src="https://plausible.io/js/script.js"
+            strategy="afterInteractive"
+          />
+        )}
+      </head>
       <body
         className={cn(
-          "overflow-x-clip bg-brand-black text-brand-light",
+          "overflow-x-clip bg-background text-foreground",
           isRtl
             ? `${notoNastaliq.variable} font-urdu`
             : `${playfair.variable} ${dmSans.variable} font-body`,
         )}
       >
         <NextIntlClientProvider locale={locale} messages={messages}>
-          <div
-            className="locale-shell relative flex min-h-screen flex-col bg-[#080808]"
-            dir={isRtl ? "rtl" : "ltr"}
-            lang={locale}
-          >
-            <div aria-hidden className="consular-orb consular-orb-crimson" />
-            <div aria-hidden className="consular-orb consular-orb-gold" />
+          <ThemeProvider>
             <div
-              aria-hidden
-              className="pointer-events-none fixed inset-0 z-0 bg-[linear-gradient(rgba(255,255,255,0.025)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.025)_1px,transparent_1px)] bg-[size:7rem_7rem] opacity-[0.035]"
-            />
-            <LocalBusinessJsonLd locale={locale} />
-            <Navbar />
-            <main className="relative z-10 flex-1">{children}</main>
-            <Footer />
-          </div>
+              className="locale-shell relative flex min-h-screen flex-col bg-background"
+              dir={isRtl ? "rtl" : "ltr"}
+              lang={locale}
+            >
+              <div aria-hidden className="consular-orb consular-orb-crimson" />
+              <div aria-hidden className="consular-orb consular-orb-gold" />
+              <div
+                aria-hidden
+                className="pointer-events-none fixed inset-0 z-0 bg-[linear-gradient(rgba(255,255,255,0.025)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.025)_1px,transparent_1px)] bg-[size:7rem_7rem] opacity-[0.035]"
+              />
+              <Navbar />
+              <main className="relative z-10 flex-1">{children}</main>
+              <Footer brand={brand} />
+            </div>
+          </ThemeProvider>
         </NextIntlClientProvider>
       </body>
     </html>

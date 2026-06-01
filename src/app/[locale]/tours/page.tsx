@@ -7,6 +7,8 @@ import { ArrowUpRight } from "lucide-react";
 
 import { Breadcrumb } from "@/components/layout/Breadcrumb";
 import { Button } from "@/components/ui/Button";
+import { SpeakableJsonLd } from "@/components/shared/JsonLd";
+import { getTourDestinations } from "@/lib/cms/fetchers";
 import {
   getLocaleFromParams,
   type LocaleParams,
@@ -94,9 +96,24 @@ export default async function ToursPage({
   const locale = await getLocaleFromParams(params);
   const key = locale === "ur" ? "ur" : "en";
   const content = CONTENT[key];
+  const cmsDestinations = await getTourDestinations(locale);
+  const destinations =
+    cmsDestinations && cmsDestinations.length > 0
+      ? cmsDestinations.map((destination) => ({
+          name: destination.name,
+          image: destination.image,
+        }))
+      : DESTINATIONS.map((destination) => ({
+          name: destination.name[key],
+          image: destination.image,
+        }));
 
   return (
     <div className="pb-24">
+      <SpeakableJsonLd
+        path={localizePath(locale, "/tours")}
+        cssSelectors={["#tours-h1", "#tours-lede"]}
+      />
       <Breadcrumb />
 
       <section className="mx-auto mt-6 grid w-full max-w-7xl gap-6 px-6 lg:grid-cols-[1.1fr_0.9fr]">
@@ -104,10 +121,10 @@ export default async function ToursPage({
           <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-1.5 text-[10px] font-bold uppercase tracking-[0.26em] text-brand-gold backdrop-blur-sm">
             {content.eyebrow}
           </span>
-          <h1 className="display-copy mt-6 font-display text-4xl font-black leading-tight text-white md:text-5xl xl:text-6xl">
+          <h1 id="tours-h1" className="display-copy mt-6 font-display text-4xl font-black leading-tight text-white md:text-5xl xl:text-6xl">
             {content.title}
           </h1>
-          <p className="mt-5 max-w-xl text-base leading-8 text-white/70 md:text-lg">
+          <p id="tours-lede" className="mt-5 max-w-xl text-base leading-8 text-white/70 md:text-lg">
             {content.description}
           </p>
           <div className="mt-8 flex flex-wrap gap-4">
@@ -140,7 +157,7 @@ export default async function ToursPage({
               {content.destinations}
             </p>
             <p className="mt-0.5 font-display text-2xl font-black text-white">
-              {DESTINATIONS.length}+ {content.packages}
+              {destinations.length}+ {content.packages}
             </p>
           </div>
         </div>
@@ -160,39 +177,35 @@ export default async function ToursPage({
         </div>
 
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {DESTINATIONS.map((destination) => {
-            const destinationName = destination.name[key];
-
-            return (
-              <article
-                key={destination.name.en}
-                className="group relative overflow-hidden rounded-[2rem] shadow-brand ring-1 ring-black/[0.06]"
-              >
-                <div className="relative min-h-[22rem] overflow-hidden">
-                  <Image
-                    src={destination.image}
-                    alt={destinationName}
-                    fill
-                    sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-                    className="object-cover transition duration-700 group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/25 to-transparent" />
-                </div>
-                <div className="absolute inset-x-0 bottom-0 p-6">
-                  <p className="font-display text-3xl font-black text-white">
-                    {destinationName}
-                  </p>
-                  <Link
-                    href={localizePath(locale, "/contact")}
-                    className="mt-4 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-5 py-2.5 text-xs font-bold uppercase tracking-[0.18em] text-white backdrop-blur-sm transition hover:border-white hover:bg-white hover:text-brand-black"
-                  >
-                    {content.enquire}
-                    <ArrowUpRight className="h-3.5 w-3.5" />
-                  </Link>
-                </div>
-              </article>
-            );
-          })}
+          {destinations.map((destination) => (
+            <article
+              key={`${destination.name}-${destination.image}`}
+              className="group relative overflow-hidden rounded-[2rem] shadow-brand ring-1 ring-black/[0.06]"
+            >
+              <div className="relative min-h-[22rem] overflow-hidden">
+                <Image
+                  src={destination.image}
+                  alt={destination.name}
+                  fill
+                  sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                  className="object-cover transition duration-700 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/25 to-transparent" />
+              </div>
+              <div className="absolute inset-x-0 bottom-0 p-6">
+                <p className="font-display text-3xl font-black text-white">
+                  {destination.name}
+                </p>
+                <Link
+                  href={localizePath(locale, "/contact")}
+                  className="mt-4 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-5 py-2.5 text-xs font-bold uppercase tracking-[0.18em] text-white backdrop-blur-sm transition hover:border-white hover:bg-white hover:text-brand-black"
+                >
+                  {content.enquire}
+                  <ArrowUpRight className="h-3.5 w-3.5" />
+                </Link>
+              </div>
+            </article>
+          ))}
         </div>
       </section>
 

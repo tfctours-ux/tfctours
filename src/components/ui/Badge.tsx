@@ -1,3 +1,4 @@
+// src/components/ui/Badge.tsx
 import type { ReactNode } from "react";
 
 import { cn } from "@/lib/utils";
@@ -23,11 +24,11 @@ export function Badge({
       className={cn(
         "inline-flex items-center gap-1.5 rounded-full border px-3 py-[5px] text-[10.5px] font-semibold uppercase tracking-[0.2em]",
         variant === "gold" &&
-          "border-brand-gold/30 bg-brand-gold/10 text-brand-gold/80",
+          "border-gold/30 bg-gold/10 text-gold/80",
         variant === "red" &&
-          "border-brand-red/20 bg-brand-red/7 text-brand-red",
+          "border-accent/20 bg-accent/10 text-accent",
         variant === "dark" &&
-          "border-black/14 bg-black/6 text-zinc-500",
+          "border-border bg-surface-muted text-foreground-muted",
         className,
       )}
     >
@@ -35,9 +36,9 @@ export function Badge({
         <span
           className={cn(
             "h-1.5 w-1.5 rounded-full opacity-70",
-            variant === "gold" && "bg-brand-gold",
-            variant === "red" && "bg-brand-red",
-            variant === "dark" && "bg-zinc-500",
+            variant === "gold" && "bg-gold",
+            variant === "red" && "bg-accent",
+            variant === "dark" && "bg-foreground-muted",
           )}
         />
       )}

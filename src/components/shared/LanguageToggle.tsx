@@ -1,13 +1,16 @@
+// src/components/shared/LanguageToggle.tsx
 "use client";
 
 import { useTransition } from "react";
 
-import { motion } from "framer-motion";
+import { Globe } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
+import { usePathname, useRouter } from "next/navigation";
 
-import { usePathname, useRouter } from "@/i18n/navigation";
-import { locales, type AppLocale } from "@/i18n";
-import { cn } from "@/lib/utils";
+import { type AppLocale } from "@/i18n";
+import { cn, localizePath, stripLocaleFromPath } from "@/lib/utils";
+
+const LOCALE_COOKIE_MAX_AGE = 60 * 60 * 24 * 365;
 
 export function LanguageToggle({ className }: { className?: string }) {
   const locale = useLocale() as AppLocale;
@@ -16,51 +19,39 @@ export function LanguageToggle({ className }: { className?: string }) {
   const t = useTranslations("common");
   const [isPending, startTransition] = useTransition();
 
+  function toggle() {
+    const next: AppLocale = locale === "en" ? "ur" : "en";
+    const normalizedPath = stripLocaleFromPath(pathname);
+    const target = localizePath(next, normalizedPath);
+
+    // Mirror next-intl's NEXT_LOCALE cookie so the middleware doesn't
+    // bounce the user back to the previous locale on the next request.
+    document.cookie = `NEXT_LOCALE=${next}; path=/; max-age=${LOCALE_COOKIE_MAX_AGE}; samesite=lax`;
+
+    startTransition(() => {
+      router.replace(target);
+    });
+  }
+
+  const nextLabel = locale === "en" ? "اردو" : "EN";
+
   return (
-    <div
-      role="group"
+    <button
+      type="button"
+      onClick={toggle}
+      disabled={isPending}
       aria-label={t("switchLocale")}
+      title={nextLabel}
       className={cn(
-        "relative inline-flex rounded-full border border-white/10 bg-white/5 p-1 text-sm text-white shadow-[inset_0_0_0_1px_rgba(255,255,255,0.02)]",
+        "group inline-flex h-9 w-9 items-center justify-center rounded-lg border transition-all duration-200",
+        "bg-surface-elevated text-foreground-muted",
+        "hover:text-foreground",
+        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+        isPending && "pointer-events-none opacity-50",
         className,
       )}
     >
-      {locales.map((item) => {
-        const active = item === locale;
-
-        return (
-          <button
-            key={item}
-            type="button"
-            disabled={active || isPending}
-            onClick={() => {
-              if (active) {
-                return;
-              }
-
-              startTransition(() => {
-                router.replace(pathname, { locale: item });
-              });
-            }}
-            className={cn(
-              "relative z-10 min-w-[4.5rem] rounded-full px-4 py-2 text-center text-xs font-semibold uppercase tracking-[0.18em] transition",
-              active ? "text-brand-black" : "text-white/70 hover:text-white",
-              item === "ur" && "font-urdu normal-case tracking-normal",
-            )}
-          >
-            {active ? (
-              <motion.span
-                layoutId="locale-pill"
-                transition={{ type: "spring", stiffness: 360, damping: 28 }}
-                className="absolute inset-0 rounded-full bg-brand-light shadow-[0_10px_30px_rgba(255,255,255,0.12)]"
-              />
-            ) : null}
-            <span className="relative z-10">
-              {item === "en" ? t("english") : t("urdu")}
-            </span>
-          </button>
-        );
-      })}
-    </div>
+      <Globe className="h-4 w-4" aria-hidden="true" />
+    </button>
   );
 }

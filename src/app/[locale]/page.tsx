@@ -1,13 +1,18 @@
+// src/app/[locale]/page.tsx
 import type { Metadata } from "next";
+import { Suspense } from "react";
 
-import { FAQ } from "@/components/home/FAQ";
+import { FAQ, FAQSkeleton } from "@/components/home/FAQ";
 import { B2BPortal } from "@/components/home/B2BPortal";
-import { Gallery } from "@/components/home/Gallery";
+import { Gallery, GallerySkeleton } from "@/components/home/Gallery";
 import { Hero } from "@/components/home/Hero";
 import { ServicesGrid } from "@/components/home/ServicesGrid";
-import { TrustBar } from "@/components/home/TrustBar";
+import { TrustBar, TrustBarSkeleton } from "@/components/home/TrustBar";
 import { UmrahFeature } from "@/components/home/WakalaFeature";
+import ErrorBoundary from "@/components/shared/ErrorBoundary";
+import { FAQJsonLd, SpeakableJsonLd } from "@/components/shared/JsonLd";
 import { buildLocalizedPageMetadata } from "@/lib/page-metadata";
+import { localizePath } from "@/lib/utils";
 
 export async function generateMetadata({
   params,
@@ -22,16 +27,38 @@ export async function generateMetadata({
   ]);
 }
 
-export default function HomePage() {
+export default async function HomePage({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
   return (
     <>
-      <Hero />
-      <TrustBar />
+      <FAQJsonLd locale={locale as "en" | "ur"} />
+      <SpeakableJsonLd
+        path={localizePath(locale as "en" | "ur", "/")}
+        cssSelectors={["#home-h1", "#home-lede"]}
+      />
+      <Hero h1Id="home-h1" pId="home-lede" />
+      <ErrorBoundary fallback={<TrustBarSkeleton />}>
+        <Suspense fallback={<TrustBarSkeleton />}>
+          <TrustBar />
+        </Suspense>
+      </ErrorBoundary>
       <ServicesGrid />
       <UmrahFeature />
       <B2BPortal />
-      <Gallery />
-      <FAQ />
+      <ErrorBoundary fallback={<GallerySkeleton />}>
+        <Suspense fallback={<GallerySkeleton />}>
+          <Gallery />
+        </Suspense>
+      </ErrorBoundary>
+      <ErrorBoundary fallback={<FAQSkeleton />}>
+        <Suspense fallback={<FAQSkeleton />}>
+          <FAQ />
+        </Suspense>
+      </ErrorBoundary>
     </>
   );
 }

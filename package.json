@@ -6,27 +6,49 @@
     "dev": "next dev --webpack",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "typecheck": "tsc --noEmit",
+    "analyze": "ANALYZE=true next build",
+    "test": "npm run test:unit && npm run test:e2e",
+    "test:unit": "vitest run",
+    "test:e2e": "playwright test",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "lighthouse": "lhci autorun",
+    "cms:types": "echo 'Run from tfc-admin to regenerate src/lib/cms/schema.ts'"
   },
   "dependencies": {
+    "@neondatabase/serverless": "^0.10.0",
     "@tailwindcss/typography": "^0.5.19",
+    "@upstash/ratelimit": "^2.0.8",
+    "@upstash/redis": "^1.38.0",
     "autoprefixer": "^10.4.27",
+    "drizzle-orm": "^0.36.0",
     "framer-motion": "^12.38.0",
     "lucide-react": "^1.8.0",
-    "next": "16.2.3",
+    "next": "^16.2.6",
     "next-intl": "^4.9.1",
     "postcss": "^8.5.9",
     "react": "19.2.4",
     "react-dom": "19.2.4",
-    "resend": "^6.12.0"
+    "resend": "^6.12.0",
+    "zod": "^3.25.76"
   },
   "devDependencies": {
+    "@lhci/cli": "^0.13.0",
+    "@next/bundle-analyzer": "^16.2.6",
+    "@playwright/test": "^1.45.0",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@vitest/coverage-v8": "^4.1.6",
+    "drizzle-kit": "^0.28.0",
     "eslint": "^9",
     "eslint-config-next": "16.2.3",
+    "playwright": "^1.45.0",
     "tailwindcss": "^3.4.19",
-    "typescript": "^5"
+    "typescript": "^5",
+    "vite-tsconfig-paths": "^6.1.1",
+    "vitest": "^4.1.6"
   }
 }
