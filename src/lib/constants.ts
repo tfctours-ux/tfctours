@@ -146,6 +146,8 @@ export const FLIGHTS_URL = "https://www.theflightcentre.pk/";
 
 export const AGENT_LOGIN_URL = "https://agent.tfctours.com/";
 
+export const GROUP_TICKETS_B2B_URL = "https://tfcagent.com/login.php";
+
 export const SERVICES: readonly ServiceConfig[] = [
   {
     slug: "ticket-booking",

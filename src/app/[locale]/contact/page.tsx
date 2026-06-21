@@ -95,7 +95,9 @@ export default async function ContactPage({
   const footer = await getTranslations({ locale, namespace: "footer" });
   const whatsappHref = `https://wa.me/${BRAND.phone.replace(/[^0-9]/g, "")}`;
   const telHref = `tel:${BRAND.phone.replace(/[^0-9+]/g, "")}`;
-  const mapQuery = encodeURIComponent(mainOffice.address);
+  const mapQuery = encodeURIComponent(
+    `${BRAND.companyName}, ${mainOffice.address}, Pakistan`,
+  );
   const mapTitle = common("gujranwalaOffice");
   const contactLabels =
     locale === "ur"

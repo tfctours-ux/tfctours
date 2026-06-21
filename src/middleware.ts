@@ -26,7 +26,11 @@ function buildCsp(nonce: string): string {
     "style-src":         ["'self'", "'unsafe-inline'"],
     "img-src":           ["'self'", "data:", "blob:", "https:"],
     "font-src":          ["'self'", "data:", "https://fonts.gstatic.com"],
-    "frame-src":         ["https://challenges.cloudflare.com"],
+    "frame-src":         [
+      "https://challenges.cloudflare.com",
+      "https://www.google.com",
+      "https://maps.google.com",
+    ],
     "connect-src":       [
       "'self'",
       "https://api.resend.com",

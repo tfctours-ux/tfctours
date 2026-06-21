@@ -15,6 +15,7 @@ import {
   MessageCircle,
   Phone,
   PlaneTakeoff,
+  UsersRound,
   X,
 } from "lucide-react";
 import { useTranslations } from "next-intl";
@@ -26,6 +27,7 @@ import {
   BRAND,
   BRAND_IMAGES,
   FLIGHTS_URL,
+  GROUP_TICKETS_B2B_URL,
   type Locale,
 } from "@/lib/constants";
 import { cn, localizePath, stripLocaleFromPath } from "@/lib/utils";
@@ -309,14 +311,15 @@ export function NavbarClient({
             <LanguageToggle className="bg-surface-elevated text-foreground-muted hover:bg-surface hover:text-foreground" />
 
             <a
-              href={`https://wa.me/92${BRAND.phone.replace(/\D/g, "").slice(1)}`}
+              href={GROUP_TICKETS_B2B_URL}
               target="_blank"
               rel="noopener noreferrer"
               className="group relative flex items-center gap-2 overflow-hidden rounded-lg bg-accent px-4 py-2.5 text-[10.5px] font-bold uppercase tracking-[0.18em] text-accent-foreground shadow-[0_0_24px_rgb(var(--tfc-accent)/0.4)] transition-all duration-200 hover:bg-accent-hover hover:shadow-[0_0_32px_rgb(var(--tfc-accent)/0.55)]"
+              aria-label="Tickets B2B"
             >
               <span className="absolute inset-0 -translate-x-full skew-x-[-20deg] bg-white/10 transition-transform duration-500 group-hover:translate-x-full" />
-              <MessageCircle className="relative h-3.5 w-3.5" />
-              <span className="relative">{footerT("whatsappCta")}</span>
+              <UsersRound className="relative h-3.5 w-3.5" />
+              <span className="relative">Tickets B2B</span>
               <ArrowUpRight className="relative h-3 w-3 opacity-70 transition-transform duration-200 group-hover:-translate-y-px group-hover:translate-x-px" />
             </a>
           </div>
@@ -492,13 +495,14 @@ export function NavbarClient({
 
               <div className="mt-6 space-y-2 px-5">
                 <a
-                  href={`https://wa.me/92${BRAND.phone.replace(/\D/g, "").slice(1)}`}
+                  href={GROUP_TICKETS_B2B_URL}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex w-full items-center justify-center gap-2 rounded-xl bg-accent px-4 py-3.5 text-[11px] font-bold uppercase tracking-[0.18em] text-accent-foreground shadow-[0_0_20px_rgb(var(--tfc-accent)/0.35)] transition hover:bg-accent-hover hover:shadow-[0_0_28px_rgb(var(--tfc-accent)/0.5)]"
+                  aria-label="Tickets B2B"
                 >
-                  <MessageCircle className="h-4 w-4" />
-                  {footerT("whatsappCta")}
+                  <UsersRound className="h-4 w-4" />
+                  Tickets B2B
                 </a>
                 <a
                   href={`tel:${BRAND.uan.replace(/[^0-9]/g, "")}`}
