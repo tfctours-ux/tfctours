@@ -2,7 +2,15 @@ import type { Metadata } from "next";
 
 import Image from "next/image";
 
-import { Building2, ShieldCheck, Star, UserRound } from "lucide-react";
+import {
+  Building2,
+  BriefcaseBusiness,
+  Handshake,
+  Plane,
+  ShieldCheck,
+  Star,
+  UserRound,
+} from "lucide-react";
 import { getTranslations } from "next-intl/server";
 
 import { AboutGallerySection } from "@/components/about/AboutGallerySection";
@@ -41,6 +49,35 @@ const aboutCopy = {
         Icon: Building2,
       },
     ],
+    ceoProfile: {
+      eyebrow: "Chief Executive Officer",
+      name: "Adv. Rana Khalid Pervez Khan",
+      title: "Hands-on leadership for reliable travel, visa and Umrah service.",
+      description:
+        "Adv. Rana Khalid Pervez Khan leads The Flight Centre Travel & Tours with a practical, client-first approach: clear guidance, accountable documentation handling and dependable support before, during and after every journey.",
+      quote:
+        "Every traveller deserves a clear process, honest advice and a team that stays available when plans are moving.",
+      highlights: [
+        {
+          title: "Client accountability",
+          description:
+            "Keeps the agency focused on transparent communication, careful case review and accessible follow-up for families, pilgrims and business travellers.",
+          Icon: Handshake,
+        },
+        {
+          title: "End-to-end coordination",
+          description:
+            "Oversees joined-up service across ticketing, Umrah packages, tours, hotel bookings, visit visas, work visa support and travel insurance.",
+          Icon: Plane,
+        },
+        {
+          title: "Operational discipline",
+          description:
+            "Guides the team to handle time-sensitive bookings and documentation with organized processes and professional care.",
+          Icon: BriefcaseBusiness,
+        },
+      ],
+    },
     valueCards: [
       {
         title: "IATA Certified Handling",
@@ -104,6 +141,35 @@ const aboutCopy = {
         Icon: Building2,
       },
     ],
+    ceoProfile: {
+      eyebrow: "چیف ایگزیکٹو آفیسر",
+      name: "ایڈووکیٹ رانا خالد پرویز خان",
+      title: "قابل اعتماد سفر، ویزا اور عمرہ خدمات کے لیے عملی قیادت۔",
+      description:
+        "ایڈووکیٹ رانا خالد پرویز خان دی فلائٹ سینٹر ٹریول اینڈ ٹورز کی قیادت ایک واضح اور کلائنٹ فرسٹ انداز میں کرتے ہیں: درست رہنمائی، ذمہ دارانہ ڈاکومنٹ ہینڈلنگ اور ہر سفر سے پہلے، دوران اور بعد قابل اعتماد سپورٹ۔",
+      quote:
+        "ہر مسافر کو واضح طریقہ کار، دیانت دار مشورہ اور ایسی ٹیم ملنی چاہیے جو پلان حرکت میں آنے کے بعد بھی دستیاب رہے۔",
+      highlights: [
+        {
+          title: "کلائنٹ اکاونٹیبلٹی",
+          description:
+            "فیملیز، زائرین اور بزنس ٹریولرز کے لیے شفاف کمیونیکیشن، محتاط کیس ریویو اور آسان فالو اپ پر توجہ برقرار رکھتے ہیں۔",
+          Icon: Handshake,
+        },
+        {
+          title: "مکمل کوآرڈینیشن",
+          description:
+            "ٹکٹنگ، عمرہ پیکجز، ٹورز، ہوٹل بکنگ، وزٹ ویزا، ورک ویزا سپورٹ اور ٹریول انشورنس کو ایک مربوط سروس کے طور پر دیکھتے ہیں۔",
+          Icon: Plane,
+        },
+        {
+          title: "آپریشنل نظم",
+          description:
+            "ٹیم کو ٹائم سینسیٹو بکنگز اور ڈاکومنٹیشن منظم طریقے اور پیشہ ورانہ احتیاط سے سنبھالنے کی رہنمائی دیتے ہیں۔",
+          Icon: BriefcaseBusiness,
+        },
+      ],
+    },
     valueCards: [
       {
         title: "سرٹیفائیڈ ٹکٹنگ ہینڈلنگ",
@@ -327,7 +393,7 @@ export default async function AboutPage({
                 CEO
               </dt>
               <dd className="mt-1 text-foreground">
-                Rana Khalid Parvez Khan
+                {copy.ceoProfile.name}
               </dd>
             </div>
             <div className="md:col-span-2">
@@ -358,16 +424,68 @@ export default async function AboutPage({
         </div>
       </section>
 
+      <section className="mx-auto mt-12 max-w-7xl px-6">
+        <div className="grid items-stretch gap-8 overflow-hidden rounded-[2.5rem] border border-border bg-surface-elevated shadow-brand lg:grid-cols-[0.9fr_1.1fr]">
+          <figure className="relative min-h-[30rem] bg-brand-black lg:min-h-full">
+            <Image
+              src="/images/ceo-adv-rana-khalid-pervez-khan.webp"
+              alt={`${copy.ceoProfile.name}, ${t("ceoTitle")} of The Flight Centre Travel & Tours`}
+              fill
+              sizes="(min-width: 1280px) 36vw, (min-width: 1024px) 44vw, 100vw"
+              className="object-cover object-top"
+            />
+            <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent p-6 text-white md:p-8">
+              <p className="text-xs font-bold uppercase tracking-[0.26em] text-brand-gold">
+                {t("ceoTitle")}
+              </p>
+              <h2 className="mt-3 font-display text-3xl font-black md:text-4xl">
+                {copy.ceoProfile.name}
+              </h2>
+            </div>
+          </figure>
+
+          <div className="px-6 py-8 md:px-8 lg:py-10">
+            <p className="text-xs font-bold uppercase tracking-[0.28em] text-accent">
+              {copy.ceoProfile.eyebrow}
+            </p>
+            <h2 className="mt-4 max-w-3xl font-display text-3xl font-black text-foreground md:text-4xl">
+              {copy.ceoProfile.title}
+            </h2>
+            <p className="mt-5 max-w-3xl text-base leading-8 text-foreground-muted">
+              {copy.ceoProfile.description}
+            </p>
+            <blockquote className="mt-6 border-l-4 border-gold pl-5 text-base font-semibold leading-8 text-foreground">
+              &ldquo;{copy.ceoProfile.quote}&rdquo;
+            </blockquote>
+
+            <div className="mt-8 grid gap-4 md:grid-cols-3">
+              {copy.ceoProfile.highlights.map(({ title, description, Icon }) => (
+                <article
+                  key={title}
+                  className="rounded-[1.5rem] border border-border bg-surface p-4"
+                >
+                  <Icon className="h-5 w-5 text-accent" />
+                  <h3 className="mt-4 font-display text-xl font-bold text-foreground">
+                    {title}
+                  </h3>
+                  <p className="mt-3 text-sm leading-7 text-foreground-muted">
+                    {description}
+                  </p>
+                </article>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section className="mx-auto mt-12 grid max-w-7xl gap-8 px-6 lg:grid-cols-[1.02fr_0.98fr]">
         <div className="rounded-[2rem] border border-black/10 bg-white p-6 shadow-brand md:p-8">
           <h2 className="font-display text-3xl font-bold text-brand-black">
             {t("story.title")}
           </h2>
           <div className="mt-5 space-y-5 text-base leading-8 text-zinc-700">
-            {story.map((paragraph, i) => (
-              <p
-                key={paragraph}
-              >
+            {story.map((paragraph) => (
+              <p key={paragraph}>
                 {paragraph}
               </p>
             ))}
@@ -446,10 +564,8 @@ export default async function AboutPage({
               {factualContent.title}
             </h2>
             <div className="mt-5 space-y-5 text-base leading-8 text-zinc-700">
-              {factualContent.paragraphs.map((paragraph, i) => (
-                <p
-                  key={paragraph}
-                >
+              {factualContent.paragraphs.map((paragraph) => (
+                <p key={paragraph}>
                   {paragraph}
                 </p>
               ))}
