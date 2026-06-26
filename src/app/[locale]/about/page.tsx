@@ -5,11 +5,16 @@ import Image from "next/image";
 import {
   Building2,
   BriefcaseBusiness,
+  ClipboardCheck,
+  Compass,
+  FileCheck2,
   Handshake,
+  Headset,
+  Layers,
   Plane,
   ShieldCheck,
   Star,
-  UserRound,
+  UsersRound,
 } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 
@@ -49,6 +54,13 @@ const aboutCopy = {
         Icon: Building2,
       },
     ],
+    stats: [
+      { value: "20+", label: "Years of service" },
+      { value: "50+", label: "Countries covered" },
+      { value: "2", label: "Offices in Gujranwala" },
+      { value: "24/7", label: "Traveller helpdesk" },
+    ],
+    identityEyebrow: "Who we are",
     ceoProfile: {
       eyebrow: "Chief Executive Officer",
       name: "Adv. Rana Khalid Pervez Khan",
@@ -78,47 +90,28 @@ const aboutCopy = {
         },
       ],
     },
+    valuesEyebrow: "The client experience",
+    valuesHeading: "Why travellers choose The Flight Centre",
+    valuesDescription:
+      "Two decades of practice distilled into a calmer, more accountable way to plan, book and travel.",
     valueCards: [
       {
-        title: "IATA Certified Handling",
+        title: "One desk, every journey",
         description:
-          "All flight bookings backed by IATA certification, giving clients access to the best fares and reliable ticketing infrastructure.",
-        Icon: ShieldCheck,
+          "Flights, Umrah, tours, hotels, visas and insurance — coordinated together so you never chase separate providers.",
+        Icon: Layers,
       },
       {
-        title: "One-Stop Travel Desk",
+        title: "Always within reach",
         description:
-          "Flights, Umrah, tours, hotels, visas and insurance — handled together so you never need to go elsewhere.",
-        Icon: Star,
+          "Phone, WhatsApp, email or a walk-in visit — reach a real consultant whenever your plans change.",
+        Icon: Headset,
       },
       {
-        title: "Direct Communication",
+        title: "Documentation done right",
         description:
-          "Phone, WhatsApp, email and walk-in — reach us however is easiest for your travel or visa question.",
-        Icon: UserRound,
-      },
-    ],
-    trustHeading: "IATA Certified",
-    trustDescription:
-      "Built on trusted travel infrastructure, direct airline access and two fully staffed offices in Gujranwala.",
-    trustCards: [
-      {
-        title: "IATA Certified Agency",
-        description:
-          "The Flight Centre is an IATA certified travel agency, giving clients access to global airline inventory and trusted booking infrastructure.",
-        Icon: ShieldCheck,
-      },
-      {
-        title: "20+ Years Experience",
-        description:
-          "Serving Pakistani travellers since the early 2000s, with thousands of satisfied clients across flights, tours, Umrah and visa services.",
-        Icon: Star,
-      },
-      {
-        title: "2 Offices in Gujranwala",
-        description:
-          "Main office at Jinnah Stadium and branch at DC Colony — both fully staffed to serve walk-in clients.",
-        Icon: Building2,
+          "Time-sensitive tickets, visa files and packages handled with organised, professional care.",
+        Icon: FileCheck2,
       },
     ],
   },
@@ -141,6 +134,13 @@ const aboutCopy = {
         Icon: Building2,
       },
     ],
+    stats: [
+      { value: "20+", label: "سال کی خدمت" },
+      { value: "50+", label: "ممالک کی رسائی" },
+      { value: "2", label: "گوجرانوالہ میں دفاتر" },
+      { value: "24/7", label: "ہیلپ ڈیسک" },
+    ],
+    identityEyebrow: "ہم کون ہیں",
     ceoProfile: {
       eyebrow: "چیف ایگزیکٹو آفیسر",
       name: "ایڈووکیٹ رانا خالد پرویز خان",
@@ -170,50 +170,61 @@ const aboutCopy = {
         },
       ],
     },
+    valuesEyebrow: "کلائنٹ کا تجربہ",
+    valuesHeading: "مسافر دی فلائٹ سینٹر کو کیوں چنتے ہیں",
+    valuesDescription:
+      "بیس سال کا تجربہ ایک پُرسکون، زیادہ ذمہ دار طریقہ کار میں ڈھل کر آپ کے سفر کی منصوبہ بندی اور بکنگ کو آسان بناتا ہے۔",
     valueCards: [
       {
-        title: "سرٹیفائیڈ ٹکٹنگ ہینڈلنگ",
+        title: "ایک ڈیسک، ہر سفر",
         description:
-          "تمام فلائٹ بکنگ مستند ٹکٹنگ سسٹم کے ذریعے ہوتی ہے، تاکہ کلائنٹس کو بہتر کرایوں اور قابل اعتماد سپورٹ تک رسائی ملے۔",
-        Icon: ShieldCheck,
+          "فلائٹس، عمرہ، ٹورز، ہوٹلز، ویزا اور انشورنس ایک ساتھ مربوط، تاکہ آپ کو مختلف جگہوں پر نہ جانا پڑے۔",
+        Icon: Layers,
       },
       {
-        title: "ون اسٹاپ ٹریول ڈیسک",
+        title: "ہمیشہ دستیاب",
         description:
-          "فلائٹس، عمرہ، ٹورز، ہوٹلز، ویزا اور انشورنس ایک ہی جگہ سنبھالے جاتے ہیں، تاکہ آپ کو مختلف جگہوں پر نہ جانا پڑے۔",
-        Icon: Star,
+          "فون، واٹس ایپ، ای میل یا دفتر آ کر — جب بھی پلان بدلے، ایک حقیقی کنسلٹنٹ سے رابطہ کریں۔",
+        Icon: Headset,
       },
       {
-        title: "براہ راست رابطہ",
+        title: "درست ڈاکومنٹیشن",
         description:
-          "فون، واٹس ایپ، ای میل یا دفتر آ کر رابطہ کریں، ہماری ٹیم ہر سفری اور ویزا سوال میں رہنمائی کرتی ہے۔",
-        Icon: UserRound,
-      },
-    ],
-    trustHeading: "آئی اے ٹی اے سرٹیفائیڈ",
-    trustDescription:
-      "قابل اعتماد ٹریول انفراسٹرکچر، براہ راست ایئرلائن رسائی اور گوجرانوالہ میں دو مکمل اسٹافڈ دفاتر کے ساتھ خدمت۔",
-    trustCards: [
-      {
-        title: "سرٹیفائیڈ ٹریول ایجنسی",
-        description:
-          "دی فلائٹ سینٹر عالمی ایئرلائن انوینٹری اور قابل اعتماد بکنگ سسٹمز تک رسائی کے ساتھ کلائنٹس کی خدمت کرتا ہے۔",
-        Icon: ShieldCheck,
-      },
-      {
-        title: "20+ سال کا تجربہ",
-        description:
-          "ابتدائی 2000s سے پاکستانی مسافروں کی فلائٹس، ٹورز، عمرہ اور ویزا سروسز میں رہنمائی۔",
-        Icon: Star,
-      },
-      {
-        title: "گوجرانوالہ میں 2 دفاتر",
-        description:
-          "جناح اسٹیڈیم میں مین آفس اور ڈی سی کالونی میں برانچ، دونوں واک اِن کلائنٹس کے لیے مکمل طور پر فعال ہیں۔",
-        Icon: Building2,
+          "ٹائم سینسیٹو ٹکٹس، ویزا فائلیں اور پیکجز منظم اور پیشہ ورانہ احتیاط کے ساتھ سنبھالے جاتے ہیں۔",
+        Icon: FileCheck2,
       },
     ],
   },
+} as const;
+
+const managingDirectorProfile = {
+  eyebrow: "Managing Director TFC Group Of Comapnies",
+  name: BRAND.managingDirector,
+  title: "Focused execution for every booking, file and follow-up.",
+  description:
+    "Adv. Rana Mudasser Nazar Khan helps turn the agency's service promise into daily action, keeping consultants aligned, documents moving and clients updated from first enquiry to final confirmation.",
+  quote:
+    "Good travel service is built in the follow-up: one clear update, one correct file and one calm decision at a time.",
+  highlights: [
+    {
+      title: "Daily operations",
+      description:
+        "Keeps the front desk, ticketing and visa workflows moving with practical coordination.",
+      Icon: ClipboardCheck,
+    },
+    {
+      title: "Client response",
+      description:
+        "Focuses on clear updates so travellers know what is complete, pending and next.",
+      Icon: UsersRound,
+    },
+    {
+      title: "Service quality",
+      description:
+        "Supports a calm, organized experience across bookings, packages and documentation.",
+      Icon: Compass,
+    },
+  ],
 } as const;
 
 export async function generateMetadata({
@@ -236,38 +247,6 @@ export default async function AboutPage({
   const t = await getTranslations({ locale, namespace: "about" });
   const common = await getTranslations({ locale, namespace: "common" });
   const copy = aboutCopy[locale];
-  const factualContent =
-    locale === "ur"
-      ? {
-          title: "دی فلائٹ سینٹر ٹریول اینڈ ٹورز کے بارے میں",
-          paragraphs: [
-            "دی فلائٹ سینٹر ٹریول اینڈ ٹورز گزشتہ 20 سال سے گوجرانوالہ میں قابلِ اعتماد ٹریول سروس فراہم کر رہا ہے۔ فلائٹ بکنگ سے لے کر مکمل عمرہ پیکجز اور انٹرنیشنل ٹورز تک، ہم ہر سفری ضرورت کو پیشہ ورانہ انداز میں سنبھالتے ہیں۔",
-            "بطور آئی اے ٹی اے سرٹیفائیڈ ایجنسی، ہمارے پاس عالمی ایئرلائن نیٹ ورک، ہوٹل پارٹنرز، ویزا سپورٹ چینلز اور 50 سے زائد ممالک کے ٹور آپریٹرز تک براہ راست رسائی موجود ہے۔",
-            "گوجرانوالہ میں ہمارے دو دفاتر ہر سال ہزاروں کلائنٹس کی خدمت کرتے ہیں، جبکہ 24/7 ہیلپ ڈیسک ہر مسافر کے لیے فوری رہنمائی مہیا کرتا ہے۔",
-          ],
-          facts: [
-            ["ہم کون ہیں", "گوجرانوالہ میں قائم آئی اے ٹی اے سرٹیفائیڈ ٹریول اینڈ ٹورز ایجنسی"],
-            ["ہم کیا کرتے ہیں", "فلائٹس، عمرہ، ٹورز، ہوٹلز، ویزا اور ٹریول انشورنس"],
-            ["ہم کہاں ہیں", "جناح اسٹیڈیم اور ڈی سی کالونی، گوجرانوالہ"],
-            ["تجربہ", "20 سال سے زائد"],
-            ["رسائی", "پاکستان بھر کے مسافروں اور ایجنٹس کے لیے"],
-          ],
-        }
-      : {
-          title: "About The Flight Centre Travel & Tours",
-          paragraphs: [
-            "The Flight Centre Travel & Tours has been Gujranwala's go-to travel agency for over 20 years. From simple flight bookings to complete Umrah packages and international tours, we handle every travel need with care and professionalism.",
-            "As an IATA certified agency, we provide direct access to global airline inventory and maintain strong relationships with hotels, visa authorities and tour operators across 50+ countries.",
-            "Our two offices in Gujranwala serve thousands of clients each year, with a 24/7 helpdesk ensuring round-the-clock support for every traveller.",
-          ],
-          facts: [
-            ["Who we are", "An IATA certified travel agency in Gujranwala, Pakistan"],
-            ["What we handle", "Flights, Umrah, tours, hotels, visas and travel insurance"],
-            ["Where we serve", "Jinnah Stadium and DC Colony, Gujranwala"],
-            ["Experience", "More than 20 years serving travellers"],
-            ["Reach", "Serving clients across Pakistan"],
-          ],
-        };
   const story = t.raw("story.paragraphs") as string[];
   const heroImage = getAboutGalleryImage("4.webp");
   const officeSceneImage = getAboutGalleryImage("2.webp");
@@ -290,7 +269,7 @@ export default async function AboutPage({
 
   return (
     <div className="pb-20">
-      <OrganizationJsonLd description={factualContent.paragraphs[0]} />
+      <OrganizationJsonLd description={story[0]} />
       <SpeakableJsonLd path="/about" cssSelectors={["#about-h1", "#about-mission"]} />
       <Breadcrumb />
       <PageHero
@@ -331,24 +310,54 @@ export default async function AboutPage({
         }
       />
 
-      <section className="bg-background py-12">
+      {/* ── Stats band ── */}
+      <section className="mx-auto mt-10 max-w-7xl px-6">
+        <div className="relative overflow-hidden rounded-[2.5rem] bg-brand-black px-6 py-10 text-white shadow-glow md:px-12 md:py-12">
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-0"
+            style={{
+              background:
+                "radial-gradient(circle at 12% 18%, rgba(201, 168, 76, 0.20), transparent 42%), radial-gradient(circle at 88% 82%, rgba(204, 0, 0, 0.18), transparent 44%)",
+            }}
+          />
+          <div className="relative grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+            {copy.stats.map(({ value, label }) => (
+              <div key={label} className="text-center lg:text-left">
+                <p className="font-display text-5xl font-black text-brand-gold md:text-6xl">
+                  {value}
+                </p>
+                <p className="mt-2 text-xs font-semibold uppercase tracking-[0.22em] text-white/70">
+                  {label}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── Identity + key facts ── */}
+      <section className="bg-background py-16">
         <div className="mx-auto max-w-5xl px-6">
+          <p className="text-xs font-bold uppercase tracking-[0.32em] text-accent">
+            {copy.identityEyebrow}
+          </p>
           <h1
             id="about-h1"
-            className="font-display text-4xl font-black text-foreground md:text-5xl"
+            className="mt-4 font-display text-4xl font-black text-foreground md:text-5xl"
           >
             {t("h1")}
           </h1>
           <p
             id="about-mission"
-            className="mt-4 max-w-3xl text-base leading-8 text-foreground-muted md:text-lg"
+            className="mt-5 max-w-3xl text-base leading-8 text-foreground-muted md:text-lg"
           >
             {t("mission")}
           </p>
 
           <dl
             id="about-key-facts"
-            className="mt-10 grid gap-x-8 gap-y-4 rounded-2xl border border-border bg-surface-elevated p-6 md:grid-cols-2"
+            className="mt-10 grid gap-x-8 gap-y-4 rounded-[2rem] border border-border bg-surface-elevated p-7 shadow-brand md:grid-cols-2 md:p-8"
           >
             <div>
               <dt className="text-[11px] font-bold uppercase tracking-[0.18em] text-foreground-subtle">
@@ -396,6 +405,14 @@ export default async function AboutPage({
                 {copy.ceoProfile.name}
               </dd>
             </div>
+            <div>
+              <dt className="text-[11px] font-bold uppercase tracking-[0.18em] text-foreground-subtle">
+                {managingDirectorProfile.eyebrow}
+              </dt>
+              <dd className="mt-1 text-foreground">
+                {managingDirectorProfile.name}
+              </dd>
+            </div>
             <div className="md:col-span-2">
               <dt className="text-[11px] font-bold uppercase tracking-[0.18em] text-foreground-subtle">
                 {t("facts.servicesLabel")}
@@ -424,7 +441,8 @@ export default async function AboutPage({
         </div>
       </section>
 
-      <section className="mx-auto mt-12 max-w-7xl px-6">
+      {/* ── Leadership: CEO ── */}
+      <section className="mx-auto max-w-7xl px-6">
         <div className="grid items-stretch gap-8 overflow-hidden rounded-[2.5rem] border border-border bg-surface-elevated shadow-brand lg:grid-cols-[0.9fr_1.1fr]">
           <figure className="relative min-h-[30rem] bg-brand-black lg:min-h-full">
             <Image
@@ -478,12 +496,73 @@ export default async function AboutPage({
         </div>
       </section>
 
+      {/* ── Leadership: Managing Director ── */}
+      <section className="mx-auto mt-8 max-w-7xl px-6">
+        <div className="grid overflow-hidden rounded-[2.5rem] border border-border bg-surface shadow-brand lg:grid-cols-[1.08fr_0.92fr]">
+          <div className="px-6 py-8 md:px-8 lg:py-10">
+            <p className="text-xs font-bold uppercase tracking-[0.28em] text-accent">
+              {managingDirectorProfile.eyebrow}
+            </p>
+            <h2 className="mt-4 max-w-3xl font-display text-3xl font-black text-foreground md:text-4xl">
+              {managingDirectorProfile.name}
+            </h2>
+            <p className="mt-3 max-w-2xl text-lg font-semibold leading-8 text-foreground">
+              {managingDirectorProfile.title}
+            </p>
+            <p className="mt-4 max-w-3xl text-base leading-8 text-foreground-muted">
+              {managingDirectorProfile.description}
+            </p>
+            <blockquote className="mt-6 border-l-4 border-gold pl-5 text-base font-semibold leading-8 text-foreground">
+              &ldquo;{managingDirectorProfile.quote}&rdquo;
+            </blockquote>
+
+            <div className="mt-8 grid gap-4 md:grid-cols-3">
+              {managingDirectorProfile.highlights.map(
+                ({ title, description, Icon }) => (
+                  <article
+                    key={title}
+                    className="rounded-[1.25rem] border border-border bg-surface-elevated p-4"
+                  >
+                    <Icon className="h-5 w-5 text-accent" />
+                    <h3 className="mt-4 font-display text-xl font-bold text-foreground">
+                      {title}
+                    </h3>
+                    <p className="mt-3 text-sm leading-7 text-foreground-muted">
+                      {description}
+                    </p>
+                  </article>
+                ),
+              )}
+            </div>
+          </div>
+
+          <figure className="relative min-h-[28rem] bg-brand-black lg:min-h-full">
+            <Image
+              src="/images/rana-mudassir-managing-director.webp"
+              alt={`${managingDirectorProfile.name}, ${managingDirectorProfile.eyebrow} of The Flight Centre Travel & Tours`}
+              fill
+              sizes="(min-width: 1280px) 38vw, (min-width: 1024px) 44vw, 100vw"
+              className="object-cover object-top"
+            />
+            <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent p-6 text-white md:p-8">
+              <p className="text-xs font-bold uppercase tracking-[0.26em] text-brand-gold">
+                {managingDirectorProfile.eyebrow}
+              </p>
+              <p className="mt-3 font-display text-3xl font-black md:text-4xl">
+                {managingDirectorProfile.name}
+              </p>
+            </div>
+          </figure>
+        </div>
+      </section>
+
+      {/* ── Story + office presence ── */}
       <section className="mx-auto mt-12 grid max-w-7xl gap-8 px-6 lg:grid-cols-[1.02fr_0.98fr]">
-        <div className="rounded-[2rem] border border-black/10 bg-white p-6 shadow-brand md:p-8">
-          <h2 className="font-display text-3xl font-bold text-brand-black">
+        <div className="rounded-[2rem] border border-border bg-surface-elevated p-6 shadow-brand md:p-8">
+          <p className="text-xs font-bold uppercase tracking-[0.28em] text-accent">
             {t("story.title")}
-          </h2>
-          <div className="mt-5 space-y-5 text-base leading-8 text-zinc-700">
+          </p>
+          <div className="mt-5 space-y-5 text-base leading-8 text-foreground-muted">
             {story.map((paragraph) => (
               <p key={paragraph}>
                 {paragraph}
@@ -493,21 +572,21 @@ export default async function AboutPage({
         </div>
 
         <div className="grid gap-4">
-          <div className="rounded-[2rem] border border-black/10 bg-white p-5 shadow-brand md:p-6">
-            <p className="text-xs font-bold uppercase tracking-[0.28em] text-brand-red">
+          <div className="rounded-[2rem] border border-border bg-surface-elevated p-5 shadow-brand md:p-6">
+            <p className="text-xs font-bold uppercase tracking-[0.28em] text-accent">
               {officePresenceCopy.eyebrow}
             </p>
-            <h2 className="mt-4 font-display text-3xl font-black text-brand-black">
+            <h2 className="mt-4 font-display text-2xl font-black text-foreground md:text-3xl">
               {officePresenceCopy.title}
             </h2>
-            <p className="mt-4 text-sm leading-7 text-zinc-600 md:text-base">
+            <p className="mt-4 text-sm leading-7 text-foreground-muted md:text-base">
               {officePresenceCopy.description}
             </p>
           </div>
 
           <div className="grid gap-4 sm:grid-cols-[1.1fr_0.9fr]">
             {officeSceneImage ? (
-              <figure className="group overflow-hidden rounded-[2rem] border border-black/10 bg-brand-black shadow-brand sm:row-span-2">
+              <figure className="group overflow-hidden rounded-[2rem] border border-border bg-brand-black shadow-brand sm:row-span-2">
                 <div className="relative aspect-[4/3] overflow-hidden sm:h-full sm:min-h-[25rem]">
                   <Image
                     src={officeSceneImage.src}
@@ -530,7 +609,7 @@ export default async function AboutPage({
             ) : null}
 
             {signageImage ? (
-              <figure className="group overflow-hidden rounded-[2rem] border border-black/10 bg-white shadow-brand">
+              <figure className="group overflow-hidden rounded-[2rem] border border-border bg-surface-elevated shadow-brand">
                 <div className="relative aspect-[4/3] overflow-hidden">
                   <Image
                     src={signageImage.src}
@@ -542,10 +621,10 @@ export default async function AboutPage({
                   <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-black/5 to-transparent" />
                 </div>
                 <figcaption className="space-y-2 px-5 py-4">
-                  <p className="text-xs font-semibold uppercase tracking-[0.22em] text-brand-red">
+                  <p className="text-xs font-semibold uppercase tracking-[0.22em] text-accent">
                     {getLocalizedGalleryText(signageImage.title, locale)}
                   </p>
-                  <p className="text-sm leading-7 text-zinc-600">
+                  <p className="text-sm leading-7 text-foreground-muted">
                     {getLocalizedGalleryText(signageImage.caption, locale)}
                   </p>
                 </figcaption>
@@ -555,80 +634,43 @@ export default async function AboutPage({
         </div>
       </section>
 
-      <section className="mx-auto mt-12 max-w-7xl px-6">
-        <div className="grid gap-8 lg:grid-cols-[1.05fr_0.95fr]">
-          <div className="rounded-[2rem] border border-black/10 bg-white p-6 shadow-brand md:p-8">
-            <h2
-              className="font-display text-3xl font-bold text-brand-black"
-            >
-              {factualContent.title}
-            </h2>
-            <div className="mt-5 space-y-5 text-base leading-8 text-zinc-700">
-              {factualContent.paragraphs.map((paragraph) => (
-                <p key={paragraph}>
-                  {paragraph}
-                </p>
-              ))}
-            </div>
-          </div>
-
-          <div className="rounded-[2rem] border border-black/10 bg-white p-6 shadow-brand md:p-8">
-            <div className="grid gap-4 sm:grid-cols-2">
-              {factualContent.facts.map(([label, value]) => (
-                <article
-                  key={label}
-                  className="rounded-[1.5rem] border border-black/10 bg-brand-light p-4"
-                >
-                  <p className="text-xs uppercase tracking-[0.2em] text-brand-red">
-                    {label}
-                  </p>
-                  <p className="mt-3 text-sm leading-7 text-zinc-700">{value}</p>
-                </article>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
       <AboutGallerySection locale={locale} items={galleryImages} />
 
+      {/* ── Why choose us ── */}
       <section className="mx-auto mt-12 max-w-7xl px-6">
-        <div className="grid gap-6 md:grid-cols-3">
-          {copy.valueCards.map(({ title, description, Icon }) => (
-            <article
-              key={title}
-              className="rounded-[2rem] border border-black/10 bg-white p-6 shadow-brand"
-            >
-              <Icon className="h-6 w-6 text-brand-red" />
-              <h3 className="mt-5 font-display text-2xl font-bold text-brand-black">
-                {title}
-              </h3>
-              <p className="mt-4 text-sm leading-7 text-zinc-700">{description}</p>
-            </article>
-          ))}
-        </div>
-      </section>
+        <div className="relative overflow-hidden rounded-[2.5rem] bg-brand-black px-6 py-10 text-white shadow-glow md:px-10 md:py-12">
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-0"
+            style={{
+              background:
+                "radial-gradient(circle at 85% 15%, rgba(201, 168, 76, 0.18), transparent 40%), radial-gradient(circle at 10% 90%, rgba(204, 0, 0, 0.16), transparent 42%)",
+            }}
+          />
+          <div className="relative max-w-3xl">
+            <p className="text-xs font-bold uppercase tracking-[0.32em] text-brand-gold">
+              {copy.valuesEyebrow}
+            </p>
+            <h2 className="mt-4 font-display text-3xl font-black md:text-4xl">
+              {copy.valuesHeading}
+            </h2>
+            <p className="mt-4 text-sm leading-7 text-white/72 md:text-base">
+              {copy.valuesDescription}
+            </p>
+          </div>
 
-      <section className="mx-auto mt-12 max-w-7xl px-6">
-        <div className="rounded-[2.5rem] bg-brand-black px-6 py-8 text-white shadow-glow md:px-8">
-          <h2 className="display-copy font-display text-4xl font-black">
-            {copy.trustHeading}
-          </h2>
-          <p className="mt-4 max-w-3xl text-sm leading-7 text-white/72">
-            {copy.trustDescription}
-          </p>
-          <div className="mt-8 grid gap-6 md:grid-cols-3">
-            {copy.trustCards.map(({ title, description, Icon }) => (
+          <div className="relative mt-9 grid gap-6 md:grid-cols-3">
+            {copy.valueCards.map(({ title, description, Icon }) => (
               <article
                 key={title}
-                className="rounded-[2rem] border border-white/10 bg-white/8 p-6 backdrop-blur"
+                className="rounded-[2rem] border border-white/10 bg-white/[0.06] p-6 backdrop-blur transition hover:border-brand-gold/40 hover:bg-white/[0.09]"
               >
-                <div className="flex items-center gap-3">
-                  <Icon className="h-5 w-5 text-brand-gold" />
-                  <p className="text-xs uppercase tracking-[0.24em] text-brand-gold">
-                    {title}
-                  </p>
+                <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-brand-gold/15">
+                  <Icon className="h-6 w-6 text-brand-gold" />
                 </div>
+                <h3 className="mt-5 font-display text-2xl font-bold text-white">
+                  {title}
+                </h3>
                 <p className="mt-4 text-sm leading-7 text-white/72">{description}</p>
               </article>
             ))}

@@ -53,6 +53,7 @@ export interface BrandProfile {
   companyName: string;
   tagline: string;
   ceo: string;
+  managingDirector: string;
   phone: string;
   phone2?: string;
   uan: string;
@@ -113,6 +114,7 @@ export const BRAND: BrandProfile = {
   companyName: "The Flight Centre Travel & Tours",
   tagline: "Your Gateway to the World",
   ceo: "Rana Khalid Parvez Khan",
+  managingDirector: "Adv. Rana Mudasser Nazar Khan",
   phone: "+92 304 1119786",
   phone2: "+92 300 8623818",
   uan: "111-786-788",

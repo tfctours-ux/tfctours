@@ -90,6 +90,7 @@ function mapBrandViewToProfile(
         ? brand.taglineUr
         : brand.taglineEn ?? BRAND.tagline,
     ceo: brand.ceoName ?? BRAND.ceo,
+    managingDirector: BRAND.managingDirector,
     phone: brand.primaryPhone,
     phone2: brand.secondaryPhone ?? undefined,
     uan: brand.uan ?? BRAND.uan,
