@@ -337,7 +337,7 @@ export function UmrahCalculatorWizard({
 
   if (submitSuccess) {
     return (
-      <div className={WIZARD_CARD_CLASS}>
+      <div className={WIZARD_CARD_CLASS} data-wizard>
         <SuccessScreen
           referenceId={referenceId}
           contactNumber={formData.step1.contactNumber}
@@ -348,7 +348,7 @@ export function UmrahCalculatorWizard({
   }
 
   return (
-    <div className={WIZARD_CARD_CLASS}>
+    <div className={WIZARD_CARD_CLASS} data-wizard>
       <StepIndicator currentStep={currentStep} labels={copy.steps} />
 
       <AnimatePresence mode="wait" custom={direction}>

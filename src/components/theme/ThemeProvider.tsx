@@ -17,9 +17,13 @@ interface ThemeContextValue {
 const ThemeContext = createContext<ThemeContextValue | null>(null);
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
-  // Keep SSR and the first client render identical; reconcile stored preference after hydration.
+  // Read localStorage during initialisation so SSR default is replaced before first paint.
   const [theme, setThemeState] = useState<Theme>(() => {
     if (typeof document === "undefined") return DEFAULT_THEME;
+    try {
+      const storedTheme = window.localStorage.getItem(THEME_STORAGE_KEY);
+      if (isTheme(storedTheme)) return storedTheme;
+    } catch {}
     const attr = document.documentElement.getAttribute("data-tfc-theme");
     return isTheme(attr) ? attr : DEFAULT_THEME;
   });
@@ -33,19 +37,10 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     root.style.colorScheme = next;
   }, []);
 
+  // Sync the DOM class/attribute whenever theme state changes (including initial mount).
   useLayoutEffect(() => {
-    try {
-      const storedTheme = window.localStorage.getItem(THEME_STORAGE_KEY);
-      if (isTheme(storedTheme)) {
-        setThemeState(storedTheme);
-        applyTheme(storedTheme);
-      } else {
-        applyTheme(DEFAULT_THEME);
-      }
-    } catch {
-      applyTheme(DEFAULT_THEME);
-    }
-  }, [applyTheme]);
+    applyTheme(theme);
+  }, [applyTheme, theme]);
 
   const setTheme = useCallback(
     (next: Theme) => {
